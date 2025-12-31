@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - Something Went Wrong</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="chatbot.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+    <style>
+        :root {
+            --tetris-grid-width: 10;
+            --tetris-grid-height: 20;
+            --cell-size: 20px;
+            --grid-color: #0d1a26; /* Dark futuristic background */
+            --border-color: #00bcd4; /* Cyan/blue glow */
+            --text-color: #a0f0ff;
+        }
+
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 0;
+        }
+        .tetris-grid-wrapper {
+            display: flex;
+            gap: 20px;
+            background: #111;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px var(--border-color);
+        }
+        #tetris-grid {
+            width: calc(var(--tetris-grid-width) * var(--cell-size));
+            height: calc(var(--tetris-grid-height) * var(--cell-size));
+            background-color: var(--grid-color);
+            border: 5px solid var(--border-color);
+            box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.5);
+            display: grid;
+            grid-template-columns: repeat(var(--tetris-grid-width), 1fr);
+            grid-template-rows: repeat(var(--tetris-grid-height), 1fr);
+        }
+        .cell {
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            position: relative;
+        }
+        .cell.filled {
+            box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.5);
+            /* Actual color determined by data-color attribute */
+            opacity: 1;
+        }
+        
+        .score-panel {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            color: var(--text-color);
+            font-family: 'Sora', sans-serif;
+            font-size: 0.9rem;
+            min-width: 120px;
+        }
+        .score-panel h3 {
+            color: var(--border-color);
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            text-shadow: 0 0 5px var(--border-color);
+        }
+        #next-piece-grid {
+            width: calc(4 * var(--cell-size));
+            height: calc(4 * var(--cell-size));
+            background-color: #222;
+            border: 2px solid var(--border-color);
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            margin-bottom: 15px;
+        }
+        .control-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="heroCanvas"></canvas>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo" aria-label="ArciGy Home" style="display: flex; align-items: center; gap: 10px;">
+                <img src="GRADIENT_LOGO ONLY.png" alt="ArciGy Logo" style="height: 32px; width: auto;">
+                <img src="GRADIENT_TEXT ONLY.png" alt="ArciGy" style="height: 24px; width: auto;">
+            </a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link" data-i18n="nav.home">Home</a></li>
+                <li><a href="about.html" class="nav-link" data-i18n="nav.about">About</a></li>
+                <li><a href="services.html" class="nav-link" data-i18n="nav.services">Services</a></li>
+                <li><a href="pricing.html" class="nav-link" data-i18n="nav.pricing">Pricing</a></li>
+                <li><a href="contact.html" class="nav-link" data-i18n="nav.contact">Contact</a></li>
+            </ul>
+            <div class="nav-lang">
+                <button class="lang-btn active" data-lang="en" aria-label="English">EN</button>
+                <button class="lang-btn" data-lang="sk" aria-label="Slovak">SK</button>
+            </div>
+        </div>
+    </nav>
+    
+    <main class="container page-content" style="min-height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px 20px;">
+        <h1 class="section-title" style="font-size: 4rem; color: var(--border-color); margin-bottom: 20px; text-shadow: 0 0 10px var(--border-color);">ERROR: System Corrupted</h1>
+        <h2 class="section-subtitle" style="font-size: 1.8rem; margin-bottom: 15px;">Restore System Integrity by Solving the Grid Problem</h2>
+        <p style="font-size: 1.2rem; max-width: 600px; margin-bottom: 30px; color: var(--text-color);">The page address is corrupted. Restore structural efficiency to the digital grid below!</p>
+        
+        <div class="game-container">
+            <div class="tetris-grid-wrapper">
+                <div id="tetris-grid">
+                    <!-- Grid cells populated by JS -->
+                </div>
+                <div class="score-panel">
+                    <h3>Score:</h3>
+                    <p id="score">0</p>
+                    <h3>Next:</h3>
+                    <div id="next-piece-grid">
+                        <!-- Next piece preview populated by JS -->
+                    </div>
+                    <p id="level">Level: 1</p>
+                    <p id="lines">Lines: 0</p>
+                    <button id="start-button" class="btn btn-primary" style="margin-top: 15px;">Start Simulation</button>
+                    <div class="control-buttons">
+                        <button id="left-btn" class="btn btn-secondary">←</button>
+                        <button id="down-btn" class="btn btn-secondary">↓</button>
+                        <button id="right-btn" class="btn btn-secondary">→</button>
+                        <button id="rotate-btn" class="btn btn-secondary">↻</button>
+                    </div>
+                </div>
+            </div>
+            <a href="index.html" class="btn btn-secondary" style="margin-top: 25px;">Exit Simulation (Go Home)</a>
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3 class="footer-logo">ArciGy</h3>
+                    <p class="footer-tagline" data-i18n="footer.tagline">Automation Architects for Business Efficiency</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4 data-i18n="footer.links.title">Quick Links</h4>
+                        <ul>
+                            <li><a href="about.html" data-i18n="nav.about">About</a></li>
+                            <li><a href="services.html" data-i18n="nav.services">Services</a></li>
+                            <li><a href="pricing.html" data-i18n="nav.pricing">Pricing</a></li>
+                            <li><a href="contact.html" class="nav-link active" data-i18n="nav.contact">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4 data-i18n="footer.legal.title">Legal</h4>
+                        <ul>
+                            <li><a href="terms-of-service.html" data-i18n="footer.legal.terms">Terms of Service</a></li>
+                            <li><a href="privacy-policy.html" data-i18n="footer.legal.privacy">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-newsletter">
+                    <h4 data-i18n="footer.newsletter.title">Newsletter</h4>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <input type="email" placeholder="Your email" aria-label="Newsletter email" data-i18n-placeholder="footer.newsletter.placeholder">
+                        <button type="submit" aria-label="Subscribe" data-i18n="footer.newsletter.submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright" data-i18n="footer.copyright">© 2024 ArciGy. All rights reserved.</p>
+                <div class="footer-lang">
+                    <button class="lang-btn active" data-lang="en" aria-label="English">EN</button>
+                    <button class="lang-btn" data-lang="sk" aria-label="Slovak">SK</button>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // --- TETRIS GAME LOGIC ---
+
+        const GRID_WIDTH = 10;
+        const GRID_HEIGHT = 20;
+        const NEXT_GRID_SIZE = 4;
+
+        const grid = document.getElementById('tetris-grid');
+        const nextGridEl = document.getElementById('next-piece-grid');
+        const scoreEl = document.getElementById('score');
+        const levelEl = document.getElementById('level');
+        const linesEl = document.getElementById('lines');
+        const startButton = document.getElementById('start-button');
+        const controlButtons = {
+            left: document.getElementById('left-btn'),
+            down: document.getElementById('down-btn'),
+            right: document.getElementById('right-btn'),
+            rotate: document.getElementById('rotate-btn')
+        };
+        
+        let cells = [];
+        let nextCells = [];
+        let score = 0;
+        let lines = 0;
+        let level = 1;
+        let timerId = null;
+        let currentPiece = null;
+        let nextPiece = null;
+        let isGameOver = false;
+
+        // The Tetris pieces and their colors (Futuristic/Neon colors)
+        const PIECES = [
+            // L
+            { shape: [[1, GRID_WIDTH + 1, GRID_WIDTH * 2 + 1, 2], [GRID_WIDTH, GRID_WIDTH + 1, GRID_WIDTH + 2, GRID_WIDTH * 2 + 2], [1, GRID_WIDTH + 1, GRID_WIDTH * 2 + 1, GRID_WIDTH * 2], [GRID_WIDTH, GRID_WIDTH * 2, GRID_WIDTH * 2 + 1, GRID_WIDTH * 2 + 2]], color: '#ff4d4d' }, // Red/Magenta
+            // J
+            { shape: [[1, GRID_WIDTH + 1, GRID_WIDTH * 2 + 1, 0], [GRID_WIDTH, GRID_WIDTH + 1, GRID_WIDTH + 2, 2], [1, GRID_WIDTH + 1, GRID_WIDTH * 2 + 1, GRID_WIDTH * 2 + 2], [GRID_WIDTH, GRID_WIDTH * 2, GRID_WIDTH * 2 + 1, GRID_WIDTH * 2 + 2]], color: '#4dffff' }, // Cyan
+            // I
+            { shape: [[1, GRID_WIDTH + 1, GRID_WIDTH * 2 + 1, GRID_WIDTH * 3 + 1], [GRID_WIDTH, GRID_WIDTH + 1, GRID_WIDTH + 2, GRID_WIDTH + 3]], color: '#ffff4d' }, // Yellow/Gold
+            // O
+            { shape: [[0, 1, GRID_WIDTH, GRID_WIDTH + 1]], color: '#ff4dff' }, // Pink/Violet
+            // S
+            { shape: [[GRID_WIDTH + 1, GRID_WIDTH + 2, GRID_WIDTH * 2, GRID_WIDTH * 2 + 1], [0, GRID_WIDTH, GRID_WIDTH + 1, GRID_WIDTH * 2 + 1]], color: '#4dff4d' }, // Green/Lime
+            // T
+            { shape: [[1, GRID_WIDTH, GRID_WIDTH + 1, GRID_WIDTH + 2], [1, GRID_WIDTH + 1, GRID_WIDTH * 2 + 1, GRID_WIDTH], [GRID_WIDTH, GRID_WIDTH + 1, GRID_WIDTH + 2, GRID_WIDTH * 2 + 1], [1, GRID_WIDTH + 1, GRID_WIDTH * 2 + 1, GRID_WIDTH * 2 + 2]], color: '#ffffff' }, // White/Bright
+            // Z
+            { shape: [[GRID_WIDTH, GRID_WIDTH + 1, GRID_WIDTH * 2 + 1, GRID_WIDTH * 2 + 2], [2, GRID_WIDTH + 1, GRID_WIDTH * 2, GRID_WIDTH * 2 + 1]], color: '#ffaa00' } // Orange
+        ];
+
+        // --- Initialization ---
+
+        function createGrid() {
+            grid.innerHTML = '';
+            cells = [];
+            for (let i = 0; i < GRID_WIDTH * GRID_HEIGHT; i++) {
+                const cell = document.createElement('div');
+                cell.classList.add('cell');
+                grid.appendChild(cell);
+                cells.push(cell);
+            }
+        }
+
+        function createNextGrid() {
+            nextGridEl.innerHTML = '';
+            nextCells = [];
+            for (let i = 0; i < NEXT_GRID_SIZE * NEXT_GRID_SIZE; i++) {
+                const cell = document.createElement('div');
+                cell.classList.add('cell');
+                nextGridEl.appendChild(cell);
+                nextCells.push(cell);
+            }
+        }
+
+        function drawPiece() {
+            if (!currentPiece) return;
+            currentPiece.shape[currentPiece.rotation].forEach(index => {
+                const cellIndex = currentPiece.position + index;
+                if (cellIndex >= 0 && cellIndex < cells.length) {
+                    cells[cellIndex].classList.add('filled');
+                    cells[cellIndex].style.backgroundColor = currentPiece.color;
+                    cells[cellIndex].setAttribute('data-color', currentPiece.color);
+                }
+            });
+        }
+
+        function undrawPiece() {
+            if (!currentPiece) return;
+            currentPiece.shape[currentPiece.rotation].forEach(index => {
+                const cellIndex = currentPiece.position + index;
+                if (cellIndex >= 0 && cellIndex < cells.length) {
+                    cells[cellIndex].classList.remove('filled');
+                    cells[cellIndex].style.backgroundColor = '';
+                    cells[cellIndex].removeAttribute('data-color');
+                }
+            });
+        }
+        
+        // Initial piece positions for the 4x4 preview grid (top-left aligned)
+        const DISPLAY_SHAPES = [
+            [1, 5, 9, 6], // L (starting at (0,1))
+            [1, 5, 9, 4], // J
+            [4, 5, 6, 7], // I (horizontal, centered)
+            [5, 6, 9, 10], // O
+            [5, 6, 8, 9], // S
+            [5, 8, 9, 10], // T
+            [4, 5, 9, 10] // Z
+        ];
+
+        function drawNextPiece() {
+            nextCells.forEach(cell => {
+                cell.classList.remove('filled');
+                cell.style.backgroundColor = '';
+                cell.removeAttribute('data-color');
+            });
+
+            if (!nextPiece) return;
+
+            // Get the display shape based on the piece type index
+            const pieceIndex = PIECES.findIndex(p => p.shape === nextPiece.shape);
+            const pieceShape = DISPLAY_SHAPES[pieceIndex];
+            const pieceColor = nextPiece.color;
+
+            pieceShape.forEach(index => {
+                if (index >= 0 && index < nextCells.length) {
+                    nextCells[index].classList.add('filled');
+                    nextCells[index].style.backgroundColor = pieceColor;
+                    nextCells[index].setAttribute('data-color', pieceColor);
+                }
+            });
+        }
+
+        function checkCollision() {
+            if (!currentPiece) return true;
+            return currentPiece.shape[currentPiece.rotation].some(index => {
+                const cellIndex = currentPiece.position + index;
+                const newCell = cells[cellIndex];
+                
+                // Check if piece moved off the bottom or collided with a locked piece
+                return (cellIndex >= cells.length) || (newCell && newCell.classList.contains('locked'));
+            });
+        }
+
+        function checkSideCollision(direction) {
+            const isLeftEdge = currentPiece.shape[currentPiece.rotation].some(index => (currentPiece.position + index) % GRID_WIDTH === 0);
+            const isRightEdge = currentPiece.shape[currentPiece.rotation].some(index => (currentPiece.position + index) % GRID_WIDTH === GRID_WIDTH - 1);
+            
+            // Check collision with locked pieces
+            const isLockedCollision = currentPiece.shape[currentPiece.rotation].some(index => {
+                const cellIndex = currentPiece.position + index + direction;
+                return cells[cellIndex] && cells[cellIndex].classList.contains('locked');
+            });
+
+            if ((direction === -1 && isLeftEdge) || (direction === 1 && isRightEdge)) return true;
+            return isLockedCollision;
+        }
+
+        function rotatePiece() {
+            undrawPiece();
+            
+            const originalRotation = currentPiece.rotation;
+            currentPiece.rotation = (currentPiece.rotation + 1) % currentPiece.shape.length;
+            
+            // Wall Kick logic (simple)
+            if (checkCollision() || checkSideCollision(0)) {
+                // Try to nudge away from the wall/other pieces
+                if (checkSideCollision(-1)) currentPiece.position += 1;
+                else if (checkSideCollision(1)) currentPiece.position -= 1;
+                else if (checkCollision()) currentPiece.rotation = originalRotation; // Revert if all else fails
+            }
+
+            drawPiece();
+        }
+
+        function moveDown() {
+            undrawPiece();
+            currentPiece.position += GRID_WIDTH;
+            if (checkCollision()) {
+                currentPiece.position -= GRID_WIDTH;
+                lockPiece();
+                generateNewPiece();
+            }
+            drawPiece();
+        }
+        
+        function moveLeft() {
+            undrawPiece();
+            const isAtLeftEdge = currentPiece.shape[currentPiece.rotation].some(index => (currentPiece.position + index) % GRID_WIDTH === 0);
+            if (!isAtLeftEdge && !checkSideCollision(-1)) {
+                currentPiece.position -= 1;
+            }
+            drawPiece();
+        }
+
+        function moveRight() {
+            undrawPiece();
+            const isAtRightEdge = currentPiece.shape[currentPiece.rotation].some(index => (currentPiece.position + index) % GRID_WIDTH === GRID_WIDTH - 1);
+            if (!isAtRightEdge && !checkSideCollision(1)) {
+                currentPiece.position += 1;
+            }
+            drawPiece();
+        }
+
+        function lockPiece() {
+            if (!currentPiece) return;
+            currentPiece.shape[currentPiece.rotation].forEach(index => {
+                const cellIndex = currentPiece.position + index;
+                if (cellIndex >= 0 && cellIndex < cells.length) {
+                    cells[cellIndex].classList.add('locked');
+                }
+            });
+            checkLines();
+        }
+
+        function checkLines() {
+            let linesCleared = 0;
+            for (let row = GRID_HEIGHT - 1; row >= 0; row--) {
+                const startIndex = row * GRID_WIDTH;
+                const rowCells = cells.slice(startIndex, startIndex + GRID_WIDTH);
+
+                if (rowCells.every(cell => cell.classList.contains('locked'))) {
+                    linesCleared++;
+                    lines++;
+                    linesEl.textContent = 'Lines: ' + lines;
+
+                    // Remove row and update score
+                    rowCells.forEach(cell => {
+                        cell.classList.remove('locked', 'filled');
+                        cell.style.backgroundColor = '';
+                        cell.removeAttribute('data-color');
+                    });
+                    
+                    // Pull all rows above down
+                    const cellsAbove = cells.slice(0, startIndex).reverse();
+                    cellsAbove.forEach((cell, i) => {
+                        const targetIndex = startIndex - 1 - i;
+                        const sourceIndex = startIndex - GRID_WIDTH - 1 - i;
+                        if (sourceIndex >= 0) {
+                            cells[targetIndex].className = cells[sourceIndex].className;
+                            cells[targetIndex].style.backgroundColor = cells[sourceIndex].style.backgroundColor;
+                            cells[targetIndex].setAttribute('data-color', cells[sourceIndex].getAttribute('data-color'));
+                        } else {
+                            cells[targetIndex].classList.value = 'cell';
+                            cells[targetIndex].style.backgroundColor = '';
+                            cells[targetIndex].removeAttribute('data-color');
+                        }
+                    });
+                    row++; // Re-check the current row index, as all rows have shifted down
+                }
+            }
+
+            if (linesCleared > 0) {
+                // Basic Tetris scoring (100 points for single, multiplier for combos)
+                score += [0, 100, 300, 500, 800][linesCleared];
+                scoreEl.textContent = score;
+
+                // Increase level every 10 lines
+                if (lines >= level * 10) {
+                    level++;
+                    levelEl.textContent = 'Level: ' + level;
+                    clearInterval(timerId);
+                    timerId = setInterval(moveDown, 1000 / level); // Increase speed
+                }
+            }
+        }
+
+        function generateNewPiece() {
+            if (nextPiece) {
+                currentPiece = nextPiece;
+            } else {
+                const randomIndex = Math.floor(Math.random() * PIECES.length);
+                currentPiece = { ...PIECES[randomIndex], position: 4, rotation: 0 };
+            }
+
+            const nextRandomIndex = Math.floor(Math.random() * PIECES.length);
+            nextPiece = { ...PIECES[nextRandomIndex], position: 4, rotation: 0 };
+            drawNextPiece();
+
+            // Game Over Check: If collision immediately after generating new piece
+            if (checkCollision()) {
+                gameOver();
+            }
+        }
+        
+        function gameOver() {
+            isGameOver = true;
+            clearInterval(timerId);
+            timerId = null;
+            startButton.textContent = 'Game Over! Play Again';
+            startButton.disabled = false;
+            
+            // Flash red on game grid cells
+            cells.forEach(cell => cell.style.borderColor = 'red');
+            alert('Game Over! Your score: ' + score + ' (Lines: ' + lines + '). Press Play Again to restart.');
+        }
+
+        // --- Event Handlers ---
+        
+        function control(e) {
+            if (isGameOver || !currentPiece) return;
+
+            if (e.keyCode === 37) { // Left
+                moveLeft();
+            } else if (e.keyCode === 39) { // Right
+                moveRight();
+            } else if (e.keyCode === 40) { // Down
+                moveDown();
+            } else if (e.keyCode === 38) { // Up / Rotate
+                rotatePiece();
+            }
+        }
+
+        function handleButtonClick(action) {
+            if (isGameOver || !currentPiece) return;
+            if (action === 'left') moveLeft();
+            else if (action === 'right') moveRight();
+            else if (action === 'down') moveDown();
+            else if (action === 'rotate') rotatePiece();
+        }
+
+        document.addEventListener('keydown', control);
+        controlButtons.left.addEventListener('click', () => handleButtonClick('left'));
+        controlButtons.right.addEventListener('click', () => handleButtonClick('right'));
+        controlButtons.down.addEventListener('click', () => handleButtonClick('down'));
+        controlButtons.rotate.addEventListener('click', () => handleButtonClick('rotate'));
+
+
+        function startGame() {
+            if (timerId) clearInterval(timerId);
+
+            createGrid();
+            createNextGrid();
+            score = 0;
+            lines = 0;
+            level = 1;
+            isGameOver = false;
+            scoreEl.textContent = 0;
+            linesEl.textContent = 'Lines: 0';
+            levelEl.textContent = 'Level: 1';
+            startButton.textContent = 'In Progress...';
+            startButton.disabled = true;
+
+            nextPiece = null; // Force first piece generation
+            generateNewPiece();
+            
+            timerId = setInterval(moveDown, 1000 / level);
+        }
+
+        startButton.addEventListener('click', startGame);
+
+    </script>
+    <script src="script.js"></script>
+    <script src="chatbot.js"></script>
+    <script src="animations.js"></script>
+</body>
+</html>

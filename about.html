@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about ArciGy - automation architects dedicated to solving systemic business problems through intelligent automation.">
+    <title>About Us - ArciGy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="chatbot.css">
+</head>
+<body>
+    <canvas id="heroCanvas"></canvas>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo" aria-label="ArciGy Home" style="display: flex; align-items: center; gap: 10px;">
+                <img src="GRADIENT_LOGO ONLY.png" alt="ArciGy Logo" style="height: 32px; width: auto;">
+                <img src="GRADIENT_TEXT ONLY.png" alt="ArciGy" style="height: 24px; width: auto;">
+            </a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link" data-i18n="nav.home">Home</a></li>
+                <li><a href="about.html" class="nav-link active" data-i18n="nav.about">About</a></li>
+                <li><a href="services.html" class="nav-link" data-i18n="nav.services">Services</a></li>
+                <li><a href="pricing.html" class="nav-link" data-i18n="nav.pricing">Pricing</a></li>
+                <li><a href="contact.html" class="nav-link" data-i18n="nav.contact">Contact</a></li>
+            </ul>
+            <div class="nav-lang">
+                <button class="lang-btn active" data-lang="en" aria-label="English">EN</button>
+                <button class="lang-btn" data-lang="sk" aria-label="Slovak">SK</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- About Hero -->
+    <section class="hero" style="min-height: 60vh; padding-top: 8rem;">
+        <div class="hero-background">
+            <div class="hero-shape shape-1"></div>
+            <div class="hero-shape shape-2"></div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title" data-i18n="about.hero.title">About ArciGy</h1>
+            <p class="hero-subtitle" data-i18n="about.hero.subtitle">Automation Architects for Predictable Growth</p>
+        </div>
+    </section>
+
+    <!-- Story Section -->
+    <section class="about-story-section">
+        <div class="container">
+            <div class="about-content">
+                <h2 class="section-title" data-i18n="about.story.title">Our Story</h2>
+                <div class="story-text">
+                    <p data-i18n="about.story.p1">ArciGy was founded with a clear mission: to help businesses unlock their full potential through intelligent automation. We recognized that many companies struggle with systemic inefficiencies that prevent growth and scalability.</p>
+                    <p data-i18n="about.story.p2">Our team of automation architects combines deep technical expertise with business acumen to identify and solve core operational challenges. We don't just implement technology—we redesign processes for maximum efficiency.</p>
+                    <p data-i18n="about.story.p3">Today, we work with businesses across industries, from manufacturing to services, helping them achieve predictable growth through strategic automation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="mission-section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="about.mission.title">Our Mission</h2>
+            <div class="mission-content">
+                <p class="mission-text" data-i18n="about.mission.text">Automation for Predictable Growth. We believe that every business deserves to operate at peak efficiency. Our mission is to identify systemic problems and solve them through intelligent automation, enabling our clients to scale without proportional cost increases.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="values-section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="about.values.title">Our Values</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <h3 data-i18n="about.values.precision.title">Precision</h3>
+                    <p data-i18n="about.values.precision.desc">Every automation solution is meticulously designed and tested to ensure reliability and accuracy.</p>
+                </div>
+                <div class="value-card">
+                    <h3 data-i18n="about.values.scalability.title">Scalability</h3>
+                    <p data-i18n="about.values.scalability.desc">We build systems that grow with your business, not ones that need constant rework.</p>
+                </div>
+                <div class="value-card">
+                    <h3 data-i18n="about.values.innovation.title">Innovation</h3>
+                    <p data-i18n="about.values.innovation.desc">We stay at the forefront of automation technology to deliver cutting-edge solutions.</p>
+                </div>
+                <div class="value-card">
+                    <h3 data-i18n="about.values.partnership.title">Partnership</h3>
+                    <p data-i18n="about.values.partnership.desc">Your success is our success. We work as an extension of your team, not just a vendor.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="about.team.title">Our Team</h2>
+            <p class="team-intro" data-i18n="about.team.intro">Our team consists of automation architects, process engineers, and business analysts who work together to deliver exceptional results.</p>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-avatar"></div>
+                    <h3 data-i18n="about.team.role1.title">Automation Architects</h3>
+                    <p data-i18n="about.team.role1.desc">Design and implement intelligent automation systems tailored to your business needs.</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar"></div>
+                    <h3 data-i18n="about.team.role2.title">Process Engineers</h3>
+                    <p data-i18n="about.team.role2.desc">Analyze and optimize workflows to identify automation opportunities.</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar"></div>
+                    <h3 data-i18n="about.team.role3.title">Business Analysts</h3>
+                    <p data-i18n="about.team.role3.desc">Bridge the gap between business requirements and technical solutions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <!--
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2 data-i18n="about.cta.title">Join Our Team</h2>
+                <p data-i18n="about.cta.text">We're always looking for talented individuals who share our passion for automation and innovation.</p>
+                <a href="careers.html" class="btn btn-primary" data-i18n="about.cta.button">View Open Positions</a>
+            </div>
+        </div>
+    </section>
+    -->
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3 class="footer-logo">ArciGy</h3>
+                    <p class="footer-tagline" data-i18n="footer.tagline">Automation Architects for Business Efficiency</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4 data-i18n="footer.links.title">Quick Links</h4>
+                        <ul>
+                            <li><a href="about.html" data-i18n="nav.about">About</a></li>
+                            <li><a href="services.html" data-i18n="nav.services">Services</a></li>
+                            <li><a href="pricing.html" data-i18n="nav.pricing">Pricing</a></li>
+                            <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4 data-i18n="footer.legal.title">Legal</h4>
+                        <ul>
+                            <li><a href="terms-of-service.html" data-i18n="footer.legal.terms">Terms of Service</a></li>
+                            <li><a href="privacy-policy.html" data-i18n="footer.legal.privacy">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-newsletter">
+                    <h4 data-i18n="footer.newsletter.title">Newsletter</h4>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <input type="email" placeholder="Your email" aria-label="Newsletter email" data-i18n-placeholder="footer.newsletter.placeholder">
+                        <button type="submit" aria-label="Subscribe" data-i18n="footer.newsletter.submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright" data-i18n="footer.copyright">© 2024 ArciGy. All rights reserved.</p>
+                <div class="footer-lang">
+                    <button class="lang-btn active" data-lang="en" aria-label="English">EN</button>
+                    <button class="lang-btn" data-lang="sk" aria-label="Slovak">SK</button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Fixed Social Buttons -->
+    <div class="social-buttons" id="socialButtons">
+        <a href="https://instagram.com/arcigy" class="social-btn" aria-label="Instagram" target="_blank" rel="noopener">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" fill="currentColor" />
+            </svg>
+        </a>
+        <a href="https://linkedin.com/company/arcigy" class="social-btn" aria-label="LinkedIn" target="_blank" rel="noopener">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" fill="currentColor"/>
+            </svg>
+        </a>
+        <a href="email-form.html" class="social-btn" aria-label="Email">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill="currentColor"/>
+            </svg>
+        </a>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="chatbot.js"></script>
+    <script src="animations.js"></script>
+    <link rel="stylesheet" href="calendar.css">
+    <script src="calendar.js"></script>
+</body>
+</html>

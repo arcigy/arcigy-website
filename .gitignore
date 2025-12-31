@@ -1,0 +1,22 @@
+# OS generated files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Visual Studio / VS Code
+.vs/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Node.js (if applicable later)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Temporary
+*.tmp
+*.bak

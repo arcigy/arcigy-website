@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - ArciGy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="chatbot.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+</head>
+<body>
+    <canvas id="heroCanvas"></canvas>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo" aria-label="ArciGy Home" style="display: flex; align-items: center; gap: 10px;">
+                <img src="GRADIENT_LOGO ONLY.png" alt="ArciGy Logo" style="height: 32px; width: auto;">
+                <img src="GRADIENT_TEXT ONLY.png" alt="ArciGy" style="height: 24px; width: auto;">
+            </a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link" data-i18n="nav.home">Home</a></li>
+                <li><a href="about.html" class="nav-link" data-i18n="nav.about">About</a></li>
+                <li><a href="services.html" class="nav-link" data-i18n="nav.services">Services</a></li>
+                <li><a href="pricing.html" class="nav-link" data-i18n="nav.pricing">Pricing</a></li>
+                <li><a href="contact.html" class="nav-link active" data-i18n="nav.contact">Contact</a></li>
+            </ul>
+            <div class="nav-lang">
+                <button class="lang-btn active" data-lang="en" aria-label="English">EN</button>
+                <button class="lang-btn" data-lang="sk" aria-label="Slovak">SK</button>
+            </div>
+        </div>
+    </nav>
+    
+    <main class="container page-content">
+        <h1 class="section-title">Terms of Service</h1>
+        <p><strong>Last updated: December 22, 2025</strong></p>
+
+        <p>Please read these Terms of Service ("Terms", "Terms of Service") carefully before using the ArciGy website and its services (the "Service") operated by ArciGy ("us", "we", or "our").</p>
+
+        <h2 class="section-subtitle">1. Acceptance of Terms</h2>
+        <p>By accessing or using the Service, you agree to be bound by these Terms. If you disagree with any part of the terms, then you may not access the Service.</p>
+
+        <h2 class="section-subtitle">2. Use of Service</h2>
+        <p>The Service, including the chatbot and calendar booking system, is provided for the purpose of communicating with ArciGy representatives and scheduling consultations regarding business automation solutions. You agree to use the Service only for lawful purposes.</p>
+        
+        <h2 class="section-subtitle">3. User Conduct</h2>
+        <p>You agree not to use the Service in any way that:</p>
+        <ul>
+            <li>Is illegal, fraudulent, or involves the transmission of any unlawful or harmful material.</li>
+            <li>Involves spamming, phishing, or other disruptive or harmful activities.</li>
+            <li>Infringes on the intellectual property rights of others.</li>
+        </ul>
+
+        <h2 class="section-subtitle">4. Booking Appointments</h2>
+        <p>Our calendar booking system is provided for your convenience. By booking an appointment, you agree that:</p>
+        <ul>
+            <li>You have provided accurate and current contact information.</li>
+            <li>You agree to the processing of your personal data as outlined in our <a href="privacy-policy.html" target="_blank">Privacy Policy</a>.</li>
+            <li>The booking is subject to confirmation and cancellation by ArciGy at any time.</li>
+        </ul>
+
+        <h2 class="section-subtitle">5. Limitation of Liability</h2>
+        <p>In no event shall ArciGy, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from (i) your access to or use of or inability to access or use the Service; (ii) any unauthorized access to or use of our servers and/or any personal information stored therein.</p>
+
+        <h2 class="section-subtitle">6. Governing Law</h2>
+        <p>These Terms shall be governed and construed in accordance with the laws of [Your Jurisdiction], without regard to its conflict of law provisions.</p>
+
+        <h2 class="section-subtitle">7. Changes to Terms</h2>
+        <p>We reserve the right, at our sole discretion, to modify or replace these Terms at any time. We will try to provide at least 30 days notice prior to any new terms taking effect.</p>
+    </main>
+    
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3 class="footer-logo">ArciGy</h3>
+                    <p class="footer-tagline" data-i18n="footer.tagline">Automation Architects for Business Efficiency</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4 data-i18n="footer.links.title">Quick Links</h4>
+                        <ul>
+                            <li><a href="about.html" data-i18n="nav.about">About</a></li>
+                            <li><a href="services.html" data-i18n="nav.services">Services</a></li>
+                            <li><a href="pricing.html" data-i18n="nav.pricing">Pricing</a></li>
+                            <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4 data-i18n="footer.legal.title">Legal</h4>
+                        <ul>
+                            <li><a href="terms-of-service.html" data-i18n="footer.legal.terms">Terms of Service</a></li>
+                            <li><a href="privacy-policy.html" data-i18n="footer.legal.privacy">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-newsletter">
+                    <h4 data-i18n="footer.newsletter.title">Newsletter</h4>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <input type="email" placeholder="Your email" aria-label="Newsletter email" data-i18n-placeholder="footer.newsletter.placeholder">
+                        <button type="submit" aria-label="Subscribe" data-i18n="footer.newsletter.submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright" data-i18n="footer.copyright">© 2024 ArciGy. All rights reserved.</p>
+                <div class="footer-lang">
+                    <button class="lang-btn active" data-lang="en" aria-label="English">EN</button>
+                    <button class="lang-btn" data-lang="sk" aria-label="Slovak">SK</button>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+    <script src="chatbot.js"></script>
+    <script src="animations.js"></script>
+</body>
+</html>

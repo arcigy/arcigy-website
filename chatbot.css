@@ -1,0 +1,512 @@
+:root {
+    --bg-primary: #050812;
+    --surface: rgba(255, 255, 255, 0.04);
+    --accent-gradient: linear-gradient(90deg, #6365e8 0%, #c751e7 100%);
+    --accent-solid: #6365e8;
+    --text-primary: #E6EDF3;
+    --text-muted: #9CA3AF;
+    --font-heading: 'Manrope', system-ui, -apple-system, sans-serif;
+    --font-body: 'Sora', system-ui, -apple-system, sans-serif;
+    --card-radius: 24px;
+    --btn-radius: 12px;
+}
+
+.chat-bubble {
+    position: fixed;
+    z-index: 9999;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: var(--surface);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease-out;
+}
+
+.chat-bubble:hover {
+    transform: scale(1.1);
+    border-color: var(--accent-solid);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes slideInUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideOutDown {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(20px); opacity: 0; }
+}
+
+.chat-window {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    bottom: 20px;
+    right: 20px;
+    width: 450px;
+    height: 600px;
+    background: var(--bg-primary);
+    border-radius: var(--card-radius);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    flex-direction: column;
+    height: 600px; /* Set a fixed height */
+    min-height: 400px;
+    max-height: 90vh; /* Set a max-height relative to viewport */
+}
+
+.chat-window.opening {
+    animation: slideInUp 0.3s ease-out forwards;
+}
+
+.chat-window.closing {
+    animation: slideOutDown 0.3s ease-out forwards;
+}
+
+.chat-bubble.opening {
+    animation: fadeIn 0.3s ease-out forwards;
+}
+
+.chat-bubble.closing {
+    animation: fadeOut 0.3s ease-out forwards;
+}
+
+.chat-header {
+    background: var(--surface);
+    color: var(--text-primary);
+    padding: 15px 20px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: grab;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.chat-header:active {
+    cursor: grabbing;
+}
+
+#close-chat {
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 24px;
+    transition: color 0.2s;
+}
+
+#close-chat:hover {
+    color: var(--text-primary);
+}
+
+.chat-messages {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Custom Scrollbar Styling */
+.chat-messages::-webkit-scrollbar {
+    width: 12px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background: rgb(3, 2, 18);
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #6365e8 0%, #c751e7 100%);
+    border-radius: 10px;
+}
+
+
+
+.message {
+    padding: 12px 18px;
+    border-radius: 18px;
+    max-width: 85%;
+    word-wrap: break-word;
+    line-height: 1.5;
+    font-family: var(--font-body);
+}
+
+.message.user {
+    background: var(--accent-gradient);
+    color: var(--bg-primary);
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+    font-weight: 500;
+}
+
+.message.bot {
+    background: var(--surface);
+    color: var(--text-primary);
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+}
+
+.chat-input-container {
+    padding: 10px 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+}
+
+#chat-input {
+    flex-grow: 1;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--btn-radius);
+    padding: 12px 18px;
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+    resize: none;
+    min-height: 48px;
+    max-height: 120px; /* 4 rows approx */
+}
+
+#chat-input:focus {
+    border-color: var(--accent-solid);
+    box-shadow: 0 0 12px rgba(122, 241, 255, 0.12);
+}
+
+#send-btn {
+    background: var(--accent-gradient);
+    border: none;
+    color: var(--bg-primary);
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    margin-left: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.15s ease-out;
+    flex-shrink: 0;
+}
+
+#send-btn:hover {
+    transform: scale(1.08);
+}
+
+#send-btn:active {
+    transform: scale(0.95);
+}
+
+#send-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--bg-primary);
+}
+
+/* 
+   CALENDAR COMPONENT INTEGRATION
+   Final implementation uses site's existing CSS variables.
+*/
+
+#calendar-container {
+    display: none; /* Initially hidden */
+    width: 100%;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    font-family: var(--font-body);
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    animation: fadeIn 0.3s ease-out;
+}
+
+#calendar-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    padding: 8px 0;
+    background-color: transparent; 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+}
+
+.calendar-nav-btn {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.calendar-nav-btn:hover {
+    background: var(--surface);
+    color: var(--accent-solid);
+}
+
+/* Day Grid Layout */
+#calendar-day-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7 columns for days */
+    gap: 5px;
+    text-align: center;
+}
+
+.day-header {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    padding-bottom: 5px;
+}
+
+.day-slot {
+    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    border: 1px solid transparent;
+}
+
+.day-slot.available {
+    background: rgba(122, 241, 255, 0.1);
+    color: var(--text-primary);
+    cursor: pointer;
+    border: 1px solid rgba(122, 241, 255, 0.3);
+    transition: all 0.2s;
+}
+
+.day-slot.available:hover {
+    background: var(--accent-solid);
+    color: var(--bg-primary);
+    transform: scale(1.05);
+}
+
+.day-slot.unavailable {
+    color: rgba(255, 255, 255, 0.2);
+    cursor: default;
+}
+
+.day-slot.empty-day {
+    pointer-events: none;
+}
+
+/* Modal Styling */
+.chatbot-modal {
+    position: absolute; /* Relative to chat window if possible, or fixed to viewport */
+    z-index: 1000; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgba(0,0,0,0.6); 
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--card-radius); /* Matches chat window radius */
+    animation: fadeIn 0.2s ease-out;
+}
+
+.modal-content {
+    background-color: var(--bg-primary); 
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 85%; 
+    max-height: 80%;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.modal-header {
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--surface);
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-family: var(--font-heading);
+    color: var(--text-primary);
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.5rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 5px;
+}
+
+.close-btn:hover {
+    color: var(--text-primary);
+}
+
+.time-slots-list {
+    padding: 15px;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    gap: 5px;
+}
+
+.slot-button {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    padding: 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    transition: all 0.2s;
+}
+
+.slot-button:hover {
+    background: rgba(122, 241, 255, 0.1);
+    border-color: var(--accent-solid);
+    color: var(--accent-solid);
+}
+
+/* --- In-Page Calendar Widget --- */
+#calendar-widget-container {
+    position: fixed;
+    bottom: 100px;
+    left: 20px; /* Default for desktop */
+    width: 300px;
+    height: 500px;
+    background: rgba(5, 8, 12, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: var(--card-radius);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    z-index: 9998; /* Just below the chat window */
+    padding: 20px;
+    box-sizing: border-box;
+    display: block; /* It will be toggled by JS */
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    cursor: grab; /* For drag-and-drop */
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    font-family: var(--font-heading);
+    font-weight: 600;
+}
+
+#close-calendar {
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 24px;
+    transition: color 0.2s;
+}
+
+#close-calendar:hover {
+    color: var(--text-primary);
+}
+
+.calendar-roller-btn {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+.calendar-roller-btn:hover {
+    background-color: var(--accent-solid);
+    color: var(--bg-primary);
+    border-color: var(--accent-solid);
+}
+
+.calendar-nav-label {
+    min-width: 80px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.day-slot.past-day {
+    color: rgba(255, 255, 255, 0.15);
+    background: transparent;
+    pointer-events: none;
+}
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 1000px) {
+    #calendar-widget-container {
+        /* On smaller screens, stack the calendar on top of the chat window */
+        bottom: 640px; /* Adjust as needed */
+        right: 20px;
+        width: calc(100% - 40px);
+        max-width: 450px;
+    }
+
+    .chat-window {
+        /* Ensure chat window doesn't overlap with the calendar */
+        bottom: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .chat-window, #calendar-widget-container {
+        width: calc(100% - 20px);
+        right: 10px;
+        bottom: 10px;
+    }
+     #calendar-widget-container {
+        bottom: 620px; /* Adjust for smaller screens */
+     }
+}
