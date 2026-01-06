@@ -1,5 +1,5 @@
 // Calendar Component Logic
-(function() {
+(function () {
     const CalendarWidget = {
         state: {
             isOpen: false,
@@ -12,8 +12,8 @@
             currentLang: localStorage.getItem('language') || 'en'
         },
 
-        // Webhook URL for fetching availability
-        WEBHOOK_URL: 'https://n8n.srv1118451.hstgr.cloud/webhook/calendar-availability-check',
+        WEBHOOK_URL: 'https://my-website-backend.railway.internal/webhook/calendar-availability-check',
+        BOOKING_URL: 'https://my-website-backend.railway.internal/webhook/calendar-initiate-book',
 
         translations: {
             en: {
@@ -56,12 +56,12 @@
             }
         },
 
-        init: function() {
+        init: function () {
             this.injectHTML();
             this.cacheDOM();
             this.bindEvents();
             this.updateLanguage(this.state.currentLang); // Initial render happens here
-            
+
             // Check session storage for state
             const savedState = sessionStorage.getItem('calendarState');
             if (savedState) {
@@ -73,7 +73,7 @@
             }
         },
 
-        injectHTML: function() {
+        injectHTML: function () {
             const container = document.createElement('div');
             container.id = 'calendar-root';
             // Inner HTML structure is injected initially, text content updated via updateLanguage
@@ -169,7 +169,7 @@
             document.body.appendChild(container);
         },
 
-        cacheDOM: function() {
+        cacheDOM: function () {
             this.dom = {
                 container: document.getElementById('calendar-widget-container'),
                 minimizedContent: document.querySelector('.minimized-content'),
@@ -193,11 +193,11 @@
             };
         },
 
-        bindEvents: function() {
+        bindEvents: function () {
             this.dom.closeBtn.addEventListener('click', () => this.close());
             this.dom.minimizeBtn.addEventListener('click', () => this.minimize());
             this.dom.minimizedContent.addEventListener('click', () => this.maximize());
-            
+
             this.dom.prevYear.addEventListener('click', () => {
                 this.state.currentDate.setFullYear(this.state.currentDate.getFullYear() - 1);
                 this.render();
@@ -213,7 +213,7 @@
 
             this.dom.confirmBtn.addEventListener('click', async () => {
                 if (!this.state.selectedDate || !this.state.selectedTimeSlot) return;
-                
+
                 const t = this.translations[this.state.currentLang];
 
                 if (!this.dom.termsCheck.checked || !this.dom.privacyCheck.checked) {
@@ -222,49 +222,68 @@
                 }
 
                 const conversationId = sessionStorage.getItem('conversationId');
+                const userEmail = sessionStorage.getItem('userEmail') || localStorage.getItem('userEmail');
+                const userName = sessionStorage.getItem('userName') || localStorage.getItem('userName');
+                const userPhone = sessionStorage.getItem('userPhone') || localStorage.getItem('userPhone');
+
                 this.dom.confirmBtn.disabled = true;
                 this.dom.confirmBtn.textContent = t.processing;
-                
+
                 try {
-                    const response = await fetch('https://n8n.srv1118451.hstgr.cloud/webhook/b9a79630-4e84-4482-ad9e-10e266161669', {
+                    const response = await fetch(this.BOOKING_URL, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
                             bookingTime: this.state.selectedTimeSlotFullISO,
+                            email: userEmail || "null",
+                            name: userName || "Client",
+                            phone: userPhone || "null",
+                            lang: this.state.currentLang,
                             conversationID: conversationId
                         })
                     });
-                    
+
                     if (response.ok) {
-                        const successMsg = t.alertSuccess
-                            .replace('{date}', this.state.selectedDate)
-                            .replace('{time}', this.state.selectedTimeSlot);
-                        alert(successMsg);
+                        const data = await response.json();
+                        if (data.status === "error") {
+                            alert(this.state.currentLang === 'sk' ? "Chyba pri odosielaní emailu. Skontrolujte nastavenia." : "Error sending email. Please check settings.");
+                            this.updateConfirmBtn();
+                            return;
+                        }
+
+                        // Notify chatbot to post confirmation message
+                        window.dispatchEvent(new CustomEvent('calendar-book-initiated', {
+                            detail: {
+                                name: userName || "Client",
+                                time: this.state.selectedTimeSlot,
+                                date: this.state.selectedDate
+                            }
+                        }));
                         this.close();
                     } else {
                         throw new Error('Booking failed');
                     }
                 } catch (e) {
-                     console.error(e);
-                     alert(t.alertFail);
-                     this.updateConfirmBtn(); 
+                    console.error(e);
+                    alert(t.alertFail);
+                    this.updateConfirmBtn();
                 }
             });
         },
 
-        updateLanguage: function(lang) {
+        updateLanguage: function (lang) {
             this.state.currentLang = lang || 'en';
             const t = this.translations[this.state.currentLang];
-            
+
             // Update static texts
             this.dom.calTitle.textContent = t.scheduler;
             this.dom.labelTerms.innerHTML = t.termsText;
             this.dom.labelPrivacy.innerHTML = t.privacyText;
-            
+
             // Re-render components dependent on language
             this.render();
             this.updateConfirmBtn();
-            
+
             // If nothing selected, reset prompt
             if (!this.state.selectedDate) {
                 this.dom.dateDisplay.textContent = t.selectDate;
@@ -273,17 +292,17 @@
             } else {
                 // Refresh date display in new language
                 const [y, m, d] = this.state.selectedDate.split('-').map(Number);
-                const dateObj = new Date(y, m-1, d);
+                const dateObj = new Date(y, m - 1, d);
                 // Use built-in locale logic for full dates, or manual if preferred. 
                 // Using browser's toLocaleDateString with explicit locale code
                 const localeCode = this.state.currentLang === 'sk' ? 'sk-SK' : 'en-US';
-                
+
                 this.dom.dateDisplay.textContent = dateObj.toLocaleDateString(localeCode, { month: 'short', day: 'numeric' });
                 this.dom.dayDisplay.textContent = dateObj.toLocaleDateString(localeCode, { weekday: 'long' });
             }
         },
 
-        open: function() {
+        open: function () {
             this.state.isOpen = true;
             this.state.isMinimized = false;
             this.dom.container.classList.add('active');
@@ -292,34 +311,34 @@
             this.fetchBookings();
         },
 
-        close: function() {
+        close: function () {
             this.state.isOpen = false;
             this.state.isMinimized = false;
             this.dom.container.classList.remove('active');
             this.saveState();
         },
 
-        minimize: function() {
+        minimize: function () {
             this.state.isMinimized = true;
             this.dom.container.classList.add('minimized');
             this.saveState();
         },
 
-        maximize: function() {
+        maximize: function () {
             this.state.isMinimized = false;
             this.dom.container.classList.remove('minimized');
             this.saveState();
         },
 
-        saveState: function() {
+        saveState: function () {
             sessionStorage.setItem('calendarState', JSON.stringify({
                 isOpen: this.state.isOpen,
                 isMinimized: this.state.isMinimized
             }));
         },
 
-        fetchBookings: async function() {
-             try {
+        fetchBookings: async function () {
+            try {
                 const response = await fetch(this.WEBHOOK_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -330,9 +349,9 @@
                 if (data && data.length > 0 && data[0].bookings_summary) {
                     this.state.bookedSlots = this.parseBookingSummary(data[0].bookings_summary);
                     this.renderDays();
-                    if(this.state.selectedDate) {
+                    if (this.state.selectedDate) {
                         const [y, m, d] = this.state.selectedDate.split('-').map(Number);
-                        const dateObj = new Date(y, m-1, d);
+                        const dateObj = new Date(y, m - 1, d);
                         this.renderTimeSlots(dateObj);
                     }
                 }
@@ -342,7 +361,7 @@
             }
         },
 
-        parseBookingSummary: function(summary) {
+        parseBookingSummary: function (summary) {
             const regex = /\(([^)]+)\), \(([^)]+)\)/;
             if (!Array.isArray(summary)) return [];
             return summary.map(item => {
@@ -357,10 +376,10 @@
             }).filter(item => item !== null);
         },
 
-        render: function() {
+        render: function () {
             const t = this.translations[this.state.currentLang];
             this.dom.yearDisplay.textContent = this.state.currentDate.getFullYear();
-            
+
             // Render Months
             this.dom.monthList.innerHTML = '';
             t.monthsShort.forEach((month, index) => {
@@ -385,17 +404,17 @@
             this.renderDays();
         },
 
-        renderDays: function() {
+        renderDays: function () {
             this.dom.grid.innerHTML = '';
             const year = this.state.currentDate.getFullYear();
             const month = this.state.currentDate.getMonth();
-            
+
             // Adjust start day based on locale if needed, but standardizing on Mon-Sun for now to match header array
             // JS getDay(): 0=Sun, 1=Mon. We want Mon=0 for our grid if header starts with Mon.
             // Header is Mon...Sun.
-            const firstDay = new Date(year, month, 1).getDay(); 
+            const firstDay = new Date(year, month, 1).getDay();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
-            const startOffset = (firstDay === 0 ? 6 : firstDay - 1); 
+            const startOffset = (firstDay === 0 ? 6 : firstDay - 1);
 
             for (let i = 0; i < startOffset; i++) {
                 const cell = document.createElement('div');
@@ -404,24 +423,24 @@
             }
 
             const today = new Date();
-            today.setHours(0,0,0,0);
-            
+            today.setHours(0, 0, 0, 0);
+
             for (let day = 1; day <= daysInMonth; day++) {
                 const dateObj = new Date(year, month, day);
                 const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-                const dayOfWeek = dateObj.getDay(); 
-                
+                const dayOfWeek = dateObj.getDay();
+
                 const isToday = day === today.getDate() && month === today.getMonth() && year === today.getFullYear();
                 const isSelected = this.state.selectedDate === dateStr;
                 const isPast = dateObj < today;
                 const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
-                
+
                 const isDisabled = isPast || isWeekend;
 
                 const cell = document.createElement('div');
                 cell.className = `cal-day ${isToday ? 'today' : ''} ${isSelected ? 'selected' : ''} ${isDisabled ? 'disabled' : ''}`;
                 cell.innerHTML = `<span>${day}</span>`;
-                
+
                 if (!isDisabled) {
                     cell.onclick = () => this.selectDate(dateStr, day, month, year);
                 }
@@ -429,29 +448,29 @@
             }
         },
 
-        selectDate: function(dateStr, day, month, year) {
+        selectDate: function (dateStr, day, month, year) {
             this.state.selectedDate = dateStr;
             this.state.selectedTimeSlot = null;
             this.render(); // Re-render highlights
-            
+
             const dateObj = new Date(year, month, day);
             const localeCode = this.state.currentLang === 'sk' ? 'sk-SK' : 'en-US';
             this.dom.dateDisplay.textContent = dateObj.toLocaleDateString(localeCode, { month: 'short', day: 'numeric' });
             this.dom.dayDisplay.textContent = dateObj.toLocaleDateString(localeCode, { weekday: 'long' });
-            
+
             this.renderTimeSlots(dateObj);
             this.updateConfirmBtn();
         },
 
-        renderTimeSlots: function(dateObj) {
+        renderTimeSlots: function (dateObj) {
             this.dom.slotsList.innerHTML = '';
             const t = this.translations[this.state.currentLang];
-            
+
             const slots = [];
             // 9-11
-            for (let h = 9; h < 11; h++) { slots.push({h, m: 0}); slots.push({h, m: 30}); }
+            for (let h = 9; h < 11; h++) { slots.push({ h, m: 0 }); slots.push({ h, m: 30 }); }
             // 14-16
-            for (let h = 14; h < 16; h++) { slots.push({h, m: 0}); slots.push({h, m: 30}); }
+            for (let h = 14; h < 16; h++) { slots.push({ h, m: 0 }); slots.push({ h, m: 30 }); }
 
             let hasAvailable = false;
 
@@ -459,14 +478,14 @@
                 const timeStr = `${String(slot.h).padStart(2, '0')}:${String(slot.m).padStart(2, '0')}`;
                 const slotDate = new Date(dateObj);
                 slotDate.setHours(slot.h, slot.m, 0, 0);
-                
-                const isBooked = this.state.bookedSlots.some(booked => 
+
+                const isBooked = this.state.bookedSlots.some(booked =>
                     slotDate >= booked.start && slotDate < booked.end
                 );
 
                 const el = document.createElement('div');
                 el.className = `time-slot-item ${isBooked ? 'booked' : ''}`;
-                
+
                 if (isBooked) {
                     el.textContent = timeStr;
                     el.title = "Booked";
@@ -489,10 +508,10 @@
             }
         },
 
-        updateConfirmBtn: function() {
+        updateConfirmBtn: function () {
             const t = this.translations[this.state.currentLang];
             const termsAccepted = this.dom.termsCheck.checked && this.dom.privacyCheck.checked;
-            
+
             if (this.state.selectedDate && this.state.selectedTimeSlot && termsAccepted) {
                 this.dom.confirmBtn.disabled = false;
                 this.dom.confirmBtn.textContent = `${t.confirmBooking} (${this.state.selectedTimeSlot})`;
@@ -501,7 +520,7 @@
                 if (!this.state.selectedTimeSlot) {
                     this.dom.confirmBtn.textContent = t.selectTime;
                 } else if (!termsAccepted) {
-                     this.dom.confirmBtn.textContent = t.acceptTerms;
+                    this.dom.confirmBtn.textContent = t.acceptTerms;
                 } else {
                     this.dom.confirmBtn.textContent = t.confirmBooking;
                 }
@@ -514,7 +533,7 @@
     } else {
         CalendarWidget.init();
     }
-    
+
     window.arcigyCalendar = CalendarWidget;
 
 })();

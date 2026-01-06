@@ -173,7 +173,7 @@ const translations = {
                 desc: "Ľudská chyba pri kontrolách kvality vedie k nekonzistenciám a nespokojnosti zákazníkov."
             }
         },
-        
+
         process: {
             title: "Náš Proces",
             step1: {
@@ -547,7 +547,7 @@ translations.en.contactpage = {
 let currentLang = localStorage.getItem('language') || 'en';
 
 // Initialize
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     initIntroOverlay();
     initLanguage();
     initNavigation();
@@ -640,38 +640,119 @@ document.addEventListener('DOMContentLoaded', function() {
     window.__globalParticlesActive = true; // Prevent double initialization
 } */
 
+// Subtle particle network in hero
+/* function initHeroParticles() {
+    if (window.__globalParticlesActive) return; // avoid double layers
+    const canvas = document.getElementById('heroCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let width, height, particles;
+    const DPR = Math.min(window.devicePixelRatio || 1, 2);
+    const colors = ['#7AF1FF', '#8B63FF', '#FF6FD8'];
+    const PCOUNT = 48;
+    function resize() {
+        width = canvas.clientWidth;
+        height = canvas.clientHeight;
+        canvas.width = Math.floor(width * DPR);
+        canvas.height = Math.floor(height * DPR);
+        ctx.scale(DPR, DPR);
+    }
+    function init() {
+        particles = Array.from({ length: PCOUNT }).map(() => ({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            vx: (Math.random() - 0.5) * 0.3,
+            vy: (Math.random() - 0.5) * 0.3,
+            r: Math.random() * 2 + 0.6,
+            c: colors[Math.floor(Math.random() * colors.length)]
+        }));
+    }
+    function step() {
+        ctx.clearRect(0, 0, width, height);
+        // draw connections
+        for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+            for (let j = i + 1; j < particles.length; j++) {
+                const q = particles[j];
+                const dx = p.x - q.x;
+                const dy = p.y - q.y;
+                const d = Math.hypot(dx, dy);
+                if (d < 120) {
+                    const alpha = 1 - d / 120;
+                    ctx.strokeStyle = `rgba(138, 99, 255, ${alpha * 0.25})`;
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(q.x, q.y);
+                    ctx.stroke();
+                }
+            }
+        }
+        // draw particles
+        for (const p of particles) {
+            ctx.fillStyle = p.c;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fill();
+            p.x += p.vx;
+            p.y += p.vy;
+            if (p.x < -20) p.x = width + 20;
+            if (p.x > width + 20) p.x = -20;
+            if (p.y < -20) p.y = height + 20;
+            if (p.y > height + 20) p.y = -20;
+        }
+        requestAnimationFrame(step);
+    }
+    resize();
+    init();
+    window.addEventListener('resize', () => {
+        resize();
+        init();
+    });
+    window.__globalParticlesActive = true; // Prevent double initialization
+    
+    // Sync language with SessionStorage for chatbot consistency
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const lang = btn.getAttribute('data-lang');
+            sessionStorage.setItem('chatLang', lang);
+        });
+    });
+} */
+
 // Language Toggle
 function initLanguage() {
     const langButtons = document.querySelectorAll('.lang-btn');
-    
+
     langButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             const lang = btn.getAttribute('data-lang');
             setLanguage(lang);
         });
     });
-    
+
     setLanguage(currentLang);
 }
 
 function setLanguage(lang) {
     currentLang = lang;
     localStorage.setItem('language', lang);
+    sessionStorage.setItem('chatLang', lang);
     // Update active button
     document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
     });
-    
+
     // Update all translatable elements
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         const keys = key.split('.');
         let value = translations[lang];
-        
+
         for (let k of keys) {
             value = value?.[k];
         }
-        
+
         if (value) {
             if (el.tagName === 'INPUT' && el.hasAttribute('placeholder')) {
                 el.placeholder = value;
@@ -680,7 +761,7 @@ function setLanguage(lang) {
             }
         }
     });
-    
+
     // Update meta title
     if (lang === 'sk') {
         document.title = 'ArciGy — Automatizácia Procesov | Architekti Efektivity';
@@ -700,14 +781,14 @@ function initNavigation() {
     const navToggle = document.getElementById('navToggle');
     const navMenu = document.getElementById('navMenu');
     const navLinks = document.querySelectorAll('.nav-link');
-    
+
     if (navToggle && navMenu) {
         navToggle.addEventListener('click', () => {
             navMenu.classList.toggle('active');
             navToggle.classList.toggle('active');
         });
     }
-    
+
     // Close menu on link click (mobile)
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
@@ -717,7 +798,7 @@ function initNavigation() {
             }
         });
     });
-    
+
     // Sticky navbar
     const navbar = document.getElementById('navbar');
     if (navbar) {
@@ -737,7 +818,7 @@ function initAnimations() {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     };
-    
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -748,12 +829,12 @@ function initAnimations() {
             }
         });
     }, observerOptions);
-    
+
     // Observe all animatable elements
     document.querySelectorAll('.problem-card, .service-item, .process-step, .pricing-card, .testimonial-card, .value-card, .team-card, .blog-card, .position-card, .step-card').forEach(el => {
         observer.observe(el);
     });
-    
+
     // Removed scroll-based parallax for hero shapes (to keep visuals static on scroll)
 }
 
@@ -926,18 +1007,18 @@ function initForms() {
     const contactForm = document.getElementById('contactForm');
     const newsletterForm = document.getElementById('newsletterForm');
     const emailForm = document.getElementById('emailForm');
-    
+
     if (contactForm) {
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            
+
             const formData = new FormData(contactForm);
             const data = Object.fromEntries(formData.entries());
-            
+
             // Add timezone and language info
             try {
                 data.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-            } catch(e) {
+            } catch (e) {
                 data.timezone = 'Europe/Bratislava';
             }
             data.language = currentLang;
@@ -948,21 +1029,21 @@ function initForms() {
             fetch(webhookUrl, {
                 method: 'GET'
             })
-            .then(response => {
-                if (response.ok) {
-                    alert(currentLang === 'sk' ? 'Ďakujeme za váš záujem! Čoskoro vás budeme kontaktovať.' : 'Thank you for your interest! We will contact you soon.');
-                    contactForm.reset();
-                } else {
-                    throw new Error('Network response was not ok');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert(currentLang === 'sk' ? 'Došlo k chybe. Skúste to prosím neskôr.' : 'An error occurred. Please try again later.');
-            });
+                .then(response => {
+                    if (response.ok) {
+                        alert(currentLang === 'sk' ? 'Ďakujeme za váš záujem! Čoskoro vás budeme kontaktovať.' : 'Thank you for your interest! We will contact you soon.');
+                        contactForm.reset();
+                    } else {
+                        throw new Error('Network response was not ok');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert(currentLang === 'sk' ? 'Došlo k chybe. Skúste to prosím neskôr.' : 'An error occurred. Please try again later.');
+                });
         });
     }
-    
+
     if (newsletterForm) {
         newsletterForm.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -972,18 +1053,18 @@ function initForms() {
             newsletterForm.reset();
         });
     }
-    
+
     if (emailForm) {
         emailForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            
+
             const formData = new FormData(emailForm);
             const data = Object.fromEntries(formData.entries());
-            
+
             // Add timezone and language info
             try {
                 data.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-            } catch(e) {
+            } catch (e) {
                 data.timezone = 'Europe/Bratislava';
             }
             data.language = currentLang;
@@ -994,18 +1075,18 @@ function initForms() {
             fetch(webhookUrl, {
                 method: 'GET'
             })
-            .then(response => {
-                if (response.ok) {
-                    alert(currentLang === 'sk' ? 'Ďakujeme za váš email! Čoskoro vás budeme kontaktovať.' : 'Thank you for your email! We will contact you soon.');
-                    emailForm.reset();
-                } else {
-                    throw new Error('Network response was not ok');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert(currentLang === 'sk' ? 'Došlo k chybe. Skúste to prosím neskôr.' : 'An error occurred. Please try again later.');
-            });
+                .then(response => {
+                    if (response.ok) {
+                        alert(currentLang === 'sk' ? 'Ďakujeme za váš email! Čoskoro vás budeme kontaktovať.' : 'Thank you for your email! We will contact you soon.');
+                        emailForm.reset();
+                    } else {
+                        throw new Error('Network response was not ok');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert(currentLang === 'sk' ? 'Došlo k chybe. Skúste to prosím neskôr.' : 'An error occurred. Please try again later.');
+                });
         });
     }
 }
@@ -1047,9 +1128,9 @@ function initIntroOverlay() {
     setTimeout(() => {
         const textPaths = overlay.querySelectorAll('.path-text');
         textPaths.forEach((path, index) => {
-             // Stagger slightly for effect if desired, but request says "Target all elements... Fade them in"
-             // We'll add the class directly.
-             path.classList.add('anim-text');
+            // Stagger slightly for effect if desired, but request says "Target all elements... Fade them in"
+            // We'll add the class directly.
+            path.classList.add('anim-text');
         });
     }, 200);
 
@@ -1075,7 +1156,7 @@ function initIntroOverlay() {
     setTimeout(() => {
         overlay.classList.add('fade-out');
         document.body.style.overflow = ''; // Unlock scroll
-        
+
         // Mark session
         sessionStorage.setItem('introShown', 'true');
 

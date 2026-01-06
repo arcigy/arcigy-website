@@ -35,24 +35,144 @@
     border-color: var(--accent-solid);
 }
 
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 20px;
+    height: 20px;
+    background: var(--accent-gradient);
+    border-radius: 50%;
+    border: 2px solid var(--bg-primary);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    font-weight: bold;
+    color: var(--bg-primary);
+    z-index: 10000;
+    box-shadow: 0 0 10px var(--accent-solid);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 5px var(--accent-solid);
+    }
+
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 0 15px var(--accent-solid);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 5px var(--accent-solid);
+    }
+}
+
+.chat-notification-bubble {
+    position: fixed;
+    right: 90px;
+    bottom: 30px;
+    background: var(--surface);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 15px 22px;
+    border-radius: 20px;
+    border-bottom-right-radius: 4px;
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    max-width: 280px;
+    word-wrap: break-word;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    display: none;
+    opacity: 0;
+    transform: translateX(20px);
+    z-index: 9998;
+    pointer-events: none;
+    visibility: hidden;
+}
+
+.chat-notification-bubble.active {
+    visibility: visible;
+    pointer-events: auto;
+    animation: bubbleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.chat-notification-bubble.hiding {
+    animation: bubbleOut 0.4s ease-in forwards;
+}
+
+@keyframes bubbleIn {
+    0% {
+        transform: translateX(40px) scale(0.8);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes bubbleOut {
+    0% {
+        transform: translateX(0) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(20px) scale(0.9);
+        opacity: 0;
+    }
+}
+
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes fadeOut {
-    from { opacity: 1; }
-    to { opacity: 0; }
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
 }
 
 @keyframes slideInUp {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 @keyframes slideOutDown {
-    from { transform: translateY(0); opacity: 1; }
-    to { transform: translateY(20px); opacity: 0; }
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(20px);
+        opacity: 0;
+    }
 }
 
 .chat-window {
@@ -68,9 +188,11 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     flex-direction: column;
-    height: 600px; /* Set a fixed height */
+    height: 600px;
+    /* Set a fixed height */
     min-height: 400px;
-    max-height: 90vh; /* Set a max-height relative to viewport */
+    max-height: 90vh;
+    /* Set a max-height relative to viewport */
 }
 
 .chat-window.opening {
@@ -188,7 +310,8 @@
     transition: all 0.3s ease;
     resize: none;
     min-height: 48px;
-    max-height: 120px; /* 4 rows approx */
+    max-height: 120px;
+    /* 4 rows approx */
 }
 
 #chat-input:focus {
@@ -232,7 +355,8 @@
 */
 
 #calendar-container {
-    display: none; /* Initially hidden */
+    display: none;
+    /* Initially hidden */
     width: 100%;
     padding: 10px 20px;
     box-sizing: border-box;
@@ -250,8 +374,8 @@
     gap: 10px;
     margin-bottom: 15px;
     padding: 8px 0;
-    background-color: transparent; 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+    background-color: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .calendar-nav-btn {
@@ -275,7 +399,8 @@
 /* Day Grid Layout */
 #calendar-day-grid {
     display: grid;
-    grid-template-columns: repeat(7, 1fr); /* 7 columns for days */
+    grid-template-columns: repeat(7, 1fr);
+    /* 7 columns for days */
     gap: 5px;
     text-align: center;
 }
@@ -322,26 +447,28 @@
 
 /* Modal Styling */
 .chatbot-modal {
-    position: absolute; /* Relative to chat window if possible, or fixed to viewport */
-    z-index: 1000; 
+    position: absolute;
+    /* Relative to chat window if possible, or fixed to viewport */
+    z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background-color: rgba(0,0,0,0.6); 
+    background-color: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(4px);
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: var(--card-radius); /* Matches chat window radius */
+    border-radius: var(--card-radius);
+    /* Matches chat window radius */
     animation: fadeIn 0.2s ease-out;
 }
 
 .modal-content {
-    background-color: var(--bg-primary); 
+    background-color: var(--bg-primary);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    width: 85%; 
+    width: 85%;
     max-height: 80%;
     border-radius: 16px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
@@ -410,7 +537,8 @@
 #calendar-widget-container {
     position: fixed;
     bottom: 100px;
-    left: 20px; /* Default for desktop */
+    left: 20px;
+    /* Default for desktop */
     width: 300px;
     height: 500px;
     background: rgba(5, 8, 12, 0.8);
@@ -419,10 +547,12 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     overflow: hidden;
-    z-index: 9998; /* Just below the chat window */
+    z-index: 9998;
+    /* Just below the chat window */
     padding: 20px;
     box-sizing: border-box;
-    display: block; /* It will be toggled by JS */
+    display: block;
+    /* It will be toggled by JS */
 }
 
 .calendar-header {
@@ -430,7 +560,8 @@
     justify-content: space-between;
     align-items: center;
     padding-bottom: 15px;
-    cursor: grab; /* For drag-and-drop */
+    cursor: grab;
+    /* For drag-and-drop */
     margin-bottom: 15px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     color: var(--text-primary);
@@ -488,7 +619,8 @@
 @media (max-width: 1000px) {
     #calendar-widget-container {
         /* On smaller screens, stack the calendar on top of the chat window */
-        bottom: 640px; /* Adjust as needed */
+        bottom: 640px;
+        /* Adjust as needed */
         right: 20px;
         width: calc(100% - 40px);
         max-width: 450px;
@@ -501,12 +633,16 @@
 }
 
 @media (max-width: 480px) {
-    .chat-window, #calendar-widget-container {
+
+    .chat-window,
+    #calendar-widget-container {
         width: calc(100% - 20px);
         right: 10px;
         bottom: 10px;
     }
-     #calendar-widget-container {
-        bottom: 620px; /* Adjust for smaller screens */
-     }
+
+    #calendar-widget-container {
+        bottom: 620px;
+        /* Adjust for smaller screens */
+    }
 }
