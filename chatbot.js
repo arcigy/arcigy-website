@@ -12,8 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let CURRENT_VIEW_YEAR;
     let CURRENT_VIEW_MONTH; // 1-12
-    const N8N_WEBHOOK_URL = 'https://my-website-backend.railway.internal/webhook/chat'; // New Railway chat webhook
-    const N8N_CALENDAR_WEBHOOK_URL = 'https://my-website-backend.railway.internal/webhook/calendar-availability-check'; // New Railway calendar webhook
+    const N8N_WEBHOOK_URL = 'https://my-website-backend-production-4247.up.railway.app/webhook/chat'; // New Railway chat webhook
+    const N8N_CALENDAR_WEBHOOK_URL = 'https://my-website-backend-production-4247.up.railway.app/webhook/calendar-availability-check'; // New Railway calendar webhook
 
     const chatBubble = `
         <div class="chat-bubble" id="chat-bubble">

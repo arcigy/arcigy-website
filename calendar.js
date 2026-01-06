@@ -12,8 +12,8 @@
             currentLang: localStorage.getItem('language') || 'en'
         },
 
-        WEBHOOK_URL: 'https://my-website-backend.railway.internal/webhook/calendar-availability-check',
-        BOOKING_URL: 'https://my-website-backend.railway.internal/webhook/calendar-initiate-book',
+        WEBHOOK_URL: 'https://my-website-backend-production-4247.up.railway.app/webhook/calendar-availability-check',
+        BOOKING_URL: 'https://my-website-backend-production-4247.up.railway.app/webhook/calendar-initiate-book',
 
         translations: {
             en: {
