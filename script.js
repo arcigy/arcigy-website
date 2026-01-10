@@ -591,6 +591,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initForms();
     initPricingInteractions();
     initRealtimeValidation();
+    initCustomSelects();
     if (window.UserState) {
         window.UserState.syncForms();
         window.UserState.listen();
@@ -1137,6 +1138,57 @@ function clearError(input) {
     }
 }
 window.clearError = clearError;
+
+function initCustomSelects() {
+    const wrappers = document.querySelectorAll('.custom-select-wrapper');
+
+    wrappers.forEach(wrapper => {
+        const trigger = wrapper.querySelector('.custom-select-trigger');
+        const triggerText = wrapper.querySelector('.custom-select-text');
+        const options = wrapper.querySelectorAll('.custom-option');
+        const hiddenInput = wrapper.querySelector('input[type="hidden"]');
+
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            // Close other selects
+            document.querySelectorAll('.custom-select-wrapper.open').forEach(w => {
+                if (w !== wrapper) w.classList.remove('open');
+            });
+            wrapper.classList.toggle('open');
+        });
+
+        options.forEach(option => {
+            option.addEventListener('click', () => {
+                const value = option.dataset.value;
+                const text = option.textContent;
+
+                triggerText.textContent = text;
+                hiddenInput.value = value;
+
+                options.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+
+                wrapper.classList.remove('open');
+
+                // Trigger change event for validation if needed
+                hiddenInput.dispatchEvent(new Event('change', { bubbles: true }));
+
+                // If UserState exists, update it if this field maps to something
+                if (window.UserState) {
+                    const name = hiddenInput.name;
+                    window.UserState.update({ [name]: value });
+                }
+            });
+        });
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', () => {
+        document.querySelectorAll('.custom-select-wrapper.open').forEach(w => {
+            w.classList.remove('open');
+        });
+    });
+}
 
 // Forms
 function initForms() {

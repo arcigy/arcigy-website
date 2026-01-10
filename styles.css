@@ -1932,6 +1932,7 @@ INTRO OVERLAY STYLES
     box-shadow: 0 0 15px rgba(122, 241, 255, 0.4);
     color: #ffffff;
 }
+
 /* Disabled Submit Button Styles */
 button[type='submit']:disabled {
     background: rgba(255, 255, 255, 0.05) !important;
@@ -1946,4 +1947,94 @@ button[type='submit']:disabled {
 
 button[type='submit']:disabled::after {
     display: none !important;
+}
+
+/* --- Custom Luxury Select Component --- */
+.custom-select-wrapper {
+    position: relative;
+    user-select: none;
+    width: 100%;
+}
+
+.custom-select-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.875rem 1.25rem;
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(12px);
+}
+
+.custom-select-wrapper.open .custom-select-trigger {
+    border-color: #7af1ff;
+    box-shadow: 0 0 20px rgba(122, 241, 255, 0.15);
+    background: rgba(15, 23, 42, 0.6);
+}
+
+.custom-select-arrow {
+    width: 12px;
+    height: 12px;
+    border-right: 2px solid #7af1ff;
+    border-bottom: 2px solid #7af1ff;
+    transform: rotate(45deg);
+    transition: transform 0.3s ease;
+    margin-bottom: 4px;
+}
+
+.custom-select-wrapper.open .custom-select-arrow {
+    transform: rotate(-135deg);
+    margin-bottom: -4px;
+}
+
+.custom-options {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.custom-select-wrapper.open .custom-options {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.custom-option {
+    padding: 12px 20px;
+    color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.custom-option:last-child {
+    border-bottom: none;
+}
+
+.custom-option:hover {
+    background: rgba(122, 241, 255, 0.1);
+    color: #7af1ff;
+    padding-left: 25px;
+}
+
+.custom-option.selected {
+    background: rgba(122, 241, 255, 0.15);
+    color: #7af1ff;
+    font-weight: 600;
 }
