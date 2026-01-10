@@ -592,6 +592,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initPricingInteractions();
     initRealtimeValidation();
     initCustomSelects();
+    initContactHelpers();
     if (window.UserState) {
         window.UserState.syncForms();
         window.UserState.listen();
@@ -1138,6 +1139,39 @@ function clearError(input) {
     }
 }
 window.clearError = clearError;
+
+// --- EMAIL & CONTACT HELPERS ---
+function initContactHelpers() {
+    // 1. Mailto Fallback (Copy to clipboard)
+    document.querySelectorAll('a[href^="mailto:"]').forEach(link => {
+        link.addEventListener('click', (e) => {
+            const email = link.href.replace('mailto:', '');
+
+            // Try to copy to clipboard as a fallback for Windows mailto issues
+            navigator.clipboard.writeText(email).then(() => {
+                // Show a subtle toast/notification if possible
+                const lang = localStorage.getItem('language') || 'en';
+                const msg = lang === 'sk' ? 'E-mail adresa bola skopírovaná!' : 'Email address copied to clipboard!';
+
+                // Show notification using the chatbot bubble if available
+                if (window.showChatbotNotification) {
+                    window.showChatbotNotification(msg);
+                } else {
+                    // Fallback to title attribute or console
+                    const originalTitle = link.title;
+                    link.title = msg;
+                    setTimeout(() => { link.title = originalTitle; }, 3000);
+                }
+            }).catch(err => {
+                console.warn('Could not copy email:', err);
+            });
+
+            // We DON'T prevent default here because we still want the browser 
+            // to try and open the mail app if it's configured.
+        });
+    });
+}
+window.initContactHelpers = initContactHelpers;
 
 function initCustomSelects() {
     const wrappers = document.querySelectorAll('.custom-select-wrapper');

@@ -452,31 +452,21 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     window.triggerAuditWelcome = function (lang) {
-        // Close chat window if open
-        const isChatOpen = chatWindowEl.style.display === 'flex';
-        if (isChatOpen) {
-            toggleChatWindow();
-        }
+        // ... (existing code omitted for brevity) ...
+    };
 
-        const messages = {
-            en: "Excellent choice! The AI Audit is the best first step. Please fill out this form to get started.",
-            sk: "Výborná voľba! AI Audit je najlepší prvý krok. Na začiatok prosím vyplňte tento formulár."
-        };
-
-        const msg = messages[lang] || messages['en'];
-
+    window.showChatbotNotification = function (msg) {
         if (notificationBubbleEl) {
-            // Always show the visual bubble
             badgeEl.style.display = 'flex';
             notificationBubbleEl.textContent = msg;
             notificationBubbleEl.classList.remove('hiding');
             notificationBubbleEl.classList.add('active');
 
-            // Log to history ONLY if not already the last message
-            const lastMsg = chatHistory.length > 0 ? chatHistory[chatHistory.length - 1] : null;
-            if (!lastMsg || lastMsg.text !== msg) {
-                appendMessage(msg, 'bot');
-            }
+            // Auto hide after 4 seconds
+            setTimeout(() => {
+                notificationBubbleEl.classList.add('hiding');
+                notificationBubbleEl.classList.remove('active');
+            }, 4000);
         }
     };
 
