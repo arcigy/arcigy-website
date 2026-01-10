@@ -211,8 +211,8 @@
                             window.showError(emailInput, validation.message, validation.suggestion);
                         } else {
                             alert(validation.message);
+                            btn.disabled = false;
                         }
-                        btn.disabled = false;
                         btn.textContent = originalText;
                         return;
                     }
