@@ -396,9 +396,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Expose function to trigger pricing warning from other scripts
     window.triggerPricingWarning = function (lang) {
         // Close chat window if open so bubble is visible
-        const chatWindow = document.getElementById('chatWindow');
-        if (chatWindow && chatWindow.classList.contains('active')) {
-            toggleChatWindow(false);
+        const isChatOpen = chatWindowEl.style.display === 'flex';
+        if (isChatOpen) {
+            toggleChatWindow();
         }
 
         // Define messages
@@ -417,29 +417,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Show first message in bubble
         if (notificationBubbleEl) {
+            badgeEl.style.display = 'flex';
             notificationBubbleEl.textContent = msgs[0];
+            notificationBubbleEl.classList.remove('hiding');
             notificationBubbleEl.classList.add('active');
 
-            // Log to history without opening
-            appendMessage(msgs[0], 'bot');
+            // Log to history ONLY if not already the last message
+            const lastMsg = chatHistory.length > 0 ? chatHistory[chatHistory.length - 1] : null;
+            if (!lastMsg || lastMsg.text !== msgs[0]) {
+                appendMessage(msgs[0], 'bot');
 
-            // Show second message in bubble after delay
-            setTimeout(() => {
-                notificationBubbleEl.classList.remove('active');
+                // Show second message after delay if we appended the first
                 setTimeout(() => {
-                    notificationBubbleEl.textContent = msgs[1];
-                    notificationBubbleEl.classList.add('active');
-                    appendMessage(msgs[1], 'bot');
-                }, 200);
-            }, 4500);
+                    notificationBubbleEl.classList.remove('active');
+                    setTimeout(() => {
+                        notificationBubbleEl.textContent = msgs[1];
+                        notificationBubbleEl.classList.add('active');
+                        appendMessage(msgs[1], 'bot');
+                    }, 200);
+                }, 4500);
+            } else {
+                // It was already the last message, just simulate the bubble sequence visually
+                setTimeout(() => {
+                    notificationBubbleEl.classList.remove('active');
+                    notificationBubbleEl.classList.add('hiding');
+                    setTimeout(() => {
+                        notificationBubbleEl.textContent = msgs[1];
+                        notificationBubbleEl.classList.remove('hiding');
+                        notificationBubbleEl.classList.add('active');
+                    }, 400);
+                }, 4500);
+            }
         }
     };
 
     window.triggerAuditWelcome = function (lang) {
         // Close chat window if open
-        const chatWindow = document.getElementById('chatWindow');
-        if (chatWindow && chatWindow.classList.contains('active')) {
-            toggleChatWindow(false);
+        const isChatOpen = chatWindowEl.style.display === 'flex';
+        if (isChatOpen) {
+            toggleChatWindow();
         }
 
         const messages = {
@@ -450,9 +466,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const msg = messages[lang] || messages['en'];
 
         if (notificationBubbleEl) {
+            // Always show the visual bubble
+            badgeEl.style.display = 'flex';
             notificationBubbleEl.textContent = msg;
+            notificationBubbleEl.classList.remove('hiding');
             notificationBubbleEl.classList.add('active');
-            appendMessage(msg, 'bot');
+
+            // Log to history ONLY if not already the last message
+            const lastMsg = chatHistory.length > 0 ? chatHistory[chatHistory.length - 1] : null;
+            if (!lastMsg || lastMsg.text !== msg) {
+                appendMessage(msg, 'bot');
+            }
         }
     };
 
