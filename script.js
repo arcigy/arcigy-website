@@ -1406,6 +1406,14 @@ const UserStateManager = {
                     if (name === 'surname') input.value = parts.slice(1).join(' ') || '';
                 }
             }
+
+            // --- ADDED: Trigger validation if value was populated ---
+            if (input.value && document.activeElement !== input) {
+                // If it's an email field, trigger blur to run validation
+                if (input.type === 'email' || name.includes('email')) {
+                    input.dispatchEvent(new Event('blur'));
+                }
+            }
         });
     },
 
