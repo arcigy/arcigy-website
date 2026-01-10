@@ -1065,7 +1065,8 @@ async function validateEmailWithBackend(email) {
     const BACKEND_URL = window.ARCIGY_BACKEND_URL || DEFAULT_BACKEND_URL;
 
     try {
-        const response = await fetch(`${BACKEND_URL}/webhook/verify-email?email=${encodeURIComponent(email)}`);
+        const lang = (typeof currentLang !== 'undefined') ? currentLang : 'en';
+        const response = await fetch(`${BACKEND_URL}/webhook/verify-email?email=${encodeURIComponent(email)}&lang=${lang}`);
         if (!response.ok) throw new Error('Validation service error');
         return await response.json();
     } catch (e) {
@@ -1092,9 +1093,9 @@ function showError(input, message, suggestion = null) {
     }
 
     if (suggestion) {
-        const lang = localStorage.getItem('language') || 'en';
+        const lang = (typeof currentLang !== 'undefined') ? currentLang : (localStorage.getItem('language') || 'en');
         const msg = lang === 'sk' ? `Mysleli ste ` : `Did you mean `;
-        errorEl.innerHTML = `<span>⚠️ ${msg}</span> <span class="suggestion-link" title="Použiť tento e-mail">${suggestion}</span>?`;
+        errorEl.innerHTML = `<span>⚠️ ${msg}</span> <span class="suggestion-link" title="${lang === 'sk' ? 'Použiť tento e-mail' : 'Use this email'}">${suggestion}</span>?`;
         errorEl.querySelector('.suggestion-link').onclick = () => {
             input.value = suggestion;
             clearError(input);
