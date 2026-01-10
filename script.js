@@ -72,37 +72,35 @@ const translations = {
         },
         pricing: {
             title: "Pricing Plans",
-            badge: "Most Popular",
-            period: "Consultation Required", // Placeholder, but won't be displayed
-            tier1: {
-                name: "Automation Essentials",
-                feature1: "Core Sales and Operation Automation (Majority)",
-                feature2: "Process Audit & Solution Design",
-                feature3: "Standard Integration (Max 2 Systems)",
-                feature4: "Monthly Performance Reports",
-                feature5: "AI Audits (Minority Service)",
+            badge: "All Inclusive",
+            basic: {
+                name: "Core Efficiency",
+                feature1: "Automates key bottlenecks for immediate impact",
+                feature2: "Streamlines essential workflows",
+                feature3: "Standard integration package",
+                feature4: "Ideal for focused improvements",
                 cta: "Schedule Meeting"
             },
-            tier2: {
-                name: "Growth Architect",
-                feature1: "Comprehensive Automation of Critical Processes (Majority)",
-                feature2: "Logistics and Sales Management Solution",
-                feature3: "Priority Support and Optimization",
-                feature4: "Custom Integrations (Up to 5 Systems)",
-                feature5: "AI Websites / Sales Funnels (Minority Service)",
+            premium: {
+                name: "Total Transformation",
+                feature1: "Complete end-to-end business automation",
+                feature2: "AI-driven architecture & scalability",
+                feature3: "Unlimited custom integrations",
+                feature4: "Dedicated 24/7 optimization & support",
                 cta: "Schedule Meeting"
             },
-            tier3: {
-                name: "Enterprise Custom",
-                feature1: "Full Multi-System Integration and Optimization (Majority)",
-                feature2: "Dedicated Automation Team (24/7 Monitoring)",
-                feature3: "Advanced Analytics and BI Tools",
-                feature4: "Custom Enterprise Packages & Security",
-                feature5: "AI Employees (Minority Service)",
-                cta: "Schedule Meeting"
+            audit: {
+                title: "AI Business Audit",
+                price: "€500",
+                desc: "The perfect starting point. We analyze your infrastructure to find where automation yields the highest returns.",
+                feature1: "Full Workflow Mapping",
+                feature2: "Bottleneck Analysis",
+                feature3: "Custom Automation Strategy",
+                feature4: "ROI Projection",
+                cta: "Book Audit"
             },
             cta: "Schedule Meeting",
-            note: "All plans require a detailed consultation to determine scope and exact monthly investment."
+            note: "Our pricing is performance-based. We charge a percentage of the value generated or costs saved, determined after a comprehensive audit."
         },
         aboutpreview: {
             title: "About ArciGy",
@@ -118,11 +116,30 @@ const translations = {
                 email: "Email",
                 phone: "Phone",
                 summary: "Project Summary (focus on the problem you need to solve)",
-                newsletter: "I want to receive the newsletter",
-                gdpr: "I agree to the processing of my personal data (GDPR)",
+                terms: 'I agree to the <a href="terms-of-service.html" target="_blank">Terms of Service</a>',
+                privacy: 'I agree to the <a href="privacy-policy.html" target="_blank">Privacy Policy</a>',
                 submit: "Send a Proposal"
             },
             privacy: "Your data is safe. We do not share it with third parties."
+        },
+        audit: {
+            hero: {
+                title: "AI Business Audit",
+                subtitle: "Tell us about your business to get started"
+            },
+            form: {
+                fullname: "Full Name",
+                email: "Email",
+                phone: "Phone Number (please include prefix, e.g. +421)",
+                pitch: "Short description of your business (what you do and for whom)",
+                turnover: "Annual Turnover",
+                select_option: "Select an option",
+                journey: "What's your customer journey? (Walk me through your business from click to close)",
+                dream: "What's your dream outcome?",
+                problem: "What's your biggest problem right now?",
+                bottleneck: "Based on your good feeling, what do you think the biggest bottleneck is right now?",
+                submit: "Select Date"
+            }
         },
         footer: {
             tagline: "Automation Architects for Business Efficiency",
@@ -234,38 +251,35 @@ const translations = {
         },
         pricing: {
             title: "Cenníkové Plány",
-            badge: "Najpopulárnejšie",
-            period: "Vyžaduje Konzultáciu", // Placeholder, but won't be displayed
-            tier1: {
-                name: "Automatizačné Základy",
-                feature1: "Základná automatizácia predaja a prevádzky (Väčšina)",
-                feature2: "Audit procesov a návrh riešenia",
-                feature3: "Štandardná integrácia (max. 2 systémy)",
-                feature4: "Mesačné prehľady výkonu",
-                feature5: "AI Audity (Menšinová Služba)",
+            badge: "All Inclusive",
+            basic: {
+                name: "Základná Efektivita",
+                feature1: "Automatizácia kľúčových úzkych miest pre okamžitý dopad",
+                feature2: "Zefektívnenie základných pracovných tokov",
+                feature3: "Štandardný balík integrácií",
+                feature4: "Ideálne pre cielené vylepšenia",
                 cta: "Dohodnite si Stretnutie"
             },
-            tier2: {
-                name: "Architekt Rastu",
-                feature1: "Komplexná automatizácia kritických procesov (Väčšina)",
-                feature2: "Riešenie pre riadenie logistiky a predaja",
-                feature3: "Prioritná podpora a optimalizácia",
-                feature4: "Vlastné integrácie (až 5 systémov)",
-                feature5: "AI Webstránky / Predajné lieviky (Menšinová Služba)",
+            premium: {
+                name: "Totálna Transformácia",
+                feature1: "Kompletná automatizácia všetkých firemných procesov",
+                feature2: "Architektúra riadená AI a neobmedzená škálovateľnosť",
+                feature3: "Neobmedzené vlastné integrácie",
+                feature4: "Dedikovaná optimalizácia a podpora 24/7",
                 cta: "Dohodnite si Stretnutie"
             },
-            tier3: {
-                name: "Enterprise na Mieru",
-                feature1: "Plná integrácia a optimalizácia viacerých systémov (Väčšina)",
-                feature2: "Dedikovaný tím pre automatizáciu (24/7 Monitoring)",
-                feature3: "Pokročilá analytika a BI nástroje",
-                feature4: "Vlastné podnikové balíčky a bezpečnosť",
-                feature5: "AI Zamestnanci (Menšinová Služba)",
-                cta: "Dohodnite si Stretnutie"
+            audit: {
+                title: "Vstupný AI Audit",
+                price: "500 €",
+                desc: "Ideálny záchytný bod. Analyzujeme vašu infraštruktúru, aby sme našli miesta, kde automatizácia prinesie najvyššiu návratnosť.",
+                feature1: "Kompletné mapovanie workflow",
+                feature2: "Analýza úzkych miest",
+                feature3: "Vlastná automatizačná stratégia",
+                feature4: "Projekcia ROI",
+                cta: "Objednať Audit"
             },
             cta: "Dohodnite si Stretnutie",
-            note: "Všetky plány vyžadujú podrobnú konzultáciu na určenie rozsahu a presnej mesačnej investície.",
-            cta: "Dohodnite si Stretnutie"
+            note: "Naša cena je založená na výkone. Účtujeme si percento z vygenerovanej hodnoty alebo ušetrených nákladov, ktoré určíme po dôkladnom audite."
         },
         aboutpreview: {
             title: "O ArciGy",
@@ -281,11 +295,30 @@ const translations = {
                 email: "Email",
                 phone: "Telefón",
                 summary: "Zhrnutie projektu (zamerajte sa na problém, ktorý potrebujete vyriešiť)",
-                newsletter: "Chcem dostávať newsletter",
-                gdpr: "Súhlasím so spracovaním osobných údajov (GDPR)",
+                terms: 'Súhlasím s <a href="terms-of-service.html" target="_blank">Obchodnými podmienkami</a>',
+                privacy: 'Súhlasím so <a href="privacy-policy.html" target="_blank">Zásadami ochrany osobných údajov</a>',
                 submit: "Odoslať návrh"
             },
             privacy: "Vaše údaje sú bezpečné. Nepreposielame ich tretím stranám."
+        },
+        audit: {
+            hero: {
+                title: "AI Business Audit",
+                subtitle: "Povedzte nám o vašom podnikaní, aby sme mohli začať"
+            },
+            form: {
+                fullname: "Celé meno",
+                email: "Email",
+                phone: "Telefónne číslo (vkladajte aj s predvoľbou napr. +421)",
+                pitch: "Stručný popis vášho podnikania (čo robíte a pre koho)",
+                turnover: "Ročný obrat",
+                select_option: "Vyberte možnosť",
+                journey: "Aká je cesta vášho zákazníka? (Preveďte ma vaším podnikaním od kliknutia po uzavretie obchodu)",
+                dream: "Aký je váš vysnívaný výsledok?",
+                problem: "Aký je váš najväčší problém práve teraz?",
+                bottleneck: "Na základe vášho pocitu, čo si myslíte, že je teraz najväčším úzkym miestom?",
+                submit: "Vybrať termín"
+            }
         },
         footer: {
             tagline: "Architekti Automatizácie pre Firemnú Efektivitu",
@@ -556,6 +589,12 @@ document.addEventListener('DOMContentLoaded', function () {
     // initHeroParticles();
     initSectionParallax();
     initForms();
+    initPricingInteractions();
+    initRealtimeValidation();
+    if (window.UserState) {
+        window.UserState.syncForms();
+        window.UserState.listen();
+    }
     setTimezone();
 
     function resize() {
@@ -757,7 +796,7 @@ function setLanguage(lang) {
             if (el.tagName === 'INPUT' && el.hasAttribute('placeholder')) {
                 el.placeholder = value;
             } else {
-                el.textContent = value;
+                el.innerHTML = value;
             }
         }
     });
@@ -773,6 +812,11 @@ function setLanguage(lang) {
     // If the calendar has been opened, re-render it to reflect the new language
     if (window.arcigyCalendar && typeof window.arcigyCalendar.updateLanguage === 'function') {
         window.arcigyCalendar.updateLanguage(lang);
+    }
+
+    // --- Cookie Consent Language Sync ---
+    if (typeof window.updateCookieConsentLanguage === 'function') {
+        window.updateCookieConsentLanguage(lang);
     }
 }
 
@@ -1002,93 +1046,185 @@ function initCursorParallax() {
     });
 } */
 
+// Email Validation Helper
+async function validateEmailWithBackend(email) {
+    if (!email) return { valid: false, message: 'Prosím zadajte email.' };
+
+    // 1. Basic Frontend Regex Check (Immediate)
+    const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+    if (!emailRegex.test(email)) {
+        return {
+            valid: false,
+            message: (typeof currentLang !== 'undefined' && currentLang === 'sk') ? 'Neplatný formát e-mailu.' : 'Invalid email format.'
+        };
+    }
+
+    // 2. Determine Backend URL
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const DEFAULT_BACKEND_URL = isLocal ? 'http://localhost:8000' : 'https://my-website-backend-production-25c8.up.railway.app';
+    const BACKEND_URL = window.ARCIGY_BACKEND_URL || DEFAULT_BACKEND_URL;
+
+    try {
+        const response = await fetch(`${BACKEND_URL}/webhook/verify-email?email=${encodeURIComponent(email)}`);
+        if (!response.ok) throw new Error('Validation service error');
+        return await response.json();
+    } catch (e) {
+        console.warn('⚠️ Email validation service unreachable.', e);
+        return { valid: true };
+    }
+}
+window.validateEmailWithBackend = validateEmailWithBackend;
+
+function showError(input, message, suggestion = null) {
+    input.classList.add('input-error');
+    let errorEl = input.parentElement.querySelector('.error-message');
+    if (!errorEl) {
+        errorEl = document.createElement('div');
+        errorEl.className = 'error-message';
+        input.parentElement.appendChild(errorEl);
+    }
+
+    if (suggestion) {
+        const lang = localStorage.getItem('language') || 'en';
+        const msg = lang === 'sk' ? `Mysleli ste ` : `Did you mean `;
+        errorEl.innerHTML = `${msg} <span class="suggestion-link">${suggestion}</span>?`;
+        errorEl.querySelector('.suggestion-link').onclick = () => {
+            input.value = suggestion;
+            clearError(input);
+            // Re-trigger UserState update
+            input.dispatchEvent(new Event('input'));
+        };
+    } else {
+        errorEl.textContent = message;
+    }
+    errorEl.classList.add('active');
+}
+window.showError = showError;
+
+function clearError(input) {
+    input.classList.remove('input-error');
+    const errorEl = input.parentElement.querySelector('.error-message');
+    if (errorEl) errorEl.classList.remove('active');
+}
+window.clearError = clearError;
+
 // Forms
 function initForms() {
     const contactForm = document.getElementById('contactForm');
     const newsletterForm = document.getElementById('newsletterForm');
     const emailForm = document.getElementById('emailForm');
 
+    async function handleFormSubmit(form, webhookUrl, successMsgSk, successMsgEn) {
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        // 1. Find email input
+        const emailInput = form.querySelector('input[type="email"]');
+        if (emailInput) {
+            clearError(emailInput);
+            const btn = form.querySelector('button[type="submit"]');
+            if (btn) {
+                const originalText = btn.textContent;
+                btn.disabled = true;
+                btn.textContent = (currentLang === 'sk' ? 'Overujem...' : 'Verifying...');
+
+                const validation = await validateEmailWithBackend(emailInput.value);
+
+                if (!validation.valid) {
+                    showError(emailInput, validation.message, validation.suggestion);
+                    btn.disabled = false;
+                    btn.textContent = originalText;
+                    return; // STOP SUBMISSION
+                }
+                btn.textContent = originalText; // Reset text for actual submission
+            }
+        }
+
+        // 2. Normal submission
+        try {
+            data.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Europe/Bratislava';
+        } catch (e) {
+            data.timezone = 'Europe/Bratislava';
+        }
+        data.language = currentLang;
+
+        const url = new URL(webhookUrl);
+        Object.keys(data).forEach(key => url.searchParams.append(key, data[key]));
+
+        fetch(url, { method: 'GET' })
+            .then(response => {
+                if (response.ok) {
+                    alert(currentLang === 'sk' ? successMsgSk : successMsgEn);
+                    form.reset();
+                    if (window.UserState) window.UserState.update({}); // Reset state
+                } else {
+                    throw new Error('Network response was not ok');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert(currentLang === 'sk' ? 'Došlo k chybe. Skúste to prosím neskôr.' : 'An error occurred. Please try again later.');
+            })
+            .finally(() => {
+                const btn = form.querySelector('button[type="submit"]');
+                if (btn) btn.disabled = false;
+            });
+    }
+
     if (contactForm) {
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
-
-            const formData = new FormData(contactForm);
-            const data = Object.fromEntries(formData.entries());
-
-            // Add timezone and language info
-            try {
-                data.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-            } catch (e) {
-                data.timezone = 'Europe/Bratislava';
-            }
-            data.language = currentLang;
-
-            const webhookUrl = new URL('https://n8n.srv1118451.hstgr.cloud/webhook-test/c67d2d9c-9c97-4e89-990a-633171bebe19');
-            Object.keys(data).forEach(key => webhookUrl.searchParams.append(key, data[key]));
-
-            fetch(webhookUrl, {
-                method: 'GET'
-            })
-                .then(response => {
-                    if (response.ok) {
-                        alert(currentLang === 'sk' ? 'Ďakujeme za váš záujem! Čoskoro vás budeme kontaktovať.' : 'Thank you for your interest! We will contact you soon.');
-                        contactForm.reset();
-                    } else {
-                        throw new Error('Network response was not ok');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert(currentLang === 'sk' ? 'Došlo k chybe. Skúste to prosím neskôr.' : 'An error occurred. Please try again later.');
-                });
-        });
-    }
-
-    if (newsletterForm) {
-        newsletterForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = newsletterForm.querySelector('input[type="email"]').value;
-            // Here you would normally send the email to a server
-            alert(currentLang === 'sk' ? 'Ďakujeme za prihlásenie sa!' : 'Thank you for subscribing!');
-            newsletterForm.reset();
+            handleFormSubmit(
+                contactForm,
+                'https://n8n.srv1118451.hstgr.cloud/webhook-test/c67d2d9c-9c97-4e89-990a-633171bebe19',
+                'Ďakujeme za váš záujem! Čoskoro vás budeme kontaktovať.',
+                'Thank you for your interest! We will contact you soon.'
+            );
         });
     }
 
     if (emailForm) {
         emailForm.addEventListener('submit', (e) => {
             e.preventDefault();
-
-            const formData = new FormData(emailForm);
-            const data = Object.fromEntries(formData.entries());
-
-            // Add timezone and language info
-            try {
-                data.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-            } catch (e) {
-                data.timezone = 'Europe/Bratislava';
-            }
-            data.language = currentLang;
-
-            const webhookUrl = new URL('https://n8n.srv1118451.hstgr.cloud/webhook-test/71b23cfc-169d-45c6-803d-7229dccf6a04');
-            Object.keys(data).forEach(key => webhookUrl.searchParams.append(key, data[key]));
-
-            fetch(webhookUrl, {
-                method: 'GET'
-            })
-                .then(response => {
-                    if (response.ok) {
-                        alert(currentLang === 'sk' ? 'Ďakujeme za váš email! Čoskoro vás budeme kontaktovať.' : 'Thank you for your email! We will contact you soon.');
-                        emailForm.reset();
-                    } else {
-                        throw new Error('Network response was not ok');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert(currentLang === 'sk' ? 'Došlo k chybe. Skúste to prosím neskôr.' : 'An error occurred. Please try again later.');
-                });
+            handleFormSubmit(
+                emailForm,
+                'https://n8n.srv1118451.hstgr.cloud/webhook-test/71b23cfc-169d-45c6-803d-7229dccf6a04',
+                'Ďakujeme za váš email! Čoskoro vás budeme kontaktovať.',
+                'Thank you for your email! We will contact you soon.'
+            );
         });
     }
+
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            handleFormSubmit(
+                newsletterForm,
+                'https://n8n.srv1118451.hstgr.cloud/webhook-test/newsletter-placeholder',
+                'Ďakujeme za prihlásenie sa!',
+                'Thank you for subscribing!'
+            );
+        });
+    }
+}
+
+function initRealtimeValidation() {
+    const emailInputs = document.querySelectorAll('input[type="email"]');
+    emailInputs.forEach(input => {
+        input.addEventListener('blur', async () => {
+            if (input.value) {
+                const validation = await validateEmailWithBackend(input.value);
+                if (!validation.valid) {
+                    showError(input, validation.message, validation.suggestion);
+                } else {
+                    clearError(input);
+                }
+            }
+        });
+        input.addEventListener('input', () => {
+            clearError(input);
+        });
+    });
 }
 
 // Set Timezone
@@ -1166,3 +1302,132 @@ function initIntroOverlay() {
         }, 500);
     }, 1500);
 }
+
+// Pricing Button Interactions
+function initPricingInteractions() {
+    const buttons = document.querySelectorAll('.js-pricing-plan-cta');
+
+    buttons.forEach(btn => {
+        btn.addEventListener('click', function (e) {
+            // Check if warning has been shown in this session
+            const hasWarned = sessionStorage.getItem('audit_warning_shown');
+
+            if (!hasWarned) {
+                e.preventDefault(); // Stop navigation
+
+                // Set flag so next click works
+                sessionStorage.setItem('audit_warning_shown', 'true');
+
+                // Trigger chatbot warning
+                if (typeof window.triggerPricingWarning === 'function') {
+                    window.triggerPricingWarning(currentLang);
+                } else {
+                    console.warn('Chatbot warning function not found');
+                }
+            }
+            // If hasWarned is true, we do nothing and let the default link behavior happen (navigation)
+        });
+    });
+}
+
+// --- User State Manager ---
+const UserStateManager = {
+    get: function () {
+        try {
+            return JSON.parse(localStorage.getItem('userState')) || {};
+        } catch (e) {
+            return {};
+        }
+    },
+
+    update: function (data) {
+        const current = this.get();
+        const filtered = {};
+        Object.keys(data).forEach(key => {
+            if (data[key] !== null && data[key] !== "null" && data[key] !== "") {
+                filtered[key] = data[key];
+            }
+        });
+        const updated = { ...current, ...filtered };
+        localStorage.setItem('userState', JSON.stringify(updated));
+        this.syncForms(); // Update UI immediately
+        return updated;
+    },
+
+    syncForms: function () {
+        const state = this.get();
+        const inputs = document.querySelectorAll('input, select, textarea');
+
+        inputs.forEach(input => {
+            const name = input.name || input.id;
+            if (!name) return;
+
+            // 1. Direct match (e.g. email, phone, company, turnover, subject, letter)
+            if (state[name] !== undefined && document.activeElement !== input) {
+                input.value = state[name];
+            }
+
+            // 2. Map canonical fullName to various field names
+            const fullNameSelectors = ['fullname', 'full_name'];
+            if (state.fullName && fullNameSelectors.includes(name) && document.activeElement !== input) {
+                input.value = state.fullName;
+            }
+
+            // 3. Split fullName to forename/surname if needed
+            if (state.fullName && (name === 'forename' || name === 'surname')) {
+                const parts = state.fullName.split(' ');
+                if (document.activeElement !== input) {
+                    if (name === 'forename') input.value = parts[0] || '';
+                    if (name === 'surname') input.value = parts.slice(1).join(' ') || '';
+                }
+            }
+        });
+    },
+
+    listen: function () {
+        const inputs = document.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+            input.addEventListener('input', (e) => {
+                const name = e.target.name || e.target.id;
+                if (!name || e.target.type === 'password') return;
+
+                let update = {};
+
+                // Capture value
+                if (name === 'fullname' || name === 'full_name') {
+                    update.fullName = e.target.value;
+                } else if (name === 'forename' || name === 'surname') {
+                    const f = document.querySelector('[name="forename"], #forename')?.value || '';
+                    const s = document.querySelector('[name="surname"], #surname')?.value || '';
+                    update.fullName = (f + ' ' + s).trim();
+                } else {
+                    update[name] = e.target.value;
+                }
+
+                if (Object.keys(update).length > 0) {
+                    const current = this.get();
+                    const merged = { ...current, ...update };
+                    localStorage.setItem('userState', JSON.stringify(merged));
+                }
+            });
+        });
+    },
+
+    clearLegacy: function () {
+        // Cleanup old trash
+        const keys = ['userName', 'userEmail', 'userPhone', 'forename', 'surname'];
+        keys.forEach(k => {
+            localStorage.removeItem(k);
+            sessionStorage.removeItem(k);
+        });
+    }
+};
+
+// Expose globally
+window.UserState = UserStateManager;
+
+// Auto-init only if we are in the main execution context 
+// (The DOMContentLoaded listener at the top also calls this, but we ensure the object exists first)
+UserStateManager.clearLegacy(); // Clean up old trash
+UserStateManager.syncForms();
+UserStateManager.listen();

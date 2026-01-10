@@ -1,23 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="View ArciGy's pricing plans for business automation solutions. Choose the plan that fits your needs.">
+    <meta name="description"
+        content="View ArciGy's pricing plans for business automation solutions. Choose the plan that fits your needs.">
     <title>Pricing - ArciGy</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="chatbot.css">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
     <link rel="apple-touch-icon" href="favicon.png">
 </head>
+
 <body>
     <canvas id="heroCanvas"></canvas>
     <nav class="navbar" id="navbar">
         <div class="nav-container">
-            <a href="index.html" class="nav-logo" aria-label="ArciGy Home" style="display: flex; align-items: center; gap: 10px;">
+            <a href="index.html" class="nav-logo" aria-label="ArciGy Home"
+                style="display: flex; align-items: center; gap: 10px;">
                 <img src="GRADIENT_LOGO ONLY.png" alt="ArciGy Logo" style="height: 32px; width: auto;">
                 <img src="GRADIENT_TEXT ONLY.png" alt="ArciGy" style="height: 24px; width: auto;">
             </a>
@@ -47,58 +53,69 @@
         </div>
         <div class="hero-content">
             <h1 class="hero-title" data-i18n="pricingpage.hero.title">Pricing Plans</h1>
-            <p class="hero-subtitle" data-i18n="pricingpage.hero.subtitle">Choose the automation solution that fits your business needs</p>
+            <p class="hero-subtitle" data-i18n="pricingpage.hero.subtitle">Choose the automation solution that fits your
+                business needs</p>
         </div>
     </section>
 
     <section class="pricing-section">
         <div class="container">
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3 class="pricing-tier" data-i18n="pricing.tier1.name">Automation Essentials</h3>
-                    <div class="pricing-cta-price-replacement">
-                        <span class="price-link" data-i18n="pricing.cta.tagline">Schedule a Meeting</span>
+            <div class="pricing-audit"
+                style="margin-bottom: 3rem; width: 100%; max-width: 1100px; margin-left: auto; margin-right: auto;">
+                <div class="pricing-card audit-card">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">
+                        <h3 class="pricing-tier" style="margin: 0; font-size: 1.75rem;" data-i18n="pricing.audit.title">
+                            AI Business Audit</h3>
+                        <div class="pricing-price"
+                            style="font-family: var(--font-heading); font-size: 2rem; font-weight: 700; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
+                            data-i18n="pricing.audit.price">€500</div>
                     </div>
-                    <ul class="pricing-features">
-                        <li data-i18n="pricing.tier1.feature1">Basic sales and operations automation (Most)</li>
-                        <li data-i18n="pricing.tier1.feature2">Process audit and solution design</li>
-                        <li data-i18n="pricing.tier1.feature3">Standard integration (max. 2 systems)</li>
-                        <li data-i18n="pricing.tier1.feature4">Monthly performance reports</li>
-                        <li data-i18n="pricing.tier1.feature5">AI Audits (Minority Service)</li>
+                    <p data-i18n="pricing.audit.desc"
+                        style="color: var(--text-muted); margin-bottom: 1rem; font-size: 1.1rem;">The perfect starting
+                        point. We analyze your infrastructure to find where automation yields the highest returns.</p>
+                    <ul class="pricing-features"
+                        style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem; text-align: center;">
+                        <li data-i18n="pricing.audit.feature1">Full Workflow Mapping</li>
+                        <li data-i18n="pricing.audit.feature2">Bottleneck Analysis</li>
+                        <li data-i18n="pricing.audit.feature3">Custom Automation Strategy</li>
+                        <li data-i18n="pricing.audit.feature4">ROI Projection</li>
                     </ul>
-                    <a href="contact.html" class="btn btn-secondary" data-i18n="pricing.cta">Schedule a Meeting</a>
-                </div>
-                <div class="pricing-card featured">
-                    <div class="pricing-badge" data-i18n="pricing.badge">Most Popular</div>
-                    <h3 class="pricing-tier" data-i18n="pricing.tier2.name">Growth Architect</h3>
-                    <div class="pricing-cta-price-replacement">
-                        <span class="price-link" data-i18n="pricing.cta.tagline">Schedule a Meeting</span>
+                    <div style="text-align: center;">
+                        <a href="audit-form.html" class="btn btn-secondary" style="width: 100%; max-width: 300px;"
+                            data-i18n="pricing.audit.cta">Book Audit</a>
+
                     </div>
-                    <ul class="pricing-features">
-                        <li data-i18n="pricing.tier2.feature1">Comprehensive automation of critical processes (Most)</li>
-                        <li data-i18n="pricing.tier2.feature2">Logistics and sales management solution</li>
-                        <li data-i18n="pricing.tier2.feature3">Priority support and optimization</li>
-                        <li data-i18n="pricing.tier2.feature4">Custom integrations (up to 5 systems)</li>
-                        <li data-i18n="pricing.tier2.feature5">AI Websites / Sales Funnels (Minority Service)</li>
-                    </ul>
-                    <a href="contact.html" class="btn btn-primary" data-i18n="pricing.cta">Schedule a Meeting</a>
-                </div>
-                <div class="pricing-card">
-                    <h3 class="pricing-tier" data-i18n="pricing.tier3.name">Enterprise Custom</h3>
-                    <div class="pricing-cta-price-replacement">
-                        <span class="price-link" data-i18n="pricing.cta.tagline">Schedule a Meeting</span>
-                    </div>
-                    <ul class="pricing-features">
-                        <li data-i18n="pricing.tier3.feature1">Full integration and optimization of multiple systems (Most)</li>
-                        <li data-i18n="pricing.tier3.feature2">Dedicated automation team (24/7 Monitoring)</li>
-                        <li data-i18n="pricing.tier3.feature3">Advanced analytics and BI tools</li>
-                        <li data-i18n="pricing.tier3.feature4">Custom enterprise packages and security</li>
-                        <li data-i18n="pricing.tier3.feature5">AI Employees (Minority Service)</li>
-                    </ul>
-                    <a href="contact.html" class="btn btn-secondary" data-i18n="pricingpage.enterprise.cta">Schedule a Meeting</a>
                 </div>
             </div>
-            <p class="pricing-note" data-i18n="pricing.note">All plans require a detailed consultation to determine scope and exact monthly investment.</p>
+
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3 class="pricing-tier" data-i18n="pricing.basic.name">Core Efficiency</h3>
+                    <ul class="pricing-features">
+                        <li data-i18n="pricing.basic.feature1">Automates key bottlenecks for immediate impact</li>
+                        <li data-i18n="pricing.basic.feature2">Streamlines essential workflows</li>
+                        <li data-i18n="pricing.basic.feature3">Standard integration package</li>
+                        <li data-i18n="pricing.basic.feature4">Ideal for focused improvements</li>
+                    </ul>
+                    <a href="contact.html" class="btn btn-secondary js-pricing-plan-cta"
+                        data-i18n="pricing.basic.cta">Schedule a Meeting</a>
+                </div>
+                <div class="pricing-card featured">
+                    <div class="pricing-badge" data-i18n="pricing.badge">All Inclusive</div>
+                    <h3 class="pricing-tier" data-i18n="pricing.premium.name">Total Transformation</h3>
+                    <ul class="pricing-features">
+                        <li data-i18n="pricing.premium.feature1">Complete end-to-end business automation</li>
+                        <li data-i18n="pricing.premium.feature2">AI-driven architecture & scalability</li>
+                        <li data-i18n="pricing.premium.feature3">Unlimited custom integrations</li>
+                        <li data-i18n="pricing.premium.feature4">Dedicated 24/7 optimization & support</li>
+                    </ul>
+                    <a href="contact.html" class="btn btn-primary js-pricing-plan-cta"
+                        data-i18n="pricing.premium.cta">Schedule a Meeting</a>
+                </div>
+            </div>
+            <p class="pricing-note" data-i18n="pricing.note">All plans require a detailed consultation to determine
+                scope and exact monthly investment.</p>
         </div>
     </section>
 
@@ -107,7 +124,8 @@
             <div class="footer-content">
                 <div class="footer-brand">
                     <h3 class="footer-logo">ArciGy</h3>
-                    <p class="footer-tagline" data-i18n="footer.tagline">Automation Architects for Business Efficiency</p>
+                    <p class="footer-tagline" data-i18n="footer.tagline">Automation Architects for Business Efficiency
+                    </p>
                 </div>
                 <div class="footer-links">
                     <div class="footer-column">
@@ -130,8 +148,10 @@
                 <div class="footer-newsletter">
                     <h4 data-i18n="footer.newsletter.title">Newsletter</h4>
                     <form class="newsletter-form" id="newsletterForm">
-                        <input type="email" placeholder="Your email" aria-label="Newsletter email" data-i18n-placeholder="footer.newsletter.placeholder">
-                        <button type="submit" aria-label="Subscribe" data-i18n="footer.newsletter.submit">Subscribe</button>
+                        <input type="email" placeholder="Your email" aria-label="Newsletter email"
+                            data-i18n-placeholder="footer.newsletter.placeholder">
+                        <button type="submit" aria-label="Subscribe"
+                            data-i18n="footer.newsletter.submit">Subscribe</button>
                     </form>
                 </div>
             </div>
@@ -148,17 +168,24 @@
     <div class="social-buttons" id="socialButtons">
         <a href="https://instagram.com/arcigy" class="social-btn" aria-label="Instagram" target="_blank" rel="noopener">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" fill="currentColor"/>
+                <path
+                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                    fill="currentColor" />
             </svg>
         </a>
-        <a href="https://linkedin.com/company/arcigy" class="social-btn" aria-label="LinkedIn" target="_blank" rel="noopener">
+        <a href="https://linkedin.com/company/arcigy" class="social-btn" aria-label="LinkedIn" target="_blank"
+            rel="noopener">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" fill="currentColor"/>
+                <path
+                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+                    fill="currentColor" />
             </svg>
         </a>
         <a href="email-form.html" class="social-btn" aria-label="Email">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill="currentColor"/>
+                <path
+                    d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
+                    fill="currentColor" />
             </svg>
         </a>
     </div>
@@ -169,4 +196,5 @@
     <link rel="stylesheet" href="calendar.css">
     <script src="calendar.js"></script>
 </body>
+
 </html>

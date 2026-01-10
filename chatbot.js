@@ -12,8 +12,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let CURRENT_VIEW_YEAR;
     let CURRENT_VIEW_MONTH; // 1-12
-    const N8N_WEBHOOK_URL = 'https://my-website-backend-production-4247.up.railway.app/webhook/chat'; // New Railway chat webhook
-    const N8N_CALENDAR_WEBHOOK_URL = 'https://my-website-backend-production-4247.up.railway.app/webhook/calendar-availability-check'; // New Railway calendar webhook
+    const DEFAULT_BACKEND_URL = 'https://my-website-backend-production-25c8.up.railway.app';
+    const BACKEND_URL = window.ARCIGY_BACKEND_URL || DEFAULT_BACKEND_URL;
+    const CHAT_WEBHOOK_URL = `${BACKEND_URL}/webhook/chat`;
+    const CALENDAR_AVAILABILITY_URL = `${BACKEND_URL}/webhook/calendar-availability-check`;
+
+    console.log('🤖 Tony Chatbot initialized. Backend URL:', BACKEND_URL);
+    console.log('👤 Current UserState:', window.UserState ? window.UserState.get() : 'Not found');
 
     const chatBubble = `
         <div class="chat-bubble" id="chat-bubble">
@@ -82,6 +87,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 chatWindowEl.classList.remove('closing');
             }, 300); // Match animation duration
         } else {
+            // Mark chat as opened (read receipt)
+            sessionStorage.setItem('chatHasBeenOpened', 'true');
+
             // Clear notifications when opening
             badgeEl.style.display = 'none';
             notificationBubbleEl.classList.remove('active', 'hiding');
@@ -94,13 +102,46 @@ document.addEventListener('DOMContentLoaded', () => {
                 chatBubbleEl.style.display = 'none';
                 chatBubbleEl.classList.remove('closing');
             }, 300); // Match animation duration
-
-            if (chatHistory.length === 0) {
-                const lang = sessionStorage.getItem('chatLang') || document.documentElement.lang || 'en';
-                const welcomeMessage = lang === 'sk' ? 'Som Tony, ako vám môžem pomôcť?' : 'I am Tony, how can I help you?';
-                appendMessage(welcomeMessage, 'bot', true);
-            }
         }
+    }
+
+    // ... (Existing code) ...
+
+    // --- Auto Greeting Logic ---
+    // If chat hasn't been opened yet, we want the notification to persist across pages.
+    const hasOpenedChat = sessionStorage.getItem('chatHasBeenOpened') === 'true';
+
+    if (!hasOpenedChat) {
+        const hasShownWelcome = sessionStorage.getItem('welcomeNotificationShown') === 'true';
+
+        // If already shown on a previous page, show immediately (no delay)
+        const delay = hasShownWelcome ? 0 : 3000;
+
+        setTimeout(() => {
+            // Re-check just in case user opened chat during the delay
+            if (chatWindowEl.style.display === 'flex') return;
+            if (sessionStorage.getItem('chatHasBeenOpened') === 'true') return;
+
+            const lang = sessionStorage.getItem('chatLang') || document.documentElement.lang || 'en';
+            const welcomeMessage = lang === 'sk' ? 'Som Tony, ako vám môžem pomôcť?' : 'I am Tony, how can I help you?';
+
+            const lastMsg = chatHistory.length > 0 ? chatHistory[chatHistory.length - 1] : null;
+
+            // Mark as shown so next page loads immediate
+            sessionStorage.setItem('welcomeNotificationShown', 'true');
+
+            if (lastMsg && (lastMsg.text === 'Som Tony, ako vám môžem pomôcť?' || lastMsg.text === 'I am Tony, how can I help you?')) {
+                // Message exists, just show the bubble again (visual only)
+                badgeEl.style.display = 'flex';
+                notificationBubbleEl.textContent = welcomeMessage;
+                notificationBubbleEl.classList.remove('hiding');
+                notificationBubbleEl.classList.add('active');
+            } else if (!lastMsg && chatHistory.length === 0) {
+                // New welcome message (appends to history + shows bubble)
+                // autoHide = false (persist)
+                appendMessage(welcomeMessage, 'bot', true, false);
+            }
+        }, delay);
     }
 
     chatBubbleEl.addEventListener('click', toggleChatWindow);
@@ -121,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sendBtnEl.disabled = true;
 
         try {
-            const response = await fetch(N8N_WEBHOOK_URL, {
+            const response = await fetch(CHAT_WEBHOOK_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -130,7 +171,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     message: messageText,
                     conversationID: conversationId,
                     history: chatHistory,
-                    lang: localStorage.getItem('language') || document.documentElement.lang || 'en'
+                    lang: localStorage.getItem('language') || document.documentElement.lang || 'en',
+                    userData: window.UserState ? window.UserState.get() : {}
                 }),
             });
 
@@ -144,8 +186,12 @@ document.addEventListener('DOMContentLoaded', () => {
             handleBackendResponse(data);
 
         } catch (error) {
-            console.error('Error sending message:', error);
-            appendMessage('Error: Could not connect to the server.', 'bot');
+            console.error('❌ Chatbot Fetch Error:', error);
+            let userErrorMsg = 'Error: Could not connect to the server.';
+            if (error.message.includes('Failed to fetch')) {
+                userErrorMsg = 'Network error. Please check if the backend is running and CORS is allowed.';
+            }
+            appendMessage(userErrorMsg, 'bot');
         } finally {
             chatInputEl.disabled = false;
             sendBtnEl.disabled = false;
@@ -176,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
         chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
     }
 
-    function appendMessage(text, type, withTypingEffect = false) {
+    function appendMessage(text, type, withTypingEffect = false, autoHide = true) {
         // Save new message to history
         chatHistory.push({ text, type });
         sessionStorage.setItem('chatHistory', JSON.stringify(chatHistory));
@@ -194,15 +240,17 @@ document.addEventListener('DOMContentLoaded', () => {
             notificationBubbleEl.classList.add('active');
 
             // Auto hide notification bubble after 8 seconds but keep badge
-            setTimeout(() => {
-                if (notificationBubbleEl.classList.contains('active')) {
-                    notificationBubbleEl.classList.remove('active');
-                    notificationBubbleEl.classList.add('hiding');
-                    setTimeout(() => {
-                        notificationBubbleEl.classList.remove('hiding');
-                    }, 400);
-                }
-            }, 8000);
+            if (autoHide) {
+                setTimeout(() => {
+                    if (notificationBubbleEl.classList.contains('active')) {
+                        notificationBubbleEl.classList.remove('active');
+                        notificationBubbleEl.classList.add('hiding');
+                        setTimeout(() => {
+                            notificationBubbleEl.classList.remove('hiding');
+                        }, 400);
+                    }
+                }, 8000);
+            }
         }
     }
 
@@ -235,24 +283,35 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Calendar Integration Logic ---
 
     // Step 2: Handle Backend Response
+    // Step 2: Handle Backend Response
     function handleBackendResponse(data) {
         // 1. Display the text response
         const messageText = data.response || 'Sorry, I did not understand that.';
         appendMessage(messageText, 'bot', true);
 
-        // 2. State tracking for frontend
-        if (data.email && data.email !== "null") {
-            sessionStorage.setItem('userEmail', data.email);
-            localStorage.setItem('userEmail', data.email);
+        // 2. State tracking for frontend (New Architecture)
+        if (window.UserState) {
+            if (data.extractedData && Object.keys(data.extractedData).length > 0) {
+                // If backend provides specific frontend bundle
+                window.UserState.update(data.extractedData);
+            } else {
+                // Fallback: Check root fields (legacy/supabase support)
+                const update = {};
+                if (data.email && data.email !== "null") update.email = data.email;
+                if (data.phone && data.phone !== "null") update.phone = data.phone;
+
+                // Construct fullname from parts if available
+                if (data.forname && data.forname !== "null") {
+                    const s = (data.surname && data.surname !== "null") ? data.surname : '';
+                    update.fullName = `${data.forname} ${s}`.trim();
+                }
+
+                if (Object.keys(update).length > 0) {
+                    window.UserState.update(update);
+                }
+            }
         }
-        if (data.forname && data.forname !== "null") {
-            sessionStorage.setItem('userName', data.forname);
-            localStorage.setItem('userName', data.forname);
-        }
-        if (data.phone && data.phone !== "null") {
-            sessionStorage.setItem('userPhone', data.phone);
-            localStorage.setItem('userPhone', data.phone);
-        }
+
         if (data.lang) sessionStorage.setItem('chatLang', data.lang);
 
         // 3. Intention handling
@@ -265,22 +324,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Event listener for calendar booking
     window.addEventListener('calendar-book-initiated', (e) => {
-        const { name, time, date } = e.detail;
+        let { name, time, date } = e.detail;
+
+        // Use UserState if available to avoid stale names like 'Jozef'
+        if (window.UserState && window.UserState.get().fullName) {
+            name = window.UserState.get().fullName;
+        }
 
         // Prioritize actual page language over session history
         const pageLang = localStorage.getItem('language') || document.documentElement.lang || 'en';
         const lang = pageLang.split('-')[0]; // Handle 'sk-SK' or 'en-US'
 
         // Format date to local format (d.m.Y)
-        // date is usually YYYY-MM-DD
         const dateParts = date.includes('-') ? date.split('-') : date.split('.');
         let formattedDate = date;
         if (dateParts.length === 3) {
             if (dateParts[0].length === 4) {
-                // YYYY-MM-DD -> DD.MM.YYYY
                 formattedDate = `${parseInt(dateParts[2])}.${parseInt(dateParts[1])}.${dateParts[0]}`;
             } else {
-                // Assume already in some local format, just ensure dots
                 formattedDate = `${parseInt(dateParts[0])}.${parseInt(dateParts[1])}.${dateParts[2]}`;
             }
         }
@@ -296,4 +357,103 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // OLD CALENDAR LOGIC REMOVED - using global widget now
+
+    // --- Dynamic Language Update ---
+    window.updateChatbotLanguage = function (lang) {
+        const MSG_EN = 'I am Tony, how can I help you?';
+        const MSG_SK = 'Som Tony, ako vám môžem pomôcť?';
+
+        const newWelcome = lang === 'sk' ? MSG_SK : MSG_EN;
+        const oldWelcome = lang === 'sk' ? MSG_EN : MSG_SK;
+
+        // 1. Update History
+        let historyChanged = false;
+        chatHistory = chatHistory.map(msg => {
+            if (msg.text === oldWelcome) {
+                historyChanged = true;
+                return { ...msg, text: newWelcome };
+            }
+            return msg;
+        });
+
+        if (historyChanged) {
+            sessionStorage.setItem('chatHistory', JSON.stringify(chatHistory));
+
+            // 2. Re-render messages if chat is open
+            chatMessagesEl.innerHTML = '';
+            chatHistory.forEach(msg => renderMessage(msg.text, msg.type, false));
+        }
+
+        // 3. Update Notification Bubble if it shows the old welcome message
+        if (notificationBubbleEl.textContent === oldWelcome) {
+            notificationBubbleEl.textContent = newWelcome;
+        }
+
+        // Update session lang
+        sessionStorage.setItem('chatLang', lang);
+    };
+
+    // Expose function to trigger pricing warning from other scripts
+    window.triggerPricingWarning = function (lang) {
+        // Close chat window if open so bubble is visible
+        const chatWindow = document.getElementById('chatWindow');
+        if (chatWindow && chatWindow.classList.contains('active')) {
+            toggleChatWindow(false);
+        }
+
+        // Define messages
+        const messages = {
+            en: [
+                "Are you sure you want to choose this path before the AI Audit? After the AI audit, we have a detailed analysis, we can determine the exact value and identify all pain points.",
+                "By the way, automations implemented based on an audit are usually up to 30% cheaper."
+            ],
+            sk: [
+                "Ste si istý, že chcete zvoliť tento postup ešte pred AI auditom? Po AI audite máme všetko detailne analyzované, vieme presne určiť hodnotu a nájsť všetky pain points.",
+                "Mimochodom, automatizácie navrhnuté na základe auditu bývajú zvyčajne až o 30% lacnejšie."
+            ]
+        };
+
+        const msgs = messages[lang] || messages['en'];
+
+        // Show first message in bubble
+        if (notificationBubbleEl) {
+            notificationBubbleEl.textContent = msgs[0];
+            notificationBubbleEl.classList.add('active');
+
+            // Log to history without opening
+            appendMessage(msgs[0], 'bot');
+
+            // Show second message in bubble after delay
+            setTimeout(() => {
+                notificationBubbleEl.classList.remove('active');
+                setTimeout(() => {
+                    notificationBubbleEl.textContent = msgs[1];
+                    notificationBubbleEl.classList.add('active');
+                    appendMessage(msgs[1], 'bot');
+                }, 200);
+            }, 4500);
+        }
+    };
+
+    window.triggerAuditWelcome = function (lang) {
+        // Close chat window if open
+        const chatWindow = document.getElementById('chatWindow');
+        if (chatWindow && chatWindow.classList.contains('active')) {
+            toggleChatWindow(false);
+        }
+
+        const messages = {
+            en: "Excellent choice! The AI Audit is the best first step. Please fill out this form to get started.",
+            sk: "Výborná voľba! AI Audit je najlepší prvý krok. Na začiatok prosím vyplňte tento formulár."
+        };
+
+        const msg = messages[lang] || messages['en'];
+
+        if (notificationBubbleEl) {
+            notificationBubbleEl.textContent = msg;
+            notificationBubbleEl.classList.add('active');
+            appendMessage(msg, 'bot');
+        }
+    };
+
 });

@@ -12,8 +12,8 @@
             currentLang: localStorage.getItem('language') || 'en'
         },
 
-        WEBHOOK_URL: 'https://my-website-backend-production-4247.up.railway.app/webhook/calendar-availability-check',
-        BOOKING_URL: 'https://my-website-backend-production-4247.up.railway.app/webhook/calendar-initiate-book',
+        WEBHOOK_URL: '',
+        BOOKING_URL: '',
 
         translations: {
             en: {
@@ -57,6 +57,12 @@
         },
 
         init: function () {
+            const DEFAULT_BACKEND_URL = 'https://my-website-backend-production-25c8.up.railway.app';
+            const BACKEND_URL = window.ARCIGY_BACKEND_URL || DEFAULT_BACKEND_URL;
+            this.WEBHOOK_URL = `${BACKEND_URL}/webhook/calendar-availability-check`;
+            this.BOOKING_URL = `${BACKEND_URL}/webhook/calendar-initiate-book`;
+            console.log('📅 Calendar Widget initialized with backend:', BACKEND_URL);
+
             this.injectHTML();
             this.cacheDOM();
             this.bindEvents();
@@ -222,9 +228,12 @@
                 }
 
                 const conversationId = sessionStorage.getItem('conversationId');
-                const userEmail = sessionStorage.getItem('userEmail') || localStorage.getItem('userEmail');
-                const userName = sessionStorage.getItem('userName') || localStorage.getItem('userName');
-                const userPhone = sessionStorage.getItem('userPhone') || localStorage.getItem('userPhone');
+
+                // Get current user state (name, email, phone)
+                const userState = window.UserState ? window.UserState.get() : {};
+                const userName = userState.fullName || sessionStorage.getItem('userName') || localStorage.getItem('userName') || "Client";
+                const userEmail = userState.email || sessionStorage.getItem('userEmail') || localStorage.getItem('userEmail') || "null";
+                const userPhone = userState.phone || sessionStorage.getItem('userPhone') || localStorage.getItem('userPhone') || "null";
 
                 this.dom.confirmBtn.disabled = true;
                 this.dom.confirmBtn.textContent = t.processing;
@@ -259,19 +268,22 @@
                                 date: this.state.selectedDate
                             }
                         }));
-                        this.close();
                     } else {
-                        throw new Error('Booking failed');
+                        const errorData = await response.json().catch(() => ({}));
+                        throw new Error(errorData.message || 'Booking failed');
                     }
                 } catch (e) {
-                    console.error(e);
-                    alert(t.alertFail);
+                    console.error('❌ Calendar Booking Error:', e);
+                    alert(`${t.alertFail} (${e.message})`);
                     this.updateConfirmBtn();
                 }
             });
         },
 
         updateLanguage: function (lang) {
+            // Safety check: if dom elements aren't cached yet, don't try to update them
+            if (!this.dom || !this.dom.calTitle) return;
+
             this.state.currentLang = lang || 'en';
             const t = this.translations[this.state.currentLang];
 

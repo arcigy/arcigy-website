@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Book an AI Business Audit with ArciGy.">
+    <title>AI Audit - ArciGy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="chatbot.css">
+    <link rel="stylesheet" href="calendar.css">
+</head>
+
+<body>
+    <canvas id="heroCanvas"></canvas>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo" aria-label="ArciGy Home"
+                style="display: flex; align-items: center; gap: 10px;">
+                <img src="GRADIENT_LOGO ONLY.png" alt="ArciGy Logo" style="height: 32px; width: auto;">
+                <img src="GRADIENT_TEXT ONLY.png" alt="ArciGy" style="height: 24px; width: auto;">
+            </a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link" data-i18n="nav.home">Home</a></li>
+                <li><a href="about.html" class="nav-link" data-i18n="nav.about">About</a></li>
+                <li><a href="services.html" class="nav-link" data-i18n="nav.services">Services</a></li>
+                <li><a href="pricing.html" class="nav-link" data-i18n="nav.pricing">Pricing</a></li>
+                <li><a href="contact.html" class="nav-link" data-i18n="nav.contact">Contact</a></li>
+            </ul>
+            <div class="nav-lang">
+                <button class="lang-btn active" data-lang="en" aria-label="English">EN</button>
+                <button class="lang-btn" data-lang="sk" aria-label="Slovak">SK</button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero" style="min-height: 35vh; padding-top: 8rem; padding-bottom: 2rem;">
+        <div class="hero-background">
+            <div class="hero-shape shape-1"></div>
+            <div class="hero-shape shape-2"></div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title" data-i18n="audit.hero.title">AI Business Audit</h1>
+            <p class="hero-subtitle" data-i18n="audit.hero.subtitle">Tell us about your business to get started</p>
+        </div>
+    </section>
+
+    <section class="contact-section" style="padding-top: 1rem;">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-form-wrapper" style="max-width: 800px; margin: 0 auto;">
+                    <form class="contact-form" id="auditForm">
+                        <div class="form-group">
+                            <label for="fullname" data-i18n="audit.form.fullname">Full Name</label>
+                            <input type="text" id="fullname" name="fullname" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" data-i18n="audit.form.email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" data-i18n="audit.form.phone">Phone Number (vkladajte aj s predvoľbou
+                                napr. +421)</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+421 9xx xxx xxx" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="company" data-i18n="contact.form.company">Company</label>
+                            <input type="text" id="company" name="company" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pitch" data-i18n="audit.form.pitch">Your Business Elevator Pitch</label>
+                            <textarea id="pitch" name="pitch" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="turnover" data-i18n="audit.form.turnover">Annual Turnover</label>
+                            <select id="turnover" name="turnover"
+                                style="width: 100%; padding: 0.875rem 1rem; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--btn-radius); color: var(--text-primary); font-family: var(--font-body); font-size: 1rem;"
+                                required>
+                                <option value="" disabled selected data-i18n="audit.form.select_option">Select an option
+                                </option>
+                                <option value="0-10k">0 - 10,000</option>
+                                <option value="10k-100k">10,000 - 100,000</option>
+                                <option value="100k-500k">100,000 - 500,000</option>
+                                <option value="500k-1M">500,000 - 1,000,000</option>
+                                <option value="1M-5M">1,000,000 - 5,000,000</option>
+                                <option value="5M+">5,000,000+</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="journey" data-i18n="audit.form.journey">What's your customer journey? (Click to
+                                close)</label>
+                            <textarea id="journey" name="journey" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="dream" data-i18n="audit.form.dream">What's your dream outcome?</label>
+                            <textarea id="dream" name="dream" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="problem" data-i18n="audit.form.problem">What's your biggest problem right
+                                now?</label>
+                            <textarea id="problem" name="problem" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="bottleneck" data-i18n="audit.form.bottleneck">What do you feel is the biggest
+                                bottleneck?</label>
+                            <textarea id="bottleneck" name="bottleneck" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group form-group-checkbox">
+                            <input type="checkbox" id="privacy" name="privacy" value="true" required>
+                            <label for="privacy" data-i18n="contact.form.privacy">I agree to the <a
+                                    href="privacy-policy.html" target="_blank">Privacy Policy</a></label>
+                        </div>
+                        <div class="form-group form-group-checkbox">
+                            <input type="checkbox" id="terms" name="terms" value="true" required>
+                            <label for="terms" data-i18n="contact.form.terms">I agree to the <a
+                                    href="terms-of-service.html" target="_blank">Terms of Service</a></label>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;"
+                            data-i18n="audit.form.submit">Select Date</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3 class="footer-logo">ArciGy</h3>
+                    <p class="footer-tagline" data-i18n="footer.tagline">Automation Architects for Business Efficiency
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4 data-i18n="footer.links.title">Quick Links</h4>
+                        <ul>
+                            <li><a href="about.html" data-i18n="nav.about">About</a></li>
+                            <li><a href="services.html" data-i18n="nav.services">Services</a></li>
+                            <li><a href="pricing.html" data-i18n="nav.pricing">Pricing</a></li>
+                            <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4 data-i18n="footer.legal.title">Legal</h4>
+                        <ul>
+                            <li><a href="privacy-policy.html" data-i18n="footer.legal.privacy">Privacy Policy</a></li>
+                            <li><a href="terms-of-service.html" data-i18n="footer.legal.terms">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4 data-i18n="footer.contact.title">Contact Us</h4>
+                        <ul>
+                            <li><a href="mailto:hello@arcigy.group">hello@arcigy.group</a></li>
+                            <li><a href="tel:+421915999999">+421 915 999 999</a></li>
+                            <li>Bratislava, Slovakia</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ArciGy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="chatbot.js"></script>
+    <script src="animations.js"></script>
+    <script src="calendar.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Trigger Chatbot Welcome Message
+            setTimeout(() => {
+                const lang = localStorage.getItem('language') || 'en';
+                if (window.triggerAuditWelcome) {
+                    window.triggerAuditWelcome(lang);
+                }
+            }, 500); // Small delay to ensure chatbot init
+
+            const form = document.getElementById('auditForm');
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData);
+
+                // Show loading state on button
+                const btn = form.querySelector('button[type="submit"]');
+                const originalText = btn.textContent;
+                btn.disabled = true;
+                btn.textContent = (localStorage.getItem('language') === 'sk' ? 'Overujem...' : 'Verifying...');
+
+                // 1. Email Validation
+                const emailInput = form.querySelector('input[type="email"]');
+                if (emailInput && typeof window.validateEmailWithBackend === 'function') {
+                    if (window.clearError) window.clearError(emailInput);
+                    const validation = await window.validateEmailWithBackend(emailInput.value);
+                    if (!validation.valid) {
+                        if (window.showError) {
+                            window.showError(emailInput, validation.message, validation.suggestion);
+                        } else {
+                            alert(validation.message);
+                        }
+                        btn.disabled = false;
+                        btn.textContent = originalText;
+                        return;
+                    }
+                }
+
+                btn.textContent = (localStorage.getItem('language') === 'sk' ? 'Ukladám...' : 'Saving...');
+
+                try {
+                    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+                    const DEFAULT_BACKEND_URL = isLocal ? 'http://localhost:8000' : 'https://my-website-backend-production-25c8.up.railway.app';
+                    const BACKEND_URL = window.ARCIGY_BACKEND_URL || DEFAULT_BACKEND_URL;
+
+                    const response = await fetch(`${BACKEND_URL}/webhook/audit-submit`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+
+                    if (!response.ok) throw new Error('Failed to save audit');
+                    console.log('✅ Audit saved successfully');
+                } catch (err) {
+                    console.error('❌ Audit save error:', err);
+                } finally {
+                    btn.disabled = false;
+                    btn.textContent = originalText;
+                }
+
+                if (window.arcigyCalendar) {
+                    window.arcigyCalendar.open();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
