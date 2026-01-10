@@ -1022,8 +1022,8 @@ section::after {
     cursor: pointer;
     transition: all 0.2s ease;
     white-space: nowrap;
-    min-width: 130px;
-    /* Prevent jumping */
+    width: max-content;
+    min-width: 140px;
 }
 
 .newsletter-form button:hover {
