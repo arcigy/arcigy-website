@@ -1084,18 +1084,26 @@ function showError(input, message, suggestion = null) {
         input.parentElement.appendChild(errorEl);
     }
 
+    // Disable submit button of the parent form
+    const form = input.closest('form');
+    if (form) {
+        const btn = form.querySelector('button[type="submit"]');
+        if (btn) btn.disabled = true;
+    }
+
     if (suggestion) {
         const lang = localStorage.getItem('language') || 'en';
         const msg = lang === 'sk' ? `Mysleli ste ` : `Did you mean `;
-        errorEl.innerHTML = `${msg} <span class="suggestion-link">${suggestion}</span>?`;
+        errorEl.innerHTML = `<span>⚠️ ${msg}</span> <span class="suggestion-link" title="Použiť tento e-mail">${suggestion}</span>?`;
         errorEl.querySelector('.suggestion-link').onclick = () => {
             input.value = suggestion;
             clearError(input);
-            // Re-trigger UserState update
+            // Re-trigger UserState update and validation
             input.dispatchEvent(new Event('input'));
+            input.dispatchEvent(new Event('blur'));
         };
     } else {
-        errorEl.textContent = message;
+        errorEl.innerHTML = `<span>⚠️ ${message}</span>`;
     }
     errorEl.classList.add('active');
 }
@@ -1105,6 +1113,16 @@ function clearError(input) {
     input.classList.remove('input-error');
     const errorEl = input.parentElement.querySelector('.error-message');
     if (errorEl) errorEl.classList.remove('active');
+
+    // Re-enable submit button if no other errors in the form
+    const form = input.closest('form');
+    if (form) {
+        const hasErrors = form.querySelectorAll('.input-error').length > 0;
+        if (!hasErrors) {
+            const btn = form.querySelector('button[type="submit"]');
+            if (btn) btn.disabled = false;
+        }
+    }
 }
 window.clearError = clearError;
 
@@ -1211,8 +1229,10 @@ function initForms() {
 function initRealtimeValidation() {
     const emailInputs = document.querySelectorAll('input[type="email"]');
     emailInputs.forEach(input => {
+        // Validation on blur
         input.addEventListener('blur', async () => {
             if (input.value) {
+                // Show immediate "verifying" state? No, just fast check
                 const validation = await validateEmailWithBackend(input.value);
                 if (!validation.valid) {
                     showError(input, validation.message, validation.suggestion);
@@ -1221,8 +1241,12 @@ function initRealtimeValidation() {
                 }
             }
         });
+
+        // Immediate clear on typing to keep it responsive
         input.addEventListener('input', () => {
-            clearError(input);
+            if (input.classList.contains('input-error')) {
+                clearError(input);
+            }
         });
     });
 }
