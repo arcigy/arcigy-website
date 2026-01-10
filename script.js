@@ -151,6 +151,9 @@ const translations = {
                 terms: "Terms of Service",
                 privacy: "Privacy Policy"
             },
+            contact: {
+                title: "Contact Us"
+            },
             newsletter: {
                 title: "Newsletter",
                 placeholder: "Your email",
@@ -329,6 +332,9 @@ const translations = {
                 title: "Právne",
                 terms: "Obchodné podmienky",
                 privacy: "Zásady ochrany súkromia"
+            },
+            contact: {
+                title: "Kontaktujte Nás"
             },
             newsletter: {
                 title: "Newsletter",
