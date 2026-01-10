@@ -1085,11 +1085,18 @@ function showError(input, message, suggestion = null) {
         input.parentElement.appendChild(errorEl);
     }
 
-    // Disable submit button of the parent form
+    // Disable submit button of the parent form and change text
     const form = input.closest('form');
     if (form) {
         const btn = form.querySelector('button[type="submit"]');
-        if (btn) btn.disabled = true;
+        if (btn) {
+            if (!btn.hasAttribute('data-original-text')) {
+                btn.setAttribute('data-original-text', btn.textContent);
+            }
+            btn.disabled = true;
+            const lang = (typeof currentLang !== 'undefined') ? currentLang : (localStorage.getItem('language') || 'en');
+            btn.textContent = lang === 'sk' ? 'Prosím, opravte chybu' : 'Please fix error';
+        }
     }
 
     if (suggestion) {
@@ -1121,7 +1128,11 @@ function clearError(input) {
         const hasErrors = form.querySelectorAll('.input-error').length > 0;
         if (!hasErrors) {
             const btn = form.querySelector('button[type="submit"]');
-            if (btn) btn.disabled = false;
+            if (btn && btn.hasAttribute('data-original-text')) {
+                btn.disabled = false;
+                btn.textContent = btn.getAttribute('data-original-text');
+                btn.removeAttribute('data-original-text');
+            }
         }
     }
 }
