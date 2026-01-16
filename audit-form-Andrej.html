@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pre-Audit Intake Form - ArciGy">
+    <title>Pre-Audit Intake Form - ArciGy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="chatbot.css">
+    <link rel="stylesheet" href="calendar.css">
+
+    <style>
+        /* Specific Styles for Intake Form maintaining Premium Look */
+
+        /* Force visibility for sticky to work */
+        body,
+        .contact-section,
+        .container {
+            overflow: visible !important;
+        }
+
+        /* Layout Grid */
+        .audit-layout {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            /* Form takes remaining space, Sidebar fixed right */
+            gap: 4rem;
+            max-width: 90%;
+            /* Much wider as requested */
+            margin: 0 auto;
+            position: relative;
+            align-items: start;
+            /* CRITICAL: Ensures sidebar is only as tall as content, allowing sticky to work */
+        }
+
+        /* Sticky Sidebar - Applied directly to grid item */
+        .audit-sidebar {
+            position: -webkit-sticky;
+            /* Safari */
+            position: sticky;
+            top: 15vh;
+            /* Levitates 15% from top */
+            height: fit-content;
+            z-index: 10;
+        }
+
+        .profile-card {
+            background: var(--surface);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 3rem;
+            backdrop-filter: blur(12px);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            width: 100%;
+            transition: transform 0.3s ease;
+            /* Shadow to make it pop */
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        .profile-image-container {
+            width: 200px;
+            height: 200px;
+            border-radius: 32px;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-info h3 {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-info p {
+            font-family: var(--font-body);
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 1rem;
+            color: var(--accent-solid);
+            margin-top: 0.5rem;
+            text-decoration: none;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .contact-pill:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .intake-form-wrapper {
+            width: 100%;
+        }
+
+        .form-section-card {
+            background: var(--surface);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(12px);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .form-section-card:hover,
+        .form-section-card:focus-within {
+            border-color: rgba(99, 101, 232, 0.4);
+        }
+
+        .section-header {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .question-group {
+            margin-bottom: 2.5rem;
+        }
+
+        .question-group:last-child {
+            margin-bottom: 0.5rem;
+        }
+
+        .question-label {
+            display: block;
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+
+        .question-label span.number {
+            color: var(--accent-solid);
+            margin-right: 8px;
+        }
+
+        /* Inputs & Textareas */
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            color: #fff;
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            transition: all 0.2s ease;
+            line-height: 1.6;
+            resize: vertical;
+            /* Allow vertical resize */
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-solid);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 0 0 4px rgba(99, 101, 232, 0.15);
+        }
+
+        .form-input::placeholder,
+        .form-textarea::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+            font-style: italic;
+            white-space: pre-wrap;
+            /* Help with wrapping in textareas */
+        }
+
+        /* Options (Radio/Checkbox) */
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .option-item input {
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            flex-shrink: 0;
+            display: grid;
+            place-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .option-item input[type="radio"] {
+            border-radius: 50%;
+        }
+
+        .option-item input[type="checkbox"] {
+            border-radius: 6px;
+        }
+
+        .option-item input::before {
+            content: "";
+            width: 14px;
+            height: 14px;
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em var(--accent-solid);
+        }
+
+        .option-item input[type="radio"]::before {
+            border-radius: 50%;
+        }
+
+        .option-item input[type="checkbox"]::before {
+            transform-origin: center;
+            clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+            box-shadow: inset 1em 1em white;
+            background-color: var(--accent-solid);
+        }
+
+        .option-item input:checked {
+            border-color: var(--accent-solid);
+        }
+
+        .option-item input[type="radio"]:checked::before {
+            transform: scale(1);
+        }
+
+        .option-item input[type="checkbox"]:checked {
+            background-color: var(--accent-solid);
+            border-color: var(--accent-solid);
+        }
+
+        .option-item input[type="checkbox"]:checked::before {
+            transform: scale(1);
+            background-color: white;
+            box-shadow: none;
+        }
+
+        .option-text {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 1200px) {
+            .audit-layout {
+                grid-template-columns: 1fr 300px;
+                gap: 2rem;
+                max-width: 95%;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .audit-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-card {
+                position: relative;
+                top: 0;
+                flex-direction: row;
+                text-align: left;
+                padding: 1.5rem;
+                margin-bottom: 2rem;
+                /* Spacing between bottom profile and footer */
+                margin-top: 4rem;
+                /* Spacing between form and bottom profile */
+            }
+
+            .profile-image-container {
+                width: 100px;
+                height: 100px;
+            }
+
+            .profile-info h3 {
+                font-size: 1.4rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-section-card {
+                padding: 1.5rem;
+                padding-top: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+            }
+
+            .question-label {
+                font-size: 1.1rem;
+            }
+
+            .profile-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-image-container {
+                width: 120px;
+                height: 120px;
+            }
+
+            .contact-pill {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="heroCanvas"></canvas>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo" aria-label="ArciGy Home"
+                style="display: flex; align-items: center; gap: 10px;">
+                <img src="GRADIENT_LOGO ONLY.png" alt="ArciGy Logo" style="height: 32px; width: auto;">
+                <img src="GRADIENT_TEXT ONLY.png" alt="ArciGy" style="height: 24px; width: auto;">
+            </a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link" data-i18n="nav.home">Home</a></li>
+                <li><a href="about.html" class="nav-link" data-i18n="nav.about">About</a></li>
+                <li><a href="services.html" class="nav-link" data-i18n="nav.services">Services</a></li>
+                <li><a href="pricing.html" class="nav-link" data-i18n="nav.pricing">Pricing</a></li>
+                <li><a href="contact.html" class="nav-link" data-i18n="nav.contact">Contact</a></li>
+            </ul>
+            <div class="nav-lang">
+                <button class="lang-btn active" data-lang="en" aria-label="English">EN</button>
+                <button class="lang-btn" data-lang="sk" aria-label="Slovak">SK</button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero" style="min-height: 40vh; padding-top: 8rem; padding-bottom: 4rem;">
+        <div class="hero-background">
+            <div class="hero-shape shape-1"></div>
+            <div class="hero-shape shape-2"></div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title" data-i18n="preaudit.hero.title">Pre-Audit Intake Form</h1>
+            <p class="hero-subtitle" data-i18n="preaudit.hero.subtitle">Help us understand your business better to
+                maximize the value of our upcoming audit.</p>
+        </div>
+    </section>
+
+    <section class="contact-section" style="padding-top: 0; padding-bottom: 6rem;">
+        <div class="container">
+            <div class="audit-layout">
+                <!-- Form Content (Swapped to be first) -->
+                <div class="intake-form-wrapper">
+                    <form id="auditIntakeForm">
+
+                        <!-- Section 1: The Basics -->
+                        <div class="form-section-card">
+                            <div class="section-header">
+                                <h2 class="section-title" data-i18n="preaudit.sections.basics">Section 1: The Basics
+                                </h2>
+                            </div>
+
+                            <div class="question-group">
+                                <label class="question-label" for="name" data-i18n="preaudit.questions.q1">1. Your
+                                    Name</label>
+                                <input type="text" id="name" name="name" class="form-input" placeholder="Your Answer"
+                                    data-i18n-placeholder="preaudit.questions.placeholder_default" required>
+                            </div>
+
+                            <div class="question-group">
+                                <label class="question-label" for="email" data-i18n="preaudit.questions.q2">2. Your
+                                    Email</label>
+                                <input type="email" id="email" name="email" class="form-input" placeholder="Your Answer"
+                                    data-i18n-placeholder="preaudit.questions.placeholder_default" required>
+                            </div>
+
+                            <div class="question-group">
+                                <label class="question-label" for="business_name" data-i18n="preaudit.questions.q3">3.
+                                    Business Name</label>
+                                <input type="text" id="business_name" name="business_name" class="form-input"
+                                    placeholder="Your Answer"
+                                    data-i18n-placeholder="preaudit.questions.placeholder_default" required>
+                            </div>
+
+                            <div class="question-group">
+                                <label class="question-label" for="industry" data-i18n="preaudit.questions.q4">4.
+                                    Industry</label>
+                                <!-- Changed to Textarea for wrapping placeholder -->
+                                <textarea id="industry" name="industry" rows="2" class="form-textarea"
+                                    placeholder="E.g., Real Estate, Marketing Agency, E-commerce, Accounting, Construction"
+                                    data-i18n-placeholder="preaudit.questions.q4_ph" required></textarea>
+                            </div>
+
+                            <div class="question-group">
+                                <label class="question-label" data-i18n="preaudit.questions.q5">5. Roughly how many
+                                    people work in your business?</label>
+                                <div class="options-grid">
+                                    <label class="option-item">
+                                        <input type="radio" name="employees" value="Just me" required>
+                                        <span class="option-text" data-i18n="preaudit.options.just_me">Just me</span>
+                                    </label>
+                                    <label class="option-item">
+                                        <input type="radio" name="employees" value="2-5">
+                                        <span class="option-text">2-5</span>
+                                    </label>
+                                    <label class="option-item">
+                                        <input type="radio" name="employees" value="6-15">
+                                        <span class="option-text">6-15</span>
+                                    </label>
+                                    <label class="option-item">
+                                        <input type="radio" name="employees" value="16-50">
+                                        <span class="option-text">16-50</span>
+                                    </label>
+                                    <label class="option-item">
+                                        <input type="radio" name="employees" value="50+">
+                                        <span class="option-text">50+</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section 2: What You Do -->
+                        <div class="form-section-card">
+                            <div class="section-header">
+                                <h2 class="section-title" data-i18n="preaudit.sections.what_you_do">Section 2: What You
+                                    Do</h2>
+                            </div>
+
+                            <div class="question-group">
+                                <label class="question-label" for="what_sell" data-i18n="preaudit.questions.q6">6. In
+                                    one sentence, what does your business sell?</label>
+                                <!-- Changed to Textarea for wrapping placeholder -->
+                                <textarea id="what_sell" name="what_sell" rows="2" class="form-textarea"
+                                    placeholder="E.g., 'We help small businesses with their bookkeeping' or 'We sell custom furniture online'"
+                                    data-i18n-placeholder="preaudit.questions.q6_ph" required></textarea>
+                            </div>
+
+                            <div class="question-group">
+                                <label class="question-label" for="typical_customer"
+                                    data-i18n="preaudit.questions.q7">7. Who is your typical customer?</label>
+                                <!-- Changed to Textarea for wrapping placeholder -->
+                                <textarea id="typical_customer" name="typical_customer" rows="2" class="form-textarea"
+                                    placeholder="E.g., 'Small business owners with 5-20 employees' or 'Homeowners aged 35-55 doing renovations'"
+                                    data-i18n-placeholder="preaudit.questions.q7_ph" required></textarea>
+                            </div>
+
+                            <div class="question-group">
+                                <label class="question-label" data-i18n="preaudit.questions.q8">8. How do most of your
+                                    customers find you?</label>
+                                <div class="options-grid">
+                                    <label class="option-item">
+                                        <input type="checkbox" name="source" value="Referrals">
+                                        <span class="option-text" data-i18n="preaudit.options.referrals">Referrals /
+                                            Word of mouth</span>
+                                    </label>
+                                    <label class="option-item">
+                                        <input type="checkbox" name="source" value="SEO">
+                                        <span class="option-text" data-i18n="preaudit.options.seo">Google search /
+                                            SEO</span>
+                                    </label>
+                                    <label class="option-item">
+                                        <input type="checkbox" name="source" value="Social Media">
+                                        <span class="option-text" data-i18n="preaudit.options.social">Social media
+                                            (organic)</span>
+                                    </label>
+                                    <label class="option-item">
+                                        <input type="checkbox" name="source" value="Paid Ads">
+                                        <span class="option-text" data-i18n="preaudit.options.ads">Paid ads</span>
+                                    </label>
+                                    <label class="option-item">
+                                        <input type="checkbox" name="source" value="Cold Outreach">
+                                        <span class="option-text" data-i18n="preaudit.options.cold">Cold outreach
+                                            (email, calls, DMs)</span>
+                                    </label>
+                                    <label class="option-item">
+                                        <input type="checkbox" name="source" value="Events">
+                                        <span class="option-text" data-i18n="preaudit.options.events">Events /
+                                            Networking</span>
+                                    </label>
+                                    <label class="option-item">
+                                        <input type="checkbox" name="source" value="Other">
+                                        <span class="option-text" data-i18n="preaudit.options.other">Other</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section 3: The Founder's Time -->
+                        <div class="form-section-card">
+                            <div class="section-header">
+                                <h2 class="section-title" data-i18n="preaudit.sections.founder_time">Section 3: The
+                                    Founder's Time</h2>
+                            </div>
+
+                            <div class="question-group">
+                                <label class="question-label" for="top_tasks" data-i18n="preaudit.questions.q9">9. As
+                                    the founder/owner, what are the top 3 tasks that eat up most of YOUR time each
+                                    week?</label>
+                                <textarea id="top_tasks" name="top_tasks" rows="4" class="form-textarea"
+                                    placeholder="Think about the stuff that pulls you away from high-value work. The things that make you say 'I shouldn't be doing this myself.'"
+                                    data-i18n-placeholder="preaudit.questions.q9_ph" required></textarea>
+                            </div>
+
+                            <div class="question-group">
+                                <label class="question-label" for="magic_wand" data-i18n="preaudit.questions.q10">10. If
+                                    you had a magic wand and could instantly get 10 hours of your week back, what task
+                                    would you eliminate first?</label>
+                                <textarea id="magic_wand" name="magic_wand" rows="4" class="form-textarea"
+                                    placeholder="Don't worry about whether it's realistic. What's the one thing that, if it just handled itself, would change everything?"
+                                    data-i18n-placeholder="preaudit.questions.q10_ph" required></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Section 4: Lead Generation & Marketing -->
+                        <div class="form-section-card">
+                            <div class="section-header">
+                                <h2 class="section-title" data-i18n="preaudit.sections.marketing">Section 4: Lead
+                                    Generation & Marketing</h2>
+                            </div>
+
+                            <div class="question-group">
+                                <label class="question-label" for="leads_challenge"
+                                    data-i18n="preaudit.questions.q11">11. When it comes to getting new leads and
+                                    marketing, what's the biggest challenge you're facing right now?</label>
+                                <textarea id="leads_challenge" name="leads_challenge" rows="4" class="form-textarea"
+                                    placeholder="E.g., 'We don't have a consistent way to generate leads,' 'Content creation takes forever,' 'We're not showing up on Google,' 'Social media feels like a time sink with no ROI'"
+                                    data-i18n-placeholder="preaudit.questions.q11_ph" required></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Section 5: Sales -->
+                        <div class="form-section-card">
+                            <div class="section-header">
+                                <h2 class="section-title" data-i18n="preaudit.sections.sales">Section 5: Sales</h2>
+                            </div>
+
+                            <div class="question-group">
+                                <label class="question-label" data-i18n="preaudit.questions.q12">12. Do you have a sales
+                                    team or is it just you handling sales?</label>
+                                <div class="options-grid">
+                                    <label class="option-item">
+                                        <input type="radio" name="sales_team" value="Just me" required>
+                                        <span class="option-text" data-i18n="preaudit.options.just_me">Just me</span>
+                                    </label>
+                                    <label class="option-item">
+                                        <input type="radio" name="sales_team" value="Me + 1-2 others">
+                                        <span class="option-text" data-i18n="preaudit.options.sales_me_plus">Me + 1-2
+                                            others</span>
+                                    </label>
+                                    <label class="option-item">
+                                        <input type="radio" name="sales_team" value="Dedicated sales team (3+)">
+                                        <span class="option-text" data-i18n="preaudit.options.sales_team">Dedicated
+                                            sales team (3+)</span>
+                                    </label>
+                                    <label class="option-item">
+                                        <input type="radio" name="sales_team" value="No sales">
+                                        <span class="option-text" data-i18n="preaudit.options.no_sales">We don't really
+                                            do "sales" (e.g., e-commerce, self-serve)</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="question-group">
+                                <label class="question-label" for="closing_issues"
+                                    data-i18n="preaudit.questions.q13">13. When it comes to closing deals and sales,
+                                    what's the biggest issue you're facing?</label>
+                                <textarea id="closing_issues" name="closing_issues" rows="4" class="form-textarea"
+                                    placeholder="E.g., 'Low conversion rate,' 'Leads go cold before we follow up,' 'Sales reps not using the CRM properly,' 'No clear sales process,' 'Proposals take too long to create'"
+                                    data-i18n-placeholder="preaudit.questions.q13_ph" required></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Section 6: Service Delivery / Operations -->
+                        <div class="form-section-card">
+                            <div class="section-header">
+                                <h2 class="section-title" data-i18n="preaudit.sections.operations">Section 6: Service
+                                    Delivery / Operations</h2>
+                            </div>
+
+                            <div class="question-group">
+                                <label class="question-label" for="delivery_time" data-i18n="preaudit.questions.q14">14.
+                                    When it comes to delivering your product or service, what's the most time-consuming
+                                    part of the process?</label>
+                                <textarea id="delivery_time" name="delivery_time" rows="4" class="form-textarea"
+                                    placeholder="Think about the steps between 'customer says yes' and 'customer is happy.' Where does it get slow or messy?"
+                                    data-i18n-placeholder="preaudit.questions.q14_ph" required></textarea>
+                            </div>
+
+                            <div class="question-group">
+                                <label class="question-label" for="ops_recurring" data-i18n="preaudit.questions.q15">15.
+                                    Is there something in your operations you've tried to fix multiple times but still
+                                    hasn't been solved?</label>
+                                <textarea id="ops_recurring" name="ops_recurring" rows="4" class="form-textarea"
+                                    placeholder="That recurring problem that keeps coming back no matter what you throw at it."
+                                    data-i18n-placeholder="preaudit.questions.q15_ph"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Section 7: Customer Support & Client Management -->
+                        <div class="form-section-card">
+                            <div class="section-header">
+                                <h2 class="section-title" data-i18n="preaudit.sections.support">Section 7: Customer
+                                    Support & Client Management</h2>
+                            </div>
+
+                            <div class="question-group">
+                                <label class="question-label" for="support_headaches"
+                                    data-i18n="preaudit.questions.q16">16. When it comes to supporting customers or
+                                    managing client relationships, what causes the most headaches?</label>
+                                <textarea id="support_headaches" name="support_headaches" rows="4" class="form-textarea"
+                                    placeholder="E.g., 'We get the same questions over and over,' 'Hard to keep track of client communications,' 'Onboarding new clients is messy,' 'We drop the ball on follow-ups'"
+                                    data-i18n-placeholder="preaudit.questions.q16_ph" required></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Section 8: AI Experience & Expectations -->
+                        <div class="form-section-card">
+                            <div class="section-header">
+                                <h2 class="section-title" data-i18n="preaudit.sections.ai">Section 8: AI Experience &
+                                    Expectations</h2>
+                            </div>
+
+                            <div class="question-group">
+                                <label class="question-label" data-i18n="preaudit.questions.q17">17. Have you or your
+                                    team tried using any AI tools yet? (ChatGPT, Notion AI, Fireflies, etc.)</label>
+                                <div class="options-grid">
+                                    <label class="option-item">
+                                        <input type="radio" name="ai_experience" value="No" required>
+                                        <span class="option-text" data-i18n="preaudit.options.ai_no">No, haven't tried
+                                            anything yet</span>
+                                    </label>
+                                    <label class="option-item">
+                                        <input type="radio" name="ai_experience" value="Tried but failed">
+                                        <span class="option-text" data-i18n="preaudit.options.ai_failed">Yes, but not
+                                            consistently / didn't stick</span>
+                                    </label>
+                                    <label class="option-item">
+                                        <input type="radio" name="ai_experience" value="Regular use">
+                                        <span class="option-text" data-i18n="preaudit.options.ai_regular">Yes, we use a
+                                            few tools regularly</span>
+                                    </label>
+                                    <label class="option-item">
+                                        <input type="radio" name="ai_experience" value="Savvy">
+                                        <span class="option-text" data-i18n="preaudit.options.ai_savvy">Yes, we're
+                                            pretty AI-savvy already</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="question-group">
+                                <label class="question-label" for="which_ai_tools"
+                                    data-i18n="preaudit.questions.q18">18. If yes, which tools have you tried and what
+                                    was your experience?</label>
+                                <textarea id="which_ai_tools" name="which_ai_tools" rows="3" class="form-textarea"
+                                    placeholder="Your Answer"
+                                    data-i18n-placeholder="preaudit.questions.placeholder_default"></textarea>
+                            </div>
+
+                            <div class="question-group">
+                                <label class="question-label" for="success_definition"
+                                    data-i18n="preaudit.questions.q19">19. If this audit goes well and we find some big
+                                    wins, what would success look like for you?</label>
+                                <textarea id="success_definition" name="success_definition" rows="4"
+                                    class="form-textarea"
+                                    placeholder="E.g., 'Save 10 hours a week on admin,' 'Stop losing leads to slow follow-up,' 'Finally get my weekends back,' 'Be able to scale without hiring'"
+                                    data-i18n-placeholder="preaudit.questions.q19_ph" required></textarea>
+                            </div>
+
+                            <div class="question-group">
+                                <label class="question-label" for="specific_focus"
+                                    data-i18n="preaudit.questions.q20">20. Is there anything specific you're hoping I
+                                    look at during the audit?</label>
+                                <textarea id="specific_focus" name="specific_focus" rows="3" class="form-textarea"
+                                    placeholder="Any particular process, tool, or frustration you want me to dig into?"
+                                    data-i18n-placeholder="preaudit.questions.q20_ph"></textarea>
+                            </div>
+                        </div>
+
+                        <div style="text-align: center; margin-top: 3rem;">
+                            <button type="submit" class="btn btn-primary"
+                                style="min-width: 250px; font-size: 1.1rem; padding: 16px 32px;"
+                                data-i18n="preaudit.submit">Submit Audit Request</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3 class="footer-logo">ArciGy</h3>
+                    <p class="footer-tagline" data-i18n="footer.tagline">Automation Architects for Business Efficiency
+                    </p>
+                </div>
+                <div class="footer-column">
+                    <h4 data-i18n="footer.links.title">Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html" data-i18n="nav.about">About</a></li>
+                        <li><a href="services.html" data-i18n="nav.services">Services</a></li>
+                        <li><a href="pricing.html" data-i18n="nav.pricing">Pricing</a></li>
+                        <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 data-i18n="footer.legal.title">Legal</h4>
+                    <ul>
+                        <li><a href="privacy-policy.html" data-i18n="footer.legal.privacy">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html" data-i18n="footer.legal.terms">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 data-i18n="footer.contact.title">Contact Us</h4>
+                    <ul>
+                        <li><a href="mailto:hello@arcigy.group">hello@arcigy.group</a></li>
+                        <li><a href="tel:+421951268376">+421 951 268 376</a></li>
+                    </ul>
+                </div>
+                <div class="footer-newsletter">
+                    <h4 data-i18n="footer.newsletter.title">Newsletter</h4>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <input type="email" name="email" placeholder="Your email" aria-label="Newsletter email"
+                            data-i18n-placeholder="footer.newsletter.placeholder">
+                        <button type="submit" aria-label="Subscribe"
+                            data-i18n="footer.newsletter.submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright" data-i18n="footer.copyright">&copy; 2024 ArciGy. All rights reserved.</p>
+                <div class="footer-lang">
+                    <button class="lang-btn" data-lang="en" aria-label="English">EN</button>
+                    <button class="lang-btn" data-lang="sk" aria-label="Slovak">SK</button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="chatbot.js"></script>
+    <script src="animations.js"></script>
+    <!-- <script src="calendar.js"></script> --> <!-- Calendar not needed for this flow -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Init Chatbot
+            setTimeout(() => {
+                const lang = localStorage.getItem('language') || 'en';
+                // Trigger language update to ensure form is translated
+                if (window.setLanguage) {
+                    window.setLanguage(lang);
+                }
+
+                if (window.triggerAuditWelcome) {
+                    window.triggerAuditWelcome(lang);
+                }
+            }, 500);
+
+            const form = document.getElementById('auditIntakeForm');
+            form.addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                const btn = this.querySelector('button[type="submit"]');
+                const originalText = btn.textContent;
+
+                // --- EMAIL VALIDATION START ---
+                const emailInput = this.querySelector('#email');
+                if (emailInput && window.validateEmailWithBackend && window.showError && window.clearError) {
+                    window.clearError(emailInput);
+
+                    // Show verifying state
+                    btn.disabled = true;
+                    const currentLang = localStorage.getItem('language') || 'en';
+                    btn.textContent = (currentLang === 'sk' ? 'Overujem...' : 'Verifying...');
+
+                    try {
+                        const validation = await window.validateEmailWithBackend(emailInput.value);
+
+                        if (!validation.valid) {
+                            window.showError(emailInput, validation.message, validation.suggestion);
+                            btn.disabled = false;
+                            btn.textContent = originalText;
+                            return; // STOP SUBMISSION
+                        }
+                    } catch (err) {
+                        console.warn('Email validation failed, proceeding anyway:', err);
+                    }
+                }
+                // --- EMAIL VALIDATION END ---
+
+                btn.disabled = true;
+                btn.textContent = 'Submitting...';
+
+                const formData = new FormData(this);
+                const data = {};
+
+                // Handle multiple checkboxes for 'source'
+                const sourceValues = [];
+                formData.getAll('source').forEach(val => sourceValues.push(val));
+
+                for (let [key, value] of formData.entries()) {
+                    if (key === 'source') {
+                        data[key] = sourceValues;
+                    } else {
+                        data[key] = value;
+                    }
+                }
+
+                const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbxPmBKMa96eB5Su3ehqchxLlYE-4PVc6RUkn27q_3XEszO4HHpE5kKNao_aYf3XbcUI/exec';
+
+                try {
+                    const response = await fetch(BACKEND_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'text/plain;charset=utf-8',
+                        },
+                        body: JSON.stringify(data)
+                    });
+
+                    // Check result via text text since GAS might return different things on CORS opaque
+                    const result = await response.text();
+                    console.log('Submission result:', result);
+
+                    alert('Thank you! Your audit intake form has been submitted successfully.');
+                    this.reset();
+                    window.scrollTo(0, 0);
+
+                } catch (error) {
+                    console.error('Error submitting form:', error);
+                    alert('Submitted! If you do not receive a confirmation email within 24 hours, please contact us.');
+                    this.reset();
+                    window.scrollTo(0, 0);
+                } finally {
+                    btn.disabled = false;
+                    btn.textContent = originalText;
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
