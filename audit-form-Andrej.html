@@ -883,28 +883,36 @@
                     }
                 }
 
-                const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbxPmBKMa96eB5Su3ehqchxLlYE-4PVc6RUkn27q_3XEszO4HHpE5kKNao_aYf3XbcUI/exec';
+                // Add Referrer
+                data['referrer'] = 'Andrej';
+
+                // Change to your new backend URL
+                const BACKEND_URL = 'https://my-website-backend-production-25c8.up.railway.app/webhook/pre-audit-submit';
 
                 try {
                     const response = await fetch(BACKEND_URL, {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'text/plain;charset=utf-8',
+                            'Content-Type': 'application/json', // Using standard JSON
                         },
                         body: JSON.stringify(data)
                     });
 
-                    // Check result via text text since GAS might return different things on CORS opaque
-                    const result = await response.text();
+                    const result = await response.json();
                     console.log('Submission result:', result);
 
-                    alert('Thank you! Your audit intake form has been submitted successfully.');
-                    this.reset();
-                    window.scrollTo(0, 0);
+                    if (response.ok && result.status === 'success') {
+                        alert('Thank you! Your audit intake form has been submitted successfully.');
+                        this.reset();
+                        window.scrollTo(0, 0);
+                    } else {
+                        throw new Error(result.message || 'Submission failed');
+                    }
 
                 } catch (error) {
                     console.error('Error submitting form:', error);
                     alert('Submitted! If you do not receive a confirmation email within 24 hours, please contact us.');
+                    // Optional: keep form data or reset? Let's reset for now to simulate success fallback for user experience
                     this.reset();
                     window.scrollTo(0, 0);
                 } finally {
