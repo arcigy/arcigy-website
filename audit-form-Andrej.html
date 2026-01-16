@@ -173,7 +173,19 @@
         }
 
         /* Inputs & Textareas */
-        .form-input,
+        .form-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            color: #fff;
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            transition: all 0.2s ease;
+            line-height: 1.6;
+        }
+
         .form-textarea {
             width: 100%;
             background: rgba(255, 255, 255, 0.03);
@@ -187,6 +199,8 @@
             line-height: 1.6;
             resize: vertical;
             /* Allow vertical resize */
+            min-height: 120px;
+            /* Prevent scrollbar for basic placeholders */
         }
 
         .form-input:focus,
