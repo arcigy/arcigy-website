@@ -31,8 +31,8 @@
             grid-template-columns: 1fr 350px;
             /* Form takes remaining space, Sidebar fixed right */
             gap: 4rem;
-            max-width: 90%;
-            /* Much wider as requested */
+            max-width: 1200px;
+            /* Centralized container */
             margin: 0 auto;
             position: relative;
             align-items: start;
@@ -739,6 +739,27 @@
 
                     </form>
                 </div>
+
+                <!-- Sticky Sidebar Profile -->
+                <aside class="audit-sidebar">
+                    <div class="profile-card">
+                        <div class="profile-image-container">
+                            <!-- Placeholder for Branislav's photo -->
+                            <img src="placeholder_user.jpg" alt="Branislav" class="profile-image"
+                                style="background-color: #333;">
+                        </div>
+                        <div class="profile-info">
+                            <h3>Branislav</h3>
+                            <a href="mailto:branislav@arcigy.com" class="contact-pill">
+                                <span>✉️</span> branislav@arcigy.com
+                            </a>
+                            <br>
+                            <a href="tel:+421951268376" class="contact-pill" style="margin-top: 5px;">
+                                <span>📞</span> +421 951 268 376
+                            </a>
+                        </div>
+                    </div>
+                </aside>
             </div>
         </div>
     </section>
