@@ -849,8 +849,80 @@
             }, 500);
 
             const form = document.getElementById('auditIntakeForm');
+            // Disable default browser validation to use our custom Tony chatbot messages
+            form.setAttribute('novalidate', true);
             form.addEventListener('submit', async function (e) {
                 e.preventDefault();
+
+                // --- CUSTOM CHATBOT VALIDATION START ---
+                // Helper to check radio/checkbox groups
+                const isGroupChecked = (name) => {
+                    const els = this.querySelectorAll(`input[name="${name}"]`);
+                    return Array.from(els).some(el => el.checked);
+                };
+
+                const currentLang = localStorage.getItem('language') || 'en';
+                const isSk = currentLang === 'sk';
+
+                // Define requirements with Tony's personality
+                const requirements = [
+                    { id: 'name', type: 'input', msg: { sk: 'Tony hlási: Zabudol si vyplniť svoje meno. Ako ťa mám volať?', en: 'Tony here: You forgot your name. What should I call you?' } },
+                    { id: 'email', type: 'input', msg: { sk: 'Tony hlási: Chýba e-mail. Kam ti pošlem potvrdenie?', en: 'Tony here: Missing email. Where should I send the confirmation?' } },
+                    { id: 'business_name', type: 'input', msg: { sk: 'Tony hlási: Každý biznis má meno. Doplň to prosím.', en: 'Tony here: Every business has a name. Please fill it in.' } },
+                    { id: 'industry', type: 'input', msg: { sk: 'Tony potrebuje kontext: V akom odvetví podnikáš?', en: 'Tony needs context: What industry are you in?' } },
+                    { name: 'employees', type: 'radio', msg: { sk: 'Tony sa pýta: Koľko ľudí je v tíme? Vyber jednu možnosť.', en: 'Tony asks: How big is the team? Select one option.' } },
+                    { id: 'what_sell', type: 'input', msg: { sk: 'Tony je zvedavý: Čo vlastne predávaš? Skús to jednou vetou.', en: 'Tony is curious: What do you sell? Try one sentence.' } },
+                    { id: 'typical_customer', type: 'input', msg: { sk: 'Tony potrebuje vedieť: Kto je tvoj typický zákazník?', en: 'Tony needs to know: Who is your target customer?' } },
+                    { name: 'source', type: 'checkbox', msg: { sk: 'Tony vyzvedá: Odkiaľ prichádzajú klienti? Zaškrtni aspoň jedno.', en: 'Tony asks: Where do clients come from? Check at least one.' } },
+                    { id: 'top_tasks', type: 'input', msg: { sk: 'Tony chce pomôcť: Čo ti žerie najviac času? Napíš top 3 úlohy.', en: 'Tony wants to help: What eats your time? List top 3 tasks.' } },
+                    { id: 'magic_wand', type: 'input', msg: { sk: 'Tonyho čarovná palička: Čo by si odstránil hneď teraz?', en: 'Tony\'s magic wand: What would you eliminate right now?' } },
+                    { id: 'leads_challenge', type: 'input', msg: { sk: 'Tony analyzuje: Aký je problém s marketingom? Buď úprimný.', en: 'Tony analyzes: What\'s the trouble with marketing? Be honest.' } },
+                    { name: 'sales_team', type: 'radio', msg: { sk: 'Tony sa pýta: Kto robí predaj? Ty alebo tím?', en: 'Tony asks: Who does sales? You or a team?' } },
+                    { id: 'closing_issues', type: 'input', msg: { sk: 'Tony pátra: Prečo ľudia nekupujú? Kde to viazne?', en: 'Tony investigates: Why aren\'t people buying? Where does it get stuck?' } },
+                    { id: 'delivery_time', type: 'input', msg: { sk: 'Tony meria čas: Čo trvá najdlhšie pri dodaní služby?', en: 'Tony times it: What takes longest in delivery?' } },
+                    { id: 'support_headaches', type: 'input', msg: { sk: 'Tony počúva: Čo ťa bolí pri zákazníckej podpore?', en: 'Tony listens: What gives you headaches in support?' } },
+                    { name: 'ai_experience', type: 'radio', msg: { sk: 'Tony sa zaujíma: Skúšal si už AI? Vyber možnosť.', en: 'Tony is interested: Have you tried AI? Select an option.' } },
+                    { id: 'success_definition', type: 'input', msg: { sk: 'Tony vizualizuje: Ako vyzerá tvoj úspech? Definuj ho.', en: 'Tony visualizes: What does success look like? Define it.' } }
+                ];
+
+                for (const req of requirements) {
+                    let isValid = false;
+                    let el = null;
+
+                    if (req.type === 'input') {
+                        el = document.getElementById(req.id);
+                        if (el && el.value.trim() !== '') isValid = true;
+                    } else if (req.type === 'radio' || req.type === 'checkbox') {
+                        if (isGroupChecked(req.name)) {
+                            isValid = true;
+                        } else {
+                            // Find container to scroll to
+                            el = this.querySelector(`input[name="${req.name}"]`)?.closest('.question-group');
+                        }
+                    }
+
+                    if (req.type === 'input' && !isValid) el = document.getElementById(req.id); // Re-assign for input if failed
+
+                    if (!isValid) {
+                        const msg = isSk ? req.msg.sk : req.msg.en;
+
+                        // Scroll nicely
+                        if (el) {
+                            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            if (req.type === 'input') el.focus();
+                        }
+
+                        // Trigger Chatbot Message
+                        if (window.triggerChatMessage) {
+                            window.triggerChatMessage(msg);
+                        } else {
+                            alert(msg); // Fallback
+                        }
+
+                        return; // Stop checking further fields, only show first error
+                    }
+                }
+                // --- CUSTOM CHATBOT VALIDATION END ---
 
                 const btn = this.querySelector('button[type="submit"]');
                 const originalText = btn.textContent;
