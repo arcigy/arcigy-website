@@ -90,19 +90,25 @@
                                     <div class="custom-select-arrow"></div>
                                 </div>
                                 <div class="custom-options">
-                                    <div class="custom-option" data-value="0-10k">0 - 10,000</div>
-                                    <div class="custom-option" data-value="10k-100k">10,000 - 100,000</div>
-                                    <div class="custom-option" data-value="100k-500k">100,000 - 500,000</div>
-                                    <div class="custom-option" data-value="500k-1M">500,000 - 1,000,000</div>
-                                    <div class="custom-option" data-value="1M-5M">1,000,000 - 5,000,000</div>
-                                    <div class="custom-option" data-value="5M+">5,000,000+</div>
+                                    <div class="custom-option" data-value="0-10k"
+                                        data-i18n="audit.form.turnover_options.t0">0 - 10,000</div>
+                                    <div class="custom-option" data-value="10k-100k"
+                                        data-i18n="audit.form.turnover_options.t1">10,000 - 100,000</div>
+                                    <div class="custom-option" data-value="100k-500k"
+                                        data-i18n="audit.form.turnover_options.t2">100,000 - 500,000</div>
+                                    <div class="custom-option" data-value="500k-1M"
+                                        data-i18n="audit.form.turnover_options.t3">500,000 - 1,000,000</div>
+                                    <div class="custom-option" data-value="1M-5M"
+                                        data-i18n="audit.form.turnover_options.t4">1,000,000 - 5,000,000</div>
+                                    <div class="custom-option" data-value="5M+"
+                                        data-i18n="audit.form.turnover_options.t5">5,000,000+</div>
                                 </div>
                                 <input type="hidden" name="turnover" id="turnover" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="journey" data-i18n="audit.form.journey">What's your customer journey? (Click to
-                                close)</label>
+                            <label for="journey" data-i18n="audit.form.journey">What's your customer journey? (Walk me
+                                through your business from click to close)</label>
                             <textarea id="journey" name="journey" rows="3" required></textarea>
                         </div>
                         <div class="form-group">
@@ -137,12 +143,13 @@
         </div>
     </section>
 
-        <footer class="footer">
+    <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
                     <h3 class="footer-logo">ArciGy</h3>
-                    <p class="footer-tagline" data-i18n="footer.tagline">Automation Architects for Business Efficiency</p>
+                    <p class="footer-tagline" data-i18n="footer.tagline">Automation Architects for Business Efficiency
+                    </p>
                 </div>
                 <div class="footer-column">
                     <h4 data-i18n="footer.links.title">Quick Links</h4>
@@ -170,8 +177,10 @@
                 <div class="footer-newsletter">
                     <h4 data-i18n="footer.newsletter.title">Newsletter</h4>
                     <form class="newsletter-form" id="newsletterForm">
-                        <input type="email" name="email" placeholder="Your email" aria-label="Newsletter email" data-i18n-placeholder="footer.newsletter.placeholder">
-                        <button type="submit" aria-label="Subscribe" data-i18n="footer.newsletter.submit">Subscribe</button>
+                        <input type="email" name="email" placeholder="Your email" aria-label="Newsletter email"
+                            data-i18n-placeholder="footer.newsletter.placeholder">
+                        <button type="submit" aria-label="Subscribe"
+                            data-i18n="footer.newsletter.submit">Subscribe</button>
                     </form>
                 </div>
             </div>

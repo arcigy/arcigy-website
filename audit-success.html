@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="sk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Potvrdené | ArciGy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Override/Additions for Success Page */
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            background: #050812;
+            overflow-x: hidden;
+        }
+
+        /* Particle Background (Reusing Hero styles slightly modified) */
+        .success-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background:
+                radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 40%);
+        }
+
+        .success-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            animation: popIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-size: 40px;
+            margin: 0 auto 24px;
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.4);
+        }
+
+        h1 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.main-msg {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        /* Consultant Profile Card within Success Page */
+        .consultant-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            text-align: left;
+            margin-bottom: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .consultant-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent-solid);
+        }
+
+        .consultant-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+            color: white;
+        }
+
+        .consultant-info p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        /* Chatbot Bubble for AI Message */
+        .ai-bubble {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 32px;
+            position: relative;
+            text-align: left;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .ai-avatar {
+            font-size: 24px;
+            min-width: 40px;
+            height: 40px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ai-text {
+            color: #d1d5db;
+            font-style: italic;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .btn-home {
+            display: inline-block;
+            background: var(--bg-secondary);
+            color: white;
+            padding: 12px 32px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .btn-home:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .consultant-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .ai-bubble {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="success-bg"></div>
+
+    <div class="success-card">
+        <div class="success-icon">✨</div>
+        <h1 id="successTitle">Prijaté!</h1>
+        <p class="main-msg">
+            Tento formulár sme úspešne prijali. Do pár sekúnd si ho preštudujeme.
+            <br>
+            <strong style="color:white; display:block; margin-top:10px;">
+                Deň pred dohodnutým termínom auditu sa Vám ozveme.
+            </strong>
+        </p>
+
+        <!-- AI Funny Message -->
+        <div class="ai-bubble" id="aiBubble" style="display:none;">
+            <div class="ai-avatar">🤖</div>
+            <div class="ai-text" id="aiMessage"></div>
+        </div>
+
+        <!-- Consultant Card -->
+        <div class="consultant-card" id="consultantCard">
+            <img src="placeholder_user.jpg" alt="Consultant" class="consultant-img" id="consultantImg">
+            <div class="consultant-info">
+                <h3 id="consultantName">Consultant</h3>
+                <p>Váš osobný automation architekt.</p>
+                <p style="margin-top: 5px; font-size: 0.85rem; opacity: 0.7;">Tešíme sa na spoluprácu!</p>
+            </div>
+        </div>
+
+        <a href="index.html" class="btn-home">Späť na domov</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Get Params
+            // Ideally we use sessionStorage to avoid ugly URLs, but we need a fallback
+            const urlParams = new URLSearchParams(window.location.search);
+            const refParam = urlParams.get('ref') || 'Andrej'; // Default to Andrej if missing
+
+            // 2. Setup Consultant
+            const consultantImg = document.getElementById('consultantImg');
+            const consultantName = document.getElementById('consultantName');
+
+            if (refParam === 'Branislav') {
+                consultantName.textContent = 'Branislav Laubert';
+                consultantImg.src = 'branislav_profile.jpg';
+            } else {
+                consultantName.textContent = 'Andrej Repický';
+                consultantImg.src = 'andrej_profile.jpg';
+            }
+
+            // 3. Get AI Message from SessionStorage
+            const aiMsg = sessionStorage.getItem('lastAiConfirmation');
+            if (aiMsg) {
+                const aiBubble = document.getElementById('aiBubble');
+                const aiText = document.getElementById('aiMessage');
+
+                // Simulate typing effect or delay slightly
+                setTimeout(() => {
+                    aiBubble.style.display = 'flex';
+                    // Strip quotes if they exist in the response
+                    aiText.textContent = aiMsg.replace(/^"|"$/g, '');
+                    // Clear it so it doesn't persist forever
+                    sessionStorage.removeItem('lastAiConfirmation');
+                }, 500);
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -24,7 +24,7 @@
 
 <body>
     <!-- One-Time Intro Overlay -->
-    <div id="Intro_Overlay" style="display: none;">
+    <div id="Intro_Overlay">
         <!-- Expanded viewBox and added overflow: visible to prevent clipping -->
         <svg id="Intro_Logo" xmlns="http://www.w3.org/2000/svg" viewBox="-100 -100 944 615"
             style="width: 80vw; max-width: 800px; height: auto; overflow: visible;">
@@ -69,11 +69,6 @@
                 <img src="GRADIENT_LOGO ONLY.png" alt="ArciGy Logo" style="height: 32px; width: auto;">
                 <img src="GRADIENT_TEXT ONLY.png" alt="ArciGy" style="height: 24px; width: auto;">
             </a>
-            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
             <ul class="nav-menu" id="navMenu">
                 <li><a href="index.html" class="nav-link active" data-i18n="nav.home">Home</a></li>
                 <li><a href="about.html" class="nav-link" data-i18n="nav.about">About</a></li>
@@ -85,6 +80,11 @@
                 <button class="lang-btn active" data-lang="en" aria-label="English">EN</button>
                 <button class="lang-btn" data-lang="sk" aria-label="Slovak">SK</button>
             </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
 
@@ -97,7 +97,7 @@
             <div class="ai-backdrop" aria-hidden="true"></div>
         </div>
         <div class="hero-content">
-            <h1 class="hero-title typing glow-on-hover" id="heroTitle" data-i18n="hero.title">Last step to business arc.
+            <h1 class="hero-title typing glow-on-hover" id="heroTitle">Last step to business arc.
             </h1>
             <p class="hero-subtitle blur-on-hover" data-i18n="hero.subtitle">We identify and automate core business
                 processes—from lead generation and quality control to logistics and internal operations—to unlock
@@ -340,6 +340,10 @@
                         style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">
                         <h3 class="pricing-tier" style="margin: 0; font-size: 1.75rem;" data-i18n="pricing.audit.title">
                             AI Business Audit</h3>
+                        <div class="pricing-badge"
+                            style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--accent-gradient); color: var(--bg-primary); padding: 6px 16px; border-radius: 20px; font-size: 0.875rem; font-weight: 600;"
+                            data-i18n="pricing.badge_first_step">First Step</div>
+
                         <div class="pricing-price"
                             style="font-family: var(--font-heading); font-size: 2rem; font-weight: 700; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
                             data-i18n="pricing.audit.price">€500</div>
@@ -374,7 +378,7 @@
                         data-i18n="pricing.basic.cta">Schedule a Meeting</a>
                 </div>
                 <div class="pricing-card featured">
-                    <div class="pricing-badge" data-i18n="pricing.badge">All Inclusive</div>
+
                     <h3 class="pricing-tier" data-i18n="pricing.premium.name">Total Transformation</h3>
                     <ul class="pricing-features">
                         <li data-i18n="pricing.premium.feature1">Complete end-to-end business automation</li>
@@ -457,12 +461,13 @@
     </section>
 
     <!-- Footer -->
-        <footer class="footer">
+    <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
                     <h3 class="footer-logo">ArciGy</h3>
-                    <p class="footer-tagline" data-i18n="footer.tagline">Automation Architects for Business Efficiency</p>
+                    <p class="footer-tagline" data-i18n="footer.tagline">Automation Architects for Business Efficiency
+                    </p>
                 </div>
                 <div class="footer-column">
                     <h4 data-i18n="footer.links.title">Quick Links</h4>
@@ -490,8 +495,10 @@
                 <div class="footer-newsletter">
                     <h4 data-i18n="footer.newsletter.title">Newsletter</h4>
                     <form class="newsletter-form" id="newsletterForm">
-                        <input type="email" name="email" placeholder="Your email" aria-label="Newsletter email" data-i18n-placeholder="footer.newsletter.placeholder">
-                        <button type="submit" aria-label="Subscribe" data-i18n="footer.newsletter.submit">Subscribe</button>
+                        <input type="email" name="email" placeholder="Your email" aria-label="Newsletter email"
+                            data-i18n-placeholder="footer.newsletter.placeholder">
+                        <button type="submit" aria-label="Subscribe"
+                            data-i18n="footer.newsletter.submit">Subscribe</button>
                     </form>
                 </div>
             </div>
@@ -544,10 +551,6 @@
     <link rel="stylesheet" href="simple-cookie.css">
     <script src="simple-cookie.js"></script>
 
-    <!-- DEBUG BUTTON: Remove before deployment -->
-    <button onclick="window.arcigyCalendar.open()"
-        style="position: fixed; bottom: 20px; left: 20px; z-index: 10000; padding: 10px 20px; background: red; color: white; border: none; border-radius: 5px; cursor: pointer;">DEBUG:
-        Open Calendar</button>
 </body>
 
 </html>

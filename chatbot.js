@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatWindow = `
         <div class="chat-window" id="chat-window">
             <div class="chat-header">
-                <span>Chat with us!</span>
+                <span id="chat-header-title">Chat with us!</span>
                 <button id="close-chat">&times;</button>
             </div>
             <div class="chat-messages" id="chat-messages"></div>
@@ -102,6 +102,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 chatBubbleEl.style.display = 'none';
                 chatBubbleEl.classList.remove('closing');
             }, 300); // Match animation duration
+
+            // Update header and placeholder
+            const lang = localStorage.getItem('language') || 'en';
+            const headerTitle = document.getElementById('chat-header-title');
+            if (headerTitle) {
+                headerTitle.textContent = lang === 'sk' ? 'Napíšte nám!' : 'Chat with us!';
+            }
+            if (chatInputEl) {
+                chatInputEl.placeholder = lang === 'sk' ? 'Napíšte správu...' : 'Type a message...';
+            }
         }
     }
 
@@ -391,6 +401,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Update session lang
         sessionStorage.setItem('chatLang', lang);
+
+        // Update static UI
+        const headerTitle = document.getElementById('chat-header-title');
+        if (headerTitle) {
+            headerTitle.textContent = lang === 'sk' ? 'Napíšte nám!' : 'Chat with us!';
+        }
+        if (chatInputEl) {
+            chatInputEl.placeholder = lang === 'sk' ? 'Napíšte správu...' : 'Type a message...';
+        }
     };
 
     // Expose function to trigger pricing warning from other scripts
@@ -468,6 +487,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 notificationBubbleEl.classList.remove('active');
             }, 4000);
         }
+    };
+
+    // Expose control functions
+    window.isChatOpen = () => chatWindowEl.style.display === 'flex';
+    window.closeChat = () => {
+        if (window.isChatOpen()) toggleChatWindow();
     };
 
 });

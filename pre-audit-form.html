@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-Audit Intake Form - ArciGy</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Existing Styles -->
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        /* Custom Styles for Form-Specific Layout */
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            padding-bottom: 4rem;
+        }
+
+        .form-header {
+            text-align: center;
+            padding: 4rem 1rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-title {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .form-description {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .form-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .form-section {
+            background: var(--surface);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            /* Slightly softer than card-radius */
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .form-section:focus-within {
+            border-color: var(--accent-solid);
+            /* transform: scale(1.01); Subtle pop */
+        }
+
+        .section-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+            text-align: left;
+            /* Override global section-title center */
+            background: none;
+            -webkit-text-fill-color: initial;
+        }
+
+        .question-group {
+            margin-bottom: 2rem;
+        }
+
+        .question-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .question-label {
+            display: block;
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .helper-text {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            font-style: italic;
+        }
+
+        /* Inputs */
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: #fff;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent-solid);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 0 4px rgba(99, 101, 232, 0.1);
+        }
+
+        /* Radio & Checkbox Custom Styling for "Premium" Feel */
+        .option-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: background 0.2s ease;
+        }
+
+        .option-label:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        /* Hide default checkbox/radio */
+        .option-input {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            /* Checkbox radius */
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .option-input[type="radio"] {
+            border-radius: 50%;
+        }
+
+        .option-input:checked {
+            border-color: var(--accent-solid);
+            background-color: var(--accent-solid);
+        }
+
+        /* Checkmark / Dot */
+        .option-input[type="checkbox"]:checked::after {
+            content: '✓';
+            position: absolute;
+            color: white;
+            font-size: 14px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: 800;
+        }
+
+        .option-input[type="radio"]:checked::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .form-actions {
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .btn-submit {
+            width: 100%;
+            max-width: 300px;
+            font-size: 1.1rem;
+            padding: 1rem 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar (Optional, using simplified version or just empty for focus) -->
+    <!-- Assuming user might integrate this into main site, leaving structure simple -->
+
+    <header class="form-header">
+        <h1 class="form-title">Pre-Audit Intake Form</h1>
+        <p class="form-description">Please fill out this form to help us understand your business before our audit.</p>
+    </header>
+
+    <div class="container form-container">
+        <form id="auditIntakeForm">
+
+            <!-- Section 1: The Basics -->
+            <div class="form-section">
+                <div class="section-header">
+                    <h2 class="section-title">Section 1: The Basics</h2>
+                </div>
+
+                <!-- 1. Name -->
+                <div class="question-group">
+                    <label class="question-label" for="name">1. Your Name</label>
+                    <input type="text" id="name" name="name" placeholder="Your answer" required>
+                </div>
+
+                <!-- 2. Email -->
+                <div class="question-group">
+                    <label class="question-label" for="email">2. Your Email</label>
+                    <input type="email" id="email" name="email" placeholder="Your answer" required>
+                </div>
+
+                <!-- 3. Business Name -->
+                <div class="question-group">
+                    <label class="question-label" for="business_name">3. Business Name</label>
+                    <input type="text" id="business_name" name="business_name" placeholder="Your answer" required>
+                </div>
+
+                <!-- 4. Industry -->
+                <div class="question-group">
+                    <label class="question-label" for="industry">4. Industry</label>
+                    <span class="helper-text">E.g., Real Estate, Marketing Agency, E-commerce, Accounting,
+                        Construction</span>
+                    <input type="text" id="industry" name="industry" placeholder="Your answer" required>
+                </div>
+
+                <!-- 5. Employees -->
+                <div class="question-group">
+                    <label class="question-label">5. Roughly how many people work in your business?</label>
+                    <div class="option-group">
+                        <label class="option-label">
+                            <input type="radio" name="employees" value="Just me" class="option-input" required>
+                            <span>Just me</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="employees" value="2-5" class="option-input">
+                            <span>2-5</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="employees" value="6-15" class="option-input">
+                            <span>6-15</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="employees" value="16-50" class="option-input">
+                            <span>16-50</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="employees" value="50+" class="option-input">
+                            <span>50+</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: What You Do -->
+            <div class="form-section">
+                <div class="section-header">
+                    <h2 class="section-title">Section 2: What You Do</h2>
+                </div>
+
+                <!-- 6. What does business sell -->
+                <div class="question-group">
+                    <label class="question-label" for="what_sell">6. In one sentence, what does your business
+                        sell?</label>
+                    <span class="helper-text">E.g., 'We help small businesses with their bookkeeping' or 'We sell custom
+                        furniture online'</span>
+                    <input type="text" id="what_sell" name="what_sell" placeholder="Your answer" required>
+                </div>
+
+                <!-- 7. Typical Customer -->
+                <div class="question-group">
+                    <label class="question-label" for="typical_customer">7. Who is your typical customer?</label>
+                    <span class="helper-text">E.g., 'Small business owners with 5-20 employees' or 'Homeowners aged
+                        35-55 doing renovations'</span>
+                    <input type="text" id="typical_customer" name="typical_customer" placeholder="Your answer" required>
+                </div>
+
+                <!-- 8. How customers find you -->
+                <div class="question-group">
+                    <label class="question-label">8. How do most of your customers find you?</label>
+                    <span class="helper-text">Select all that apply</span>
+                    <div class="option-group">
+                        <label class="option-label">
+                            <input type="checkbox" name="source" value="Referrals" class="option-input">
+                            <span>Referrals / Word of mouth</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="checkbox" name="source" value="SEO" class="option-input">
+                            <span>Google search / SEO</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="checkbox" name="source" value="Social Media" class="option-input">
+                            <span>Social media (organic)</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="checkbox" name="source" value="Paid Ads" class="option-input">
+                            <span>Paid ads</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="checkbox" name="source" value="Cold Outreach" class="option-input">
+                            <span>Cold outreach (email, calls, DMs)</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="checkbox" name="source" value="Events" class="option-input">
+                            <span>Events / Networking</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="checkbox" name="source" value="Other" class="option-input">
+                            <span>Other</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: The Founder's Time -->
+            <div class="form-section">
+                <div class="section-header">
+                    <h2 class="section-title">Section 3: The Founder's Time</h2>
+                </div>
+
+                <!-- 9. Top 3 tasks -->
+                <div class="question-group">
+                    <label class="question-label" for="top_tasks">9. As the founder/owner, what are the top 3 tasks that
+                        eat up most of YOUR time each week?</label>
+                    <span class="helper-text">Think about the stuff that pulls you away from high-value work. The things
+                        that make you say "I shouldn't be doing this myself."</span>
+                    <textarea id="top_tasks" name="top_tasks" rows="4" placeholder="Your answer" required></textarea>
+                </div>
+
+                <!-- 10. Magic Wand -->
+                <div class="question-group">
+                    <label class="question-label" for="magic_wand">10. If you had a magic wand and could instantly get
+                        10 hours of your week back, what task would you eliminate first?</label>
+                    <span class="helper-text">Don't worry about whether it's realistic. What's the one thing that, if it
+                        just handled itself, would change everything?</span>
+                    <textarea id="magic_wand" name="magic_wand" rows="4" placeholder="Your answer" required></textarea>
+                </div>
+            </div>
+
+            <!-- Section 4: Lead Generation & Marketing -->
+            <div class="form-section">
+                <div class="section-header">
+                    <h2 class="section-title">Section 4: Lead Generation & Marketing</h2>
+                </div>
+
+                <!-- 11. Leads Challenge -->
+                <div class="question-group">
+                    <label class="question-label" for="leads_challenge">11. When it comes to getting new leads and
+                        marketing, what's the biggest challenge you're facing right now?</label>
+                    <span class="helper-text">E.g., "We don't have a consistent way to generate leads," "Content
+                        creation takes forever," "We're not showing up on Google," "Social media feels like a time sink
+                        with no ROI"</span>
+                    <textarea id="leads_challenge" name="leads_challenge" rows="4" placeholder="Your answer"
+                        required></textarea>
+                </div>
+            </div>
+
+            <!-- Section 5: Sales -->
+            <div class="form-section">
+                <div class="section-header">
+                    <h2 class="section-title">Section 5: Sales</h2>
+                </div>
+
+                <!-- 12. Sales Team -->
+                <div class="question-group">
+                    <label class="question-label">12. Do you have a sales team or is it just you handling sales?</label>
+                    <div class="option-group">
+                        <label class="option-label">
+                            <input type="radio" name="sales_team" value="Just me" class="option-input" required>
+                            <span>Just me</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sales_team" value="Me + 1-2 others" class="option-input">
+                            <span>Me + 1-2 others</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sales_team" value="Dedicated sales team (3+)"
+                                class="option-input">
+                            <span>Dedicated sales team (3+)</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="sales_team" value="No sales" class="option-input">
+                            <span>We don't really do "sales" (e.g., e-commerce, self-serve)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 13. Closing Issues -->
+                <div class="question-group">
+                    <label class="question-label" for="closing_issues">13. When it comes to closing deals and sales,
+                        what's the biggest issue you're facing?</label>
+                    <span class="helper-text">E.g., "Low conversion rate," "Leads go cold before we follow up," "Sales
+                        reps not using the CRM properly," "No clear sales process," "Proposals take too long to
+                        create"</span>
+                    <textarea id="closing_issues" name="closing_issues" rows="4" placeholder="Your answer"
+                        required></textarea>
+                </div>
+            </div>
+
+            <!-- Section 6: Service Delivery / Operations -->
+            <div class="form-section">
+                <div class="section-header">
+                    <h2 class="section-title">Section 6: Service Delivery / Operations</h2>
+                </div>
+
+                <!-- 14. Delivery Time -->
+                <div class="question-group">
+                    <label class="question-label" for="delivery_time">14. When it comes to delivering your product or
+                        service, what's the most time-consuming part of the process?</label>
+                    <span class="helper-text">Think about the steps between "customer says yes" and "customer is happy."
+                        Where does it get slow or messy?</span>
+                    <textarea id="delivery_time" name="delivery_time" rows="4" placeholder="Your answer"
+                        required></textarea>
+                </div>
+
+                <!-- 15. Operations recurring (Optional) -->
+                <div class="question-group">
+                    <label class="question-label" for="ops_recurring">15. Is there something in your operations you've
+                        tried to fix multiple times but still hasn't been solved?</label>
+                    <span class="helper-text">That recurring problem that keeps coming back no matter what you throw at
+                        it. (Optional)</span>
+                    <textarea id="ops_recurring" name="ops_recurring" rows="4" placeholder="Your answer"></textarea>
+                </div>
+            </div>
+
+            <!-- Section 7: Customer Support & Client Management -->
+            <div class="form-section">
+                <div class="section-header">
+                    <h2 class="section-title">Section 7: Customer Support & Client Management</h2>
+                </div>
+
+                <!-- 16. Support Headaches -->
+                <div class="question-group">
+                    <label class="question-label" for="support_headaches">16. When it comes to supporting customers or
+                        managing client relationships, what causes the most headaches?</label>
+                    <span class="helper-text">E.g., "We get the same questions over and over," "Hard to keep track of
+                        client communications," "Onboarding new clients is messy," "We drop the ball on
+                        follow-ups"</span>
+                    <textarea id="support_headaches" name="support_headaches" rows="4" placeholder="Your answer"
+                        required></textarea>
+                </div>
+            </div>
+
+            <!-- Section 8: AI Experience & Expectations -->
+            <div class="form-section">
+                <div class="section-header">
+                    <h2 class="section-title">Section 8: AI Experience & Expectations</h2>
+                </div>
+
+                <!-- 17. AI Experience -->
+                <div class="question-group">
+                    <label class="question-label">17. Have you or your team tried using any AI tools yet? (ChatGPT,
+                        Notion AI, Fireflies, etc.)</label>
+                    <div class="option-group">
+                        <label class="option-label">
+                            <input type="radio" name="ai_experience" value="No" class="option-input" required>
+                            <span>No, haven't tried anything yet</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="ai_experience" value="Tried but failed" class="option-input">
+                            <span>Yes, but not consistently / didn't stick</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="ai_experience" value="Regular use" class="option-input">
+                            <span>Yes, we use a few tools regularly</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="ai_experience" value="Savvy" class="option-input">
+                            <span>Yes, we're pretty AI-savvy already</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 18. Which AI Tools (Optional) -->
+                <div class="question-group">
+                    <label class="question-label" for="which_ai_tools">18. If yes, which tools have you tried and what
+                        was your experience?</label>
+                    <textarea id="which_ai_tools" name="which_ai_tools" rows="3" placeholder="Your answer"></textarea>
+                </div>
+
+                <!-- 19. Success Definition -->
+                <div class="question-group">
+                    <label class="question-label" for="success_definition">19. If this audit goes well and we find some
+                        big wins, what would success look like for you?</label>
+                    <span class="helper-text">E.g., "Save 10 hours a week on admin," "Stop losing leads to slow
+                        follow-up," "Finally get my weekends back," "Be able to scale without hiring"</span>
+                    <textarea id="success_definition" name="success_definition" rows="4" placeholder="Your answer"
+                        required></textarea>
+                </div>
+
+                <!-- 20. Specific Look (Optional) -->
+                <div class="question-group">
+                    <label class="question-label" for="specific_focus">20. Is there anything specific you're hoping I
+                        look at during the audit?</label>
+                    <span class="helper-text">Any particular process, tool, or frustration you want me to dig into?
+                        (Optional)</span>
+                    <textarea id="specific_focus" name="specific_focus" rows="3" placeholder="Your answer"></textarea>
+                </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-submit">Submit Audit Request</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Script for Handling Submission -->
+    <script>
+        document.getElementById('auditIntakeForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const btn = this.querySelector('button[type="submit"]');
+            const originalText = btn.textContent;
+
+            btn.disabled = true;
+            btn.textContent = 'Submitting...';
+
+            // Gather data
+            const formData = new FormData(this);
+            const data = {};
+
+            // Handle multiple checkboxes for 'source'
+            const sourceValues = [];
+            formData.getAll('source').forEach(val => sourceValues.push(val));
+
+            for (let [key, value] of formData.entries()) {
+                if (key === 'source') {
+                    data[key] = sourceValues;
+                } else {
+                    data[key] = value;
+                }
+            }
+
+            console.log('Form Data:', data);
+
+            // TODO: Replace with your actual backend endpoint
+            // const BACKEND_URL = 'https://your-backend.railway.app';
+
+            try {
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 1500));
+
+                alert('Thank you! Your audit intake form has been submitted successfully.');
+                this.reset();
+
+                // Redirect or close?
+                // window.location.href = 'thank-you.html';
+
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                alert('There was an error submitting the form. Please try again.');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = originalText;
+            }
+        });
+    </script>
+</body>
+
+</html>

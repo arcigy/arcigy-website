@@ -31,6 +31,25 @@ const translations = {
                 desc: "Human error in quality checks leads to inconsistencies and customer dissatisfaction."
             }
         },
+        process: {
+            title: "Our Process",
+            step1: {
+                title: "Audit",
+                desc: "We map your processes and data flows to uncover bottlenecks."
+            },
+            step2: {
+                title: "Analysis",
+                desc: "We quantify impact and design the optimal automation approach."
+            },
+            step3: {
+                title: "Implementation",
+                desc: "We deploy smart systems and integrate across your stack."
+            },
+            step4: {
+                title: "Optimization",
+                desc: "We monitor, tune and expand automations for compounding ROI."
+            }
+        },
         services: {
             title: "Our Automation Solutions",
             item1: {
@@ -138,7 +157,15 @@ const translations = {
                 dream: "What's your dream outcome?",
                 problem: "What's your biggest problem right now?",
                 bottleneck: "Based on your good feeling, what do you think the biggest bottleneck is right now?",
-                submit: "Select Date"
+                submit: "Select Date",
+                turnover_options: {
+                    t0: "€0 - €10,000",
+                    t1: "€10,000 - €100,000",
+                    t2: "€100,000 - €500,000",
+                    t3: "€500,000 - €1,000,000",
+                    t4: "€1,000,000 - €5,000,000",
+                    t5: "€5,000,000+"
+                }
             }
         },
         footer: {
@@ -159,7 +186,10 @@ const translations = {
                 placeholder: "Your email",
                 submit: "Subscribe"
             },
-            copyright: "© 2024 ArciGy. All rights reserved."
+            copyright: "© 2024 ArciGy. All rights reserved.",
+            errors: {
+                empty_email: "Please enter email."
+            }
         }
     },
     sk: {
@@ -320,7 +350,15 @@ const translations = {
                 dream: "Aký je váš vysnívaný výsledok?",
                 problem: "Aký je váš najväčší problém práve teraz?",
                 bottleneck: "Na základe vášho pocitu, čo si myslíte, že je teraz najväčším úzkym miestom?",
-                submit: "Vybrať termín"
+                submit: "Vybrať termín",
+                turnover_options: {
+                    t0: "0 - 10 000 €",
+                    t1: "10 000 - 100 000 €",
+                    t2: "100 000 - 500 000 €",
+                    t3: "500 000 - 1 000 000 €",
+                    t4: "1 000 000 - 5 000 000 €",
+                    t5: "5 000 000 €+"
+                }
             }
         },
         footer: {
@@ -341,7 +379,10 @@ const translations = {
                 placeholder: "Váš email",
                 submit: "Prihlásiť sa"
             },
-            copyright: "© 2024 ArciGy. Všetky práva vyhradené."
+            copyright: "© 2024 ArciGy. Všetky práva vyhradené.",
+            errors: {
+                empty_email: "Prosím zadajte email."
+            }
         },
         about: {
             hero: {
@@ -457,6 +498,76 @@ const translations = {
                 title: "Začnite Ešte Dnes",
                 subtitle: "Poďme diskutovať o tom, ako môže automatizácia transformovať vašu firmu"
             }
+        },
+        preaudit: {
+            hero: {
+                title: "Vstupný formulár pre audit",
+                subtitle: "Pomôžte nám lepšie pochopiť vaše podnikanie, aby sme maximalizovali hodnotu nášho auditu."
+            },
+            sections: {
+                basics: "Sekcia 1: Základy",
+                what_you_do: "Sekcia 2: Čo robíte",
+                founder_time: "Sekcia 3: Čas zakladateľa",
+                marketing: "Sekcia 4: Generovanie leadov a Marketing",
+                sales: "Sekcia 5: Predaj",
+                operations: "Sekcia 6: Dodanie služby / Operatíva",
+                support: "Sekcia 7: Zákaznícka podpora a riadenie klientov",
+                ai: "Sekcia 8: Skúsenosti s AI a očakávania"
+            },
+            questions: {
+                q1: "1. Vaše Meno",
+                q2: "2. Váš Email",
+                q3: "3. Názov firmy",
+                q4: "4. Odvetvie",
+                q4_ph: "Napr., Reality, Marketingová agentúra, E-shop, Účtovníctvo, Stavebníctvo",
+                q5: "5. Koľko ľudí približne pracuje vo vašej firme?",
+                q6: "6. Jednou vetou, čo vaša firma predáva?",
+                q6_ph: "Napr., 'Pomáhame malým firmám s účtovníctvom' alebo 'Predávame nábytok na mieru online'",
+                q7: "7. Kto je váš typický zákazník?",
+                q7_ph: "Napr., 'Majitelia malých firiem s 5-20 zamestnancami' alebo 'Majitelia domov vo veku 35-55 rokov, ktorí rekonštruujú'",
+                q8: "8. Ako vás nájde väčšina zákazníkov?",
+                q9: "9. Ako zakladateľ/majiteľ, aké sú 3 hlavné úlohy, ktoré vám každý týždeň zaberajú najviac času?",
+                q9_ph: "Zamyslite sa nad vecami, ktoré vás odvádzajú od práce s vysokou hodnotou. Veci, pri ktorých si hovoríte 'Toto by som nemal robiť ja.'",
+                q10: "10. Keby ste mali čarovný prútik a mohli okamžite získať späť 10 hodín týždenne, ktorú úlohu by ste odstránili ako prvú?",
+                q10_ph: "Netrápte sa tým, či je to realistické. Čo je tá jedna vec, ktorá keby sa robila sama, všetko by zmenila?",
+                q11: "11. Pokiaľ ide o získavanie nových leadov a marketing, akej najväčšej výzve momentálne čelíte?",
+                q11_ph: "Napr., 'Nemáme konzistentný spôsob generovania leadov', 'Tvorba obsahu trvá večnosť', 'Nezobrazujeme sa na Google', 'Sociálne siete sú žrút času bez návratnosti'",
+                q12: "12. Máte obchodný tím alebo predaj riešite len vy?",
+                q13: "13. Pokiaľ ide o uzatváranie obchodov, akej najväčšej výzve čelíte?",
+                q13_ph: "Napr., 'Nízka konverzia', 'Leady vychladnú skôr ako sa ozveme', 'Obchodníci nepoužívajú CRM správne', 'Žiadny jasný predajný proces', 'Tvorba ponúk trvá príliš dlho'",
+                q14: "14. Pokiaľ ide o dodanie vášho produktu alebo služby, čo je časovo najnáročnejšia časť procesu?",
+                q14_ph: "Zamyslite sa nad krokmi medzi 'zákazník povie áno' a 'zákazník je spokojný'. Kde sa to spomaľuje alebo komplikuje?",
+                q15: "15. Je niečo vo vašej operatíve, čo ste sa pokúšali vyriešiť viackrát, ale stále sa to nepodarilo?",
+                q15_ph: "Ten opakujúci sa problém, ktorý sa vracia bez ohľadu na to, čo s ním robíte.",
+                q16: "16. Pokiaľ ide o podporu zákazníkov alebo riadenie vzťahov s klientmi, čo vám spôsobuje najväčšie bolesti hlavy?",
+                q16_ph: "Napr., 'Dostávame stále tie isté otázky', 'Je ťažké sledovať komunikáciu s klientmi', 'Onboarding nových klientov je chaos', 'Zabúdame na follow-upy'",
+                q17: "17. Už ste vy alebo váš tím skúšali používať nejaké AI nástroje? (ChatGPT, Notion AI, Fireflies, atď.)",
+                q18: "18. Ak áno, ktoré nástroje ste skúšali a aká bola vaša skúsenosť?",
+                q18_ph: "Vaša odpoveď",
+                q19: "19. Ak tento audit dopadne dobre a nájdeme veľké príležitosti, ako by pre vás vyzeral úspech?",
+                q19_ph: "Napr., 'Ušetriť 10 hodín týždenne na administratíve', 'Prestať strácať leady kvôli pomalej reakcii', 'Konečne mať voľné víkendy', 'Môcť škálovať bez prijímania nových ľudí'",
+                q20: "20. Je niečo konkrétne, na čo by som sa mal počas auditu zamerať?",
+                q20_ph: "Akýkoľvek konkrétny proces, nástroj alebo frustrácia, do ktorej sa mám ponoriť?",
+                placeholder_default: "Vaša odpoveď"
+            },
+            options: {
+                just_me: "Iba ja",
+                sales_me_plus: "Ja + 1-2 ďalší",
+                sales_team: "Dedikovaný obchodný tím (3+)",
+                no_sales: "V skutočnosti nerobíme 'sales' (napr. e-shop, samoobsluha)",
+                ai_no: "Nie, zatiaľ sme nič neskúšali",
+                ai_failed: "Áno, ale nie konzistentne / neuchytilo sa to",
+                ai_regular: "Áno, používame pár nástrojov pravidelne",
+                ai_savvy: "Áno, sme už celkom AI-zbehlí",
+                referrals: "Odporúčania / Word of mouth",
+                seo: "Google vyhľadávanie / SEO",
+                social: "Sociálne siete (organické)",
+                ads: "Platená reklama",
+                cold: "Cold outreach (email, volania, správy)",
+                events: "Eventy / Networking",
+                other: "Iné"
+            },
+            submit: "Odoslať žiadosť o audit"
         }
     }
 };
@@ -579,6 +690,77 @@ translations.en.contactpage = {
         title: "Get Started Today",
         subtitle: "Let's discuss how automation can transform your business"
     }
+};
+
+translations.en.preaudit = {
+    hero: {
+        title: "Pre-Audit Intake Form",
+        subtitle: "Help us understand your business better to maximize the value of our upcoming audit."
+    },
+    sections: {
+        basics: "Section 1: The Basics",
+        what_you_do: "Section 2: What You Do",
+        founder_time: "Section 3: The Founder's Time",
+        marketing: "Section 4: Lead Generation & Marketing",
+        sales: "Section 5: Sales",
+        operations: "Section 6: Service Delivery / Operations",
+        support: "Section 7: Customer Support & Client Management",
+        ai: "Section 8: AI Experience & Expectations"
+    },
+    questions: {
+        q1: "1. Your Name",
+        q2: "2. Your Email",
+        q3: "3. Business Name",
+        q4: "4. Industry",
+        q4_ph: "E.g., Real Estate, Marketing Agency, E-commerce, Accounting, Construction",
+        q5: "5. Roughly how many people work in your business?",
+        q6: "6. In one sentence, what does your business sell?",
+        q6_ph: "E.g., 'We help small businesses with their bookkeeping' or 'We sell custom furniture online'",
+        q7: "7. Who is your typical customer?",
+        q7_ph: "E.g., 'Small business owners with 5-20 employees' or 'Homeowners aged 35-55 doing renovations'",
+        q8: "8. How do most of your customers find you?",
+        q9: "9. As the founder/owner, what are the top 3 tasks that eat up most of YOUR time each week?",
+        q9_ph: "Think about the stuff that pulls you away from high-value work. The things that make you say 'I shouldn't be doing this myself.'",
+        q10: "10. If you had a magic wand and could instantly get 10 hours of your week back, what task would you eliminate first?",
+        q10_ph: "Don't worry about whether it's realistic. What's the one thing that, if it just handled itself, would change everything?",
+        q11: "11. When it comes to getting new leads and marketing, what's the biggest challenge you're facing right now?",
+        q11_ph: "E.g., 'We don't have a consistent way to generate leads,' 'Content creation takes forever,' 'We're not showing up on Google,' 'Social media feels like a time sink with no ROI'",
+        q12: "12. Do you have a sales team or is it just you handling sales?",
+        q13: "13. When it comes to closing deals and sales, what's the biggest issue you're facing?",
+        q13_ph: "E.g., 'Low conversion rate,' 'Leads go cold before we follow up,' 'Sales reps not using the CRM properly,' 'No clear sales process,' 'Proposals take too long to create'",
+        q14: "14. When it comes to delivering your product or service, what's the most time-consuming part of the process?",
+        q14_ph: "Think about the steps between 'customer says yes' and 'customer is happy.' Where does it get slow or messy?",
+        q15: "15. Is there something in your operations you've tried to fix multiple times but still hasn't been solved?",
+        q15_ph: "That recurring problem that keeps coming back no matter what you throw at it.",
+        q16: "16. When it comes to supporting customers or managing client relationships, what causes the most headaches?",
+        q16_ph: "E.g., 'We get the same questions over and over,' 'Hard to keep track of client communications,' 'Onboarding new clients is messy,' 'We drop the ball on follow-ups'",
+        q17: "17. Have you or your team tried using any AI tools yet? (ChatGPT, Notion AI, Fireflies, etc.)",
+        q18: "18. If yes, which tools have you tried and what was your experience?",
+        q18_ph: "Your Answer",
+        q19: "19. If this audit goes well and we find some big wins, what would success look like for you?",
+        q19_ph: "E.g., 'Save 10 hours a week on admin,' 'Stop losing leads to slow follow-up,' 'Finally get my weekends back,' 'Be able to scale without hiring'",
+        q20: "20. Is there anything specific you're hoping I look at during the audit?",
+        q20_ph: "Any particular process, tool, or frustration you want me to dig into?",
+        placeholder_default: "Your Answer"
+    },
+    options: {
+        just_me: "Just me",
+        sales_me_plus: "Me + 1-2 others",
+        sales_team: "Dedicated sales team (3+)",
+        no_sales: "We don't really do 'sales' (e.g., e-commerce, self-serve)",
+        ai_no: "No, haven't tried anything yet",
+        ai_failed: "Yes, but not consistently / didn't stick",
+        ai_regular: "Yes, we use a few tools regularly",
+        ai_savvy: "Yes, we're pretty AI-savvy already",
+        referrals: "Referrals / Word of mouth",
+        seo: "Google search / SEO",
+        social: "Social media (organic)",
+        ads: "Paid ads",
+        cold: "Cold outreach (email, calls, DMs)",
+        events: "Events / Networking",
+        other: "Other"
+    },
+    submit: "Submit Audit Request"
 };
 
 
@@ -791,21 +973,49 @@ function setLanguage(lang) {
     });
 
     // Update all translatable elements
-    document.querySelectorAll('[data-i18n]').forEach(el => {
+    document.querySelectorAll('[data-i18n], [data-i18n-placeholder]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        const keys = key.split('.');
-        let value = translations[lang];
+        const placeholderKey = el.getAttribute('data-i18n-placeholder');
 
-        for (let k of keys) {
-            value = value?.[k];
+        if (key) {
+            const keys = key.split('.');
+            let value = translations[lang];
+            for (let k of keys) value = value?.[k];
+            if (value) {
+                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                    if (el.type === 'submit' || el.type === 'button') el.value = value;
+                    else el.placeholder = value;
+                } else if (el.tagName === 'SELECT') {
+                    // Update select options if they have data-i18n
+                    Array.from(el.options).forEach(opt => {
+                        const optKey = opt.getAttribute('data-i18n');
+                        if (optKey) {
+                            let optValue = translations[lang];
+                            for (let k of optKey.split('.')) optValue = optValue?.[k];
+                            if (optValue) opt.textContent = optValue;
+                        }
+                    });
+                } else {
+                    el.innerHTML = value;
+                }
+            }
         }
 
-        if (value) {
-            if (el.tagName === 'INPUT' && el.hasAttribute('placeholder')) {
-                el.placeholder = value;
-            } else {
-                el.innerHTML = value;
-            }
+        if (placeholderKey) {
+            const keys = placeholderKey.split('.');
+            let value = translations[lang];
+            for (let k of keys) value = value?.[k];
+            if (value) el.placeholder = value;
+        }
+    });
+
+    // Update language-specific content blocks (e.g. legal pages)
+    document.querySelectorAll('[data-lang-content]').forEach(el => {
+        const contentLang = el.getAttribute('data-lang-content');
+        if (contentLang === lang) {
+            el.style.display = 'block';
+        } else {
+            el.style.display = 'none';
         }
     });
 
@@ -836,8 +1046,14 @@ function initNavigation() {
 
     if (navToggle && navMenu) {
         navToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
+            const isActive = navMenu.classList.toggle('active');
             navToggle.classList.toggle('active');
+
+            // If opening menu on mobile, close other overlays
+            if (isActive && window.innerWidth <= 768) {
+                if (window.closeChat) window.closeChat();
+                if (window.arcigyCalendar && window.arcigyCalendar.close) window.arcigyCalendar.close();
+            }
         });
     }
 
@@ -1056,7 +1272,11 @@ function initCursorParallax() {
 
 // Email Validation Helper
 async function validateEmailWithBackend(email) {
-    if (!email) return { valid: false, message: 'Prosím zadajte email.' };
+    const lang = (typeof currentLang !== 'undefined') ? currentLang : 'en';
+    if (!email) {
+        const msg = translations[lang]?.footer?.errors?.empty_email || (lang === 'sk' ? 'Prosím zadajte email.' : 'Please enter email.');
+        return { valid: false, message: msg };
+    }
 
     // 1. Basic Frontend Regex Check (Immediate)
     const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
@@ -1198,15 +1418,25 @@ function initCustomSelects() {
         });
 
         options.forEach(option => {
-            option.addEventListener('click', () => {
-                const value = option.dataset.value;
-                const text = option.textContent;
+            option.addEventListener('click', function () {
+                const val = this.getAttribute('data-value');
+                const i18nKey = this.getAttribute('data-i18n');
 
-                triggerText.textContent = text;
-                hiddenInput.value = value;
+                // Get translated text
+                let translatedText = this.textContent;
+                if (i18nKey) {
+                    const lang = localStorage.getItem('language') || 'en';
+                    let valObj = translations[lang];
+                    for (let k of i18nKey.split('.')) valObj = valObj?.[k];
+                    if (valObj) translatedText = valObj;
+                }
+
+                trigger.querySelector('.custom-select-text').textContent = translatedText;
+                trigger.querySelector('.custom-select-text').classList.add('selected');
+                hiddenInput.value = val;
 
                 options.forEach(opt => opt.classList.remove('selected'));
-                option.classList.add('selected');
+                this.classList.add('selected');
 
                 wrapper.classList.remove('open');
 
@@ -1567,3 +1797,31 @@ window.UserState = UserStateManager;
 UserStateManager.clearLegacy(); // Clean up old trash
 UserStateManager.syncForms();
 UserStateManager.listen();
+// Overlap Management & Mobile Fixes
+function initOverlayManagement() {
+    // 1. Calendar vs Chatbot
+    // We override the calendar open method to ensure chatbot closes on mobile
+    const originalCalOpen = window.arcigyCalendar?.open;
+    if (originalCalOpen) {
+        window.arcigyCalendar.open = function () {
+            if (window.innerWidth <= 768) {
+                if (window.closeChat) window.closeChat();
+                // Also close nav menu if open
+                document.getElementById('navMenu')?.classList.remove('active');
+                document.getElementById('navToggle')?.classList.remove('active');
+            }
+            originalCalOpen.apply(this, arguments);
+        };
+    }
+
+    // 2. Hide debug button on mobile (extra JS safety)
+    const debugBtn = document.querySelector('button[onclick*="arcigyCalendar.open"]');
+    if (debugBtn && window.innerWidth <= 768) {
+        debugBtn.style.display = 'none';
+    }
+}
+
+// Ensure overlay management runs after everything is loaded
+window.addEventListener('load', () => {
+    initOverlayManagement();
+});

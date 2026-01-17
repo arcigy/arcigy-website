@@ -916,9 +916,12 @@
                     console.log('Submission result:', result);
 
                     if (response.ok && result.status === 'success') {
-                        alert('Thank you! Your audit intake form has been submitted successfully.');
-                        this.reset();
-                        window.scrollTo(0, 0);
+                        // Store AI message if available
+                        if (result.ai_message) {
+                            sessionStorage.setItem('lastAiConfirmation', result.ai_message);
+                        }
+                        // Redirect to success page
+                        window.location.href = 'audit-success.html?ref=Andrej';
                     } else {
                         throw new Error(result.message || 'Submission failed');
                     }

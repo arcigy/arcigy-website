@@ -1,0 +1,266 @@
+:root {
+    --cal-bg: #050812;
+    --cal-surface: rgba(20, 20, 30, 0.98);
+    --cal-surface-hover: rgba(40, 40, 50, 0.98);
+    --cal-border: rgba(255, 255, 255, 0.1);
+    --cal-primary: #6365e8;
+    --cal-secondary: #c751e7;
+    --cal-accent-gradient: linear-gradient(90deg, #6365e8 0%, #c751e7 100%);
+    --cal-text: #E6EDF3;
+    --cal-text-muted: #9CA3AF;
+    --cal-font-heading: 'Manrope', system-ui, -apple-system, sans-serif;
+    --cal-font-body: 'Sora', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background-color: var(--cal-bg);
+    color: var(--cal-text);
+    font-family: var(--cal-font-body);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.meeting-container {
+    display: flex;
+    gap: 2rem;
+    width: 100%;
+    max-width: 1200px;
+    background: var(--cal-surface);
+    border: 1px solid var(--cal-border);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    align-items: flex-start;
+}
+
+.meeting-info {
+    border-right: 1px solid var(--cal-border);
+    padding-right: 2rem;
+    flex: 0 0 300px;
+}
+
+.meeting-info h1, .meeting-info h2 {
+    margin: 0;
+    font-family: var(--cal-font-heading);
+}
+
+.meeting-scheduler {
+    display: flex;
+    gap: 1rem;
+    flex: 1;
+}
+
+/* Calendar styles adapted from calendar.css */
+.calendar-main-area {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.calendar-top-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0.5rem;
+}
+
+.year-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.year-nav button {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--cal-text);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.year-nav button:hover {
+    border-color: var(--cal-primary);
+    color: var(--cal-primary);
+}
+
+.current-year-display {
+    font-family: var(--cal-font-heading);
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.month-list {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 4px;
+    width: 100%;
+}
+
+.month-pill {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--cal-text-muted);
+    padding: 0.25rem 0.2rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.month-pill:hover {
+    color: var(--cal-text);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.month-pill.active {
+    background: rgba(99, 101, 232, 0.15);
+    color: var(--cal-primary);
+    border-color: rgba(99, 101, 232, 0.3);
+}
+
+.calendar-days-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    color: var(--cal-text-muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-auto-rows: 1fr; /* Make rows flexible */
+    gap: 4px;
+    aspect-ratio: 1 / 0.8; /* Maintain aspect ratio */
+}
+
+.cal-day {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9rem;
+    position: relative;
+    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.cal-day:hover:not(.empty):not(.disabled) {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.cal-day.empty {
+    background: transparent;
+    cursor: default;
+}
+
+.cal-day.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.cal-day.selected {
+    background: var(--cal-accent-gradient);
+    color: #050812;
+    font-weight: 700;
+}
+
+.cal-day.today {
+    border: 1px solid var(--cal-primary);
+}
+
+.calendar-sidebar-area {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    width: 280px;
+}
+
+.time-slots-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    overflow-y: auto;
+    max-height: 300px;
+}
+
+.time-slot-item {
+    padding: 0.8rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.time-slot-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--cal-primary);
+}
+
+.time-slot-item.selected {
+    background: rgba(99, 101, 232, 0.15);
+    border-color: var(--cal-primary);
+}
+
+.meeting-details-form {
+    padding: 1rem;
+}
+
+.meeting-details-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.meeting-details-form input,
+.meeting-details-form textarea {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--cal-border);
+    border-radius: 8px;
+    color: var(--cal-text);
+}
+
+.bg-shape {
+    position: fixed;
+    border-radius: 50%;
+    z-index: -1;
+    filter: blur(100px);
+}
+
+.shape-1 {
+    width: 300px;
+    height: 300px;
+    background: rgba(99, 101, 232, 0.3);
+    top: -50px;
+    left: -50px;
+}
+
+.shape-2 {
+    width: 300px;
+    height: 300px;
+    background: rgba(199, 81, 231, 0.3);
+    bottom: -50px;
+    right: -50px;
+}
