@@ -617,4 +617,32 @@
     pointer-events: none;
 }
 
-/* Mobile overrides handled in styles.css */
+/* Mobile overrides handled in styles.css BUT we enforce positioning here */
+@media (max-width: 768px) {
+    .chat-bubble {
+        /* Fix for mobile scroll jitter */
+        transform: translateZ(0);
+        /* Use safe area to prevent overlap with home indicator */
+        bottom: calc(20px + env(safe-area-inset-bottom));
+        right: 20px;
+    }
+
+    .chat-window {
+        /* Fix for mobile scroll jitter */
+        transform: translateZ(0);
+        width: 90vw !important;
+        right: 5vw !important;
+        /* Dynamic viewport height to prevent header/bar overlap issues */
+        height: calc(100dvh - 120px) !important;
+        max-height: calc(100dvh - 120px) !important;
+        bottom: calc(85px + env(safe-area-inset-bottom)) !important;
+        border-radius: 16px;
+    }
+
+    /* Ensure notification bubble is also safe */
+    .chat-notification-bubble {
+        bottom: calc(30px + env(safe-area-inset-bottom));
+        right: 80px;
+        transform: translateZ(0);
+    }
+}
