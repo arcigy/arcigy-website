@@ -124,9 +124,13 @@ function animate() {
 }
 
 window.addEventListener('resize', () => {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-    init();
+    // Only re-init if the WIDTH changes (e.g. rotation or desktop resize)
+    // This ignores vertical resizes caused by mobile address bars showing/hiding
+    if (window.innerWidth !== width) {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        init();
+    }
 });
 
 init();
