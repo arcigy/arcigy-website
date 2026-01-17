@@ -944,42 +944,6 @@
     <link rel="stylesheet" href="simple-cookie.css">
     <script src="simple-cookie.js"></script>
 
-    <!-- DEV HELPER: Autofill Button (Only visible with ?test=1) -->
-    <script>
-        if (new URLSearchParams(window.location.search).has('test')) {
-            const btn = document.createElement('button');
-            btn.innerHTML = '⚡ AUTOFILL TEST DATA';
-            btn.style.cssText = 'position:fixed; bottom:20px; left:20px; z-index:9999; padding:15px; background:#6366f1; color:white; border:none; border-radius:10px; cursor:pointer; font-weight:bold; box-shadow:0 0 20px rgba(99,102,241,0.5);';
-            btn.onclick = () => {
-                document.getElementById('name').value = "Jozef Mak";
-                document.getElementById('email').value = "jozef.mak@test.sk";
-                document.getElementById('business_name').value = "Realitná Kancelária Domov Snov";
-                document.getElementById('industry').value = "Realitná činnosť a správa nehnuteľností";
-                document.getElementById('what_sell').value = "Sprostredkovanie predaja a prenájmu bytov a domov v Bratislave.";
-                document.getElementById('typical_customer').value = "Rodiny hľadajúce nové bývanie a investori do nehnuteľností.";
-                document.getElementById('top_tasks').value = "1. Telefonáty s klientmi a obhliadky.\n2. Papierovačky a zmluvy.\n3. Nahadzovanie inzerátov na portály.";
-                document.getElementById('magic_wand').value = "Chcel by som, aby sa obhliadky a zmluvy riešili samé. Nenávidím tú administratívu okolo katastra.";
-                document.getElementById('leads_challenge').value = "Máme veľa dopytov, ale nestíhame ich triediť. Veľa z nich sú len 'obzeráči' čo nič nekúpia.";
-                document.getElementById('closing_issues').value = "Zdlhavý proces schvaľovania hypoték a klienti si to často na poslednú chvíľu rozmyslia.";
-                document.getElementById('delivery_time').value = "Od podpisu rezervácie po odovzdanie kľúčov to trvá večnosť kvôli úradom.";
-                document.getElementById('ops_recurring').value = "Stále zabúdame volať klientom po pol roku, či sú spokojní. CRM máme, ale nikto ho nepoužíva poriadne.";
-                document.getElementById('support_headaches').value = "Klienti volajú aj cez víkendy s banálnymi otázkami, ktoré sú na webe.";
-                document.getElementById('which_ai_tools').value = "Skúšal som ChatGPT na písanie inzerátov, ale znelo to roboticky.";
-                document.getElementById('success_definition').value = "Mať viac času na rodinu a menej času v aute a papieroch. Chcem automatizovať maily.";
-                document.getElementById('specific_focus').value = "Pozrite sa hlavne na to, ako automatizovať komunikáciu s 'mŕtvymi' leadmi.";
-
-                // Radio & Checkbox
-                try { document.querySelector('input[name="employees"][value="2-5"]').checked = true; } catch (e) { }
-                try { document.querySelector('input[name="sales_team"][value="Me + 1-2 others"]').checked = true; } catch (e) { }
-                try { document.querySelector('input[name="ai_experience"][value="Tried but failed"]').checked = true; } catch (e) { }
-                try { document.querySelector('input[name="source"][value="Referrals"]').checked = true; } catch (e) { }
-                try { document.querySelector('input[name="source"][value="Social Media"]').checked = true; } catch (e) { }
-
-                alert('✅ Dáta boli vyplnené! Môžeš odoslať formulár.');
-            };
-            document.body.appendChild(btn);
-        }
-    </script>
 </body>
 
 </html>
