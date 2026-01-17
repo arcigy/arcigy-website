@@ -481,12 +481,23 @@ document.addEventListener('DOMContentLoaded', () => {
             notificationBubbleEl.classList.remove('hiding');
             notificationBubbleEl.classList.add('active');
 
-            // Auto hide after 4 seconds
+            // Auto hide after 8 seconds (matching appendMessage logic)
             setTimeout(() => {
                 notificationBubbleEl.classList.add('hiding');
                 notificationBubbleEl.classList.remove('active');
-            }, 4000);
+            }, 8000);
         }
+    };
+
+    // NEW: Robust trigger for external pages
+    window.triggerChatMessage = function (msg) {
+        // 1. Ensure chat is closed so bubble is visible
+        if (window.isChatOpen()) {
+            toggleChatWindow();
+        }
+
+        // 2. Add message which triggers notification bubble
+        appendMessage(msg, 'bot', false, false); // False = don't auto-hide immediately, let user see it
     };
 
     // Expose control functions

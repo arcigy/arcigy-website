@@ -11,29 +11,19 @@
         href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="chatbot.css"> <!-- Ensure chatbot styles are loaded -->
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
     <style>
-        /* Override/Additions for Success Page */
-        body {
+        /* Specific overrides for this page content */
+        .success-content {
+            padding-top: 120px;
+            padding-bottom: 80px;
+            min-height: 80vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
-            padding: 20px;
-            background: #050812;
-            overflow-x: hidden;
-        }
-
-        /* Particle Background (Reusing Hero styles slightly modified) */
-        .success-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background:
-                radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 40%);
+            position: relative;
+            z-index: 2;
         }
 
         .success-card {
@@ -47,8 +37,6 @@
             text-align: center;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
             animation: popIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            overflow: hidden;
         }
 
         @keyframes popIn {
@@ -75,7 +63,7 @@
             box-shadow: 0 0 30px rgba(99, 102, 241, 0.4);
         }
 
-        h1 {
+        h1.success-title {
             font-family: var(--font-heading);
             font-size: 2.5rem;
             margin-bottom: 16px;
@@ -84,14 +72,14 @@
             -webkit-text-fill-color: transparent;
         }
 
-        p.main-msg {
+        p.success-msg {
             font-size: 1.1rem;
             color: var(--text-muted);
             margin-bottom: 32px;
             line-height: 1.6;
         }
 
-        /* Consultant Profile Card within Success Page */
+        /* Consultant Profile */
         .consultant-card {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 16px;
@@ -116,44 +104,13 @@
             font-size: 1.2rem;
             margin-bottom: 4px;
             color: white;
+            font-family: var(--font-heading);
         }
 
         .consultant-info p {
             font-size: 0.95rem;
             color: var(--text-muted);
             margin: 0;
-        }
-
-        /* Chatbot Bubble for AI Message */
-        .ai-bubble {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
-            border: 1px solid rgba(139, 92, 246, 0.3);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 32px;
-            position: relative;
-            text-align: left;
-            display: flex;
-            gap: 16px;
-            align-items: flex-start;
-        }
-
-        .ai-avatar {
-            font-size: 24px;
-            min-width: 40px;
-            height: 40px;
-            background: #fff;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .ai-text {
-            color: #d1d5db;
-            font-style: italic;
-            font-size: 1rem;
-            line-height: 1.5;
         }
 
         .btn-home {
@@ -173,16 +130,9 @@
             transform: translateY(-2px);
         }
 
-        /* Mobile Adjustments */
         @media (max-width: 600px) {
             .consultant-card {
                 flex-direction: column;
-                text-align: center;
-            }
-
-            .ai-bubble {
-                flex-direction: column;
-                align-items: center;
                 text-align: center;
             }
         }
@@ -191,44 +141,104 @@
 
 <body>
 
-    <div class="success-bg"></div>
-
-    <div class="success-card">
-        <div class="success-icon">✨</div>
-        <h1 id="successTitle">Prijaté!</h1>
-        <p class="main-msg">
-            Tento formulár sme úspešne prijali. Do pár sekúnd si ho preštudujeme.
-            <br>
-            <strong style="color:white; display:block; margin-top:10px;">
-                Deň pred dohodnutým termínom auditu sa Vám ozveme.
-            </strong>
-        </p>
-
-        <!-- AI Funny Message -->
-        <div class="ai-bubble" id="aiBubble" style="display:none;">
-            <div class="ai-avatar">🤖</div>
-            <div class="ai-text" id="aiMessage"></div>
+    <!-- Navigation (Same as website) -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo" aria-label="ArciGy Home"
+                style="display: flex; align-items: center; gap: 10px;">
+                <img src="GRADIENT_LOGO ONLY.png" alt="ArciGy Logo" style="height: 32px; width: auto;">
+                <img src="GRADIENT_TEXT ONLY.png" alt="ArciGy" style="height: 24px; width: auto;">
+            </a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link" data-i18n="nav.home">Home</a></li>
+                <li><a href="about.html" class="nav-link" data-i18n="nav.about">About</a></li>
+                <li><a href="services.html" class="nav-link" data-i18n="nav.services">Services</a></li>
+                <li><a href="pricing.html" class="nav-link" data-i18n="nav.pricing">Pricing</a></li>
+                <li><a href="contact.html" class="nav-link" data-i18n="nav.contact">Contact</a></li>
+            </ul>
+            <div class="nav-lang">
+                <button class="lang-btn active" data-lang="en" aria-label="English">EN</button>
+                <button class="lang-btn" data-lang="sk" aria-label="Slovak">SK</button>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
+    </nav>
 
-        <!-- Consultant Card -->
-        <div class="consultant-card" id="consultantCard">
-            <img src="placeholder_user.jpg" alt="Consultant" class="consultant-img" id="consultantImg">
-            <div class="consultant-info">
-                <h3 id="consultantName">Consultant</h3>
-                <p>Váš osobný automation architekt.</p>
-                <p style="margin-top: 5px; font-size: 0.85rem; opacity: 0.7;">Tešíme sa na spoluprácu!</p>
+    <!-- Background Shapes (Consistent with site) -->
+    <div class="hero-background"
+        style="position: fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none;">
+        <div class="hero-shape shape-1"></div>
+        <div class="hero-shape shape-2"></div>
+        <div class="hero-shape shape-3"></div>
+        <div class="ai-backdrop" aria-hidden="true"></div>
+    </div>
+
+    <section class="success-content">
+        <div class="container" style="display: flex; justify-content: center;">
+            <div class="success-card">
+                <div class="success-icon">✨</div>
+                <h1 class="success-title">Prijaté!</h1>
+                <p class="success-msg">
+                    Tento formulár sme úspešne prijali. Do pár sekúnd si ho preštudujeme.
+                    <br>
+                    <strong style="color:white; display:block; margin-top:10px;">
+                        Deň pred dohodnutým termínom auditu sa Vám ozveme.
+                    </strong>
+                </p>
+
+                <!-- Consultant Card -->
+                <div class="consultant-card" id="consultantCard">
+                    <img src="placeholder_user.jpg" alt="Consultant" class="consultant-img" id="consultantImg">
+                    <div class="consultant-info">
+                        <h3 id="consultantName">Consultant</h3>
+                        <p>Váš osobný automation architekt.</p>
+                        <p style="margin-top: 5px; font-size: 0.85rem; opacity: 0.7;">Tešíme sa na spoluprácu!</p>
+                    </div>
+                </div>
+
+                <a href="index.html" class="btn-home">Späť na domov</a>
             </div>
         </div>
+    </section>
 
-        <a href="index.html" class="btn-home">Späť na domov</a>
-    </div>
+    <!-- Footer (Same as website) -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3 class="footer-logo">ArciGy</h3>
+                    <p class="footer-tagline" data-i18n="footer.tagline">Automation Architects for Business Efficiency
+                    </p>
+                </div>
+                <!-- Simplified Footer Links -->
+                <div class="footer-column">
+                    <h4 data-i18n="footer.links.title">Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright" data-i18n="footer.copyright">&copy; 2024 ArciGy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script src="chatbot.js"></script>
+    <script src="simple-cookie.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // 1. Get Params
-            // Ideally we use sessionStorage to avoid ugly URLs, but we need a fallback
             const urlParams = new URLSearchParams(window.location.search);
-            const refParam = urlParams.get('ref') || 'Andrej'; // Default to Andrej if missing
+            const refParam = urlParams.get('ref') || 'Andrej';
 
             // 2. Setup Consultant
             const consultantImg = document.getElementById('consultantImg');
@@ -242,20 +252,23 @@
                 consultantImg.src = 'andrej_profile.jpg';
             }
 
-            // 3. Get AI Message from SessionStorage
+            // 3. Trigger AI Message via Chatbot Bubble
             const aiMsg = sessionStorage.getItem('lastAiConfirmation');
             if (aiMsg) {
-                const aiBubble = document.getElementById('aiBubble');
-                const aiText = document.getElementById('aiMessage');
-
-                // Simulate typing effect or delay slightly
+                // Wait for chatbot.js to init and DOM to settle
                 setTimeout(() => {
-                    aiBubble.style.display = 'flex';
-                    // Strip quotes if they exist in the response
-                    aiText.textContent = aiMsg.replace(/^"|"$/g, '');
-                    // Clear it so it doesn't persist forever
+                    const cleanMsg = aiMsg.replace(/^"|"$/g, '');
+
+                    // Use the newly exposed helper from chatbot.js
+                    if (window.triggerChatMessage) {
+                        window.triggerChatMessage(cleanMsg);
+                    } else {
+                        console.warn("triggerChatMessage not found, chatbot.js might be cached.");
+                    }
+
+                    // Clear session
                     sessionStorage.removeItem('lastAiConfirmation');
-                }, 500);
+                }, 1000);
             }
         });
     </script>
