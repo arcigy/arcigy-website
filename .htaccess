@@ -1,0 +1,17 @@
+RewriteEngine On
+
+# 1. Redirect .html to non-.html (remove extension from URL)
+# If the request matches a file ending in .html (and is not an existing file or directory itself in a weird way), redirect.
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s([^.]+)\.html [NC]
+RewriteRule ^ %1 [R=301,L]
+
+# 2. Internally rewrite non-extension request to .html file
+# If the requested filename is not a directory, and the request + .html exists as a file...
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.*)$ $1.html [L]
+
+# 3. Handle trailing slashes (optional, but good for consistency)
+# If a request ends in a slash and is not a directory, remove the slash
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)/$ $1 [R=301,L]

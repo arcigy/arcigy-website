@@ -56,7 +56,7 @@ window.addEventListener('load', function () {
                 },
 
                 language: {
-                    default: 'en',
+                    default: 'sk',
                     translations: {
                         en: {
                             consent_modal: {

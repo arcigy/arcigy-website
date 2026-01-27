@@ -70,6 +70,7 @@
             transform: translateY(-2px);
         }
     </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -77,9 +78,10 @@
         <div class="icon">✨</div>
         <h1 id="title">Success!</h1>
         <p id="message">Your action has been confirmed and processed successfully.</p>
-        <a href="index.html" class="btn">Return to Website</a>
+        <a href="./" class="btn">Return to Website</a>
     </div>
 
+    <script src="script.js"></script>
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const lang = urlParams.get('lang') || 'sk';
@@ -103,5 +105,3 @@
 </body>
 
 </html>
-
-

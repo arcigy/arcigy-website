@@ -19,7 +19,7 @@
     };
 
     function getLang() {
-        return localStorage.getItem('language') || 'en';
+        return localStorage.getItem('language') || 'sk';
     }
 
     function hasConsented() {

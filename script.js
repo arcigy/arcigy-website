@@ -135,8 +135,8 @@ const translations = {
                 email: "Email",
                 phone: "Phone",
                 summary: "Project Summary (focus on the problem you need to solve)",
-                terms: 'I agree to the <a href="terms-of-service.html" target="_blank">Terms of Service</a>',
-                privacy: 'I agree to the <a href="privacy-policy.html" target="_blank">Privacy Policy</a>',
+                terms: 'I agree to the <a href="terms-of-service" target="_blank">Terms of Service</a>',
+                privacy: 'I agree to the <a href="privacy-policy" target="_blank">Privacy Policy</a>',
                 submit: "Send a Proposal"
             },
             privacy: "Your data is safe. We do not share it with third parties."
@@ -328,8 +328,8 @@ const translations = {
                 email: "Email",
                 phone: "Telefón",
                 summary: "Zhrnutie projektu (zamerajte sa na problém, ktorý potrebujete vyriešiť)",
-                terms: 'Súhlasím s <a href="terms-of-service.html" target="_blank">Obchodnými podmienkami</a>',
-                privacy: 'Súhlasím so <a href="privacy-policy.html" target="_blank">Zásadami ochrany osobných údajov</a>',
+                terms: 'Súhlasím s <a href="terms-of-service" target="_blank">Obchodnými podmienkami</a>',
+                privacy: 'Súhlasím so <a href="privacy-policy" target="_blank">Zásadami ochrany osobných údajov</a>',
                 submit: "Odoslať návrh"
             },
             privacy: "Vaše údaje sú bezpečné. Nepreposielame ich tretím stranám."
@@ -765,7 +765,7 @@ translations.en.preaudit = {
 
 
 // Current Language
-let currentLang = localStorage.getItem('language') || 'en';
+let currentLang = localStorage.getItem('language') || 'sk';
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function () {
@@ -781,6 +781,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initRealtimeValidation();
     initCustomSelects();
     initContactHelpers();
+    initCustomScrollbar();
     if (window.UserState) {
         window.UserState.syncForms();
         window.UserState.listen();
@@ -1067,16 +1068,21 @@ function initNavigation() {
         });
     });
 
-    // Sticky navbar
+    // Scrolled navbar state
     const navbar = document.getElementById('navbar');
     if (navbar) {
-        window.addEventListener('scroll', () => {
+        const updateNavbar = () => {
             if (window.scrollY > 50) {
-                navbar.style.background = 'rgba(5, 8, 18, 0.95)';
+                navbar.classList.add('scrolled');
             } else {
-                navbar.style.background = 'rgba(5, 8, 18, 0.8)';
+                navbar.classList.remove('scrolled');
             }
-        });
+        };
+
+        // Initial check
+        updateNavbar();
+
+        window.addEventListener('scroll', updateNavbar, { passive: true });
     }
 }
 
@@ -1825,3 +1831,93 @@ function initOverlayManagement() {
 window.addEventListener('load', () => {
     initOverlayManagement();
 });
+
+
+function initCustomScrollbar() {
+    const old = document.querySelector('.custom-scrollbar-container');
+    if (old) old.remove();
+
+    const container = document.createElement('div');
+    container.className = 'custom-scrollbar-container';
+
+    const thumb = document.createElement('div');
+    thumb.className = 'custom-scrollbar-thumb';
+
+    container.appendChild(thumb);
+    document.body.appendChild(container);
+
+    const doc = document.documentElement;
+    let isDragging = false;
+    let startY, startScrollTop;
+
+    const updateThumb = () => {
+        if (isDragging) return;
+        const scrollTop = window.pageYOffset || doc.scrollTop;
+        const scrollHeight = doc.scrollHeight;
+        const windowHeight = window.innerHeight;
+
+        const containerHeight = windowHeight * 0.3;
+        const thumbHeight = windowHeight * 0.04;
+        const travelHeight = containerHeight - thumbHeight;
+
+        const scrollPercent = scrollTop / (scrollHeight - windowHeight || 1);
+        const thumbPos = Math.max(0, Math.min(travelHeight, scrollPercent * travelHeight));
+
+        thumb.style.transform = `translateY(${thumbPos}px)`;
+        thumb.style.setProperty('--thumb-y', `${thumbPos}px`);
+    };
+
+    window.addEventListener('scroll', updateThumb, { passive: true });
+    window.addEventListener('resize', updateThumb);
+    requestAnimationFrame(updateThumb);
+
+    // Manual Dragging Logic
+    const startDrag = (y) => {
+        isDragging = true;
+        startY = y;
+        startScrollTop = window.pageYOffset || doc.scrollTop;
+        thumb.style.cursor = 'grabbing';
+        document.body.style.userSelect = 'none';
+        container.classList.add('active');
+    };
+
+    const moveDrag = (y) => {
+        if (!isDragging) return;
+        const deltaY = y - startY;
+        const windowHeight = window.innerHeight;
+        const scrollHeight = doc.scrollHeight;
+        const travelHeight = (windowHeight * 0.3) - (windowHeight * 0.04);
+        const scrollRatio = (scrollHeight - windowHeight) / travelHeight;
+
+        window.scrollTo(0, startScrollTop + deltaY * scrollRatio);
+    };
+
+    const endDrag = () => {
+        if (!isDragging) return;
+        isDragging = false;
+        thumb.style.cursor = 'grab';
+        document.body.style.userSelect = '';
+        container.classList.remove('active');
+    };
+
+    thumb.addEventListener('mousedown', (e) => {
+        startDrag(e.pageY);
+        e.preventDefault();
+    });
+
+    window.addEventListener('mousemove', (e) => moveDrag(e.pageY));
+    window.addEventListener('mouseup', endDrag);
+
+    thumb.addEventListener('touchstart', (e) => {
+        startDrag(e.touches[0].pageY);
+    }, { passive: false });
+
+    window.addEventListener('touchmove', (e) => {
+        if (isDragging) {
+            moveDrag(e.touches[0].pageY);
+            e.preventDefault();
+        }
+    }, { passive: false });
+
+    window.addEventListener('touchend', endDrag);
+}

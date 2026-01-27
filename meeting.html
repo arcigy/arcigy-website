@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Schedule Meeting - ArciGy</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="meeting.css">
 </head>
+
 <body>
     <div class="meeting-container">
         <div class="meeting-info">
-            <a href="index.html" class="back-link">&larr;</a>
+            <a href="./" class="back-link">&larr;</a>
             <h2>Branislav Laubert</h2>
             <h1>New Meeting</h1>
             <p>15 min</p>
@@ -24,9 +28,10 @@
             <div class="calendar-main-area">
                 <div class="calendar-top-controls">
                     <div class="year-nav">
-                        <button class="prev-year"><</button>
-                        <span class="current-year-display">2026</span>
-                        <button class="next-year">></button>
+                        <button class="prev-year">
+                            << /button>
+                                <span class="current-year-display">2026</span>
+                                <button class="next-year">></button>
                     </div>
                 </div>
                 <div class="month-scroll-container">
@@ -52,12 +57,16 @@
             <button id="add-guest-btn">Add Guests</button>
             <label for="notes">Please share anything that will help prepare for our meeting.</label>
             <textarea id="notes" name="notes"></textarea>
-            <p class="terms">By proceeding, you confirm that you have read and agree to <a href="terms-of-service.html">Terms of Service</a> and <a href="privacy-policy.html">Privacy Notice</a>.</p>
+            <p class="terms">By proceeding, you confirm that you have read and agree to <a href="terms-of-service">Terms
+                    of Service</a> and <a href="privacy-policy">Privacy
+                    Notice</a>.</p>
             <button id="schedule-event-btn" class="glow-btn">Schedule Event</button>
         </div>
     </div>
     <div class="bg-shape shape-1"></div>
     <div class="bg-shape shape-2"></div>
+    <script src="script.js"></script>
     <script src="meeting.js"></script>
 </body>
+
 </html>
