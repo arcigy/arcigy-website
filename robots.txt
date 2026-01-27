@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Canonical domain
+Sitemap: https://www.arcigy.com/sitemap.xml
